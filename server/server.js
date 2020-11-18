@@ -29,7 +29,13 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
+
+  // socket.on('Hello from client', function(data) {
+  //   console.log("SERVER RECEIVING DATA ::: ");
+  // })
+
 });
+
 
 const getApiAndEmit = socket => {
   const response = data();
