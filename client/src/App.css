@@ -11,9 +11,17 @@
   background-color: goldenrod;
 }
 
+<<<<<<< HEAD
 .backgroundTeacher {
   background-color: pink; 
 }
+=======
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} */
+>>>>>>> Create-Server-Node-Express-Socket
 
 .toolsContainerOpen {
   display: flex;
