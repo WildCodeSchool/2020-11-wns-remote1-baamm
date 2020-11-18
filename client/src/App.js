@@ -1,25 +1,44 @@
-import photo from './pictures/photo.jpeg'
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Teacher from './components/Teacher';
+import Student from './components/Student';
+import Home from './components/Home';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={photo} className="App-logo" alt="photo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Teacher />
   );
 }
 
 export default App;
+
+
+/* <Router>
+      <div className="App">
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+        <Link to="/teacher">
+          <button>Interface Professeur</button>
+        </Link>
+        <Link to="/student">
+          <button>Interface Eleve</button>
+        </Link>
+      </div>
+      <Switch>
+        <Route path="/teacher">
+          <Teacher />
+        </Route>
+        <Route path="/student">
+          <Student />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router> */
