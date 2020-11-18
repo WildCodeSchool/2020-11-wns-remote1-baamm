@@ -37,6 +37,8 @@ io.on("connection", (socket) => {
 });
 
 
+
+
 const getApiAndEmit = socket => {
   const response = data();
   console.log("DATA ::: ", response);
