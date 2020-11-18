@@ -1,4 +1,4 @@
-function User(id, alias, lastname, firstName, role, askTalking) {
+    function User(id, alias, lastname, firstName, role, askTalking) {
     this.id         = id,
     this.alias      = alias,
     this.lastname   = lastname,

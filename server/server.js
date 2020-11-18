@@ -20,10 +20,7 @@ let interval;
 io.on("connection", (socket) => {
   console.log("New client connected");
   socket.emit("FromAPI")
-  *// if (interval) {
-  //   clearInterval(interval);
-  // }
-  // interval = setInterval(() => getApiAndEmit(socket), 1000);
+  *
   getApiAndEmit(socket);
   socket.on("disconnect", () => {
     console.log("Client disconnected");
@@ -35,7 +32,7 @@ const getApiAndEmit = socket => {
   const response = data();
   console.log("DATA ::: ", response);
   
-  // Emitting a new message. Will be consumed by the client
+  // Emitting a new message. Will be consumed by the cient
   socket.emit("FromAPI", response);
 };
 

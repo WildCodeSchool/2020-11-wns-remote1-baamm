@@ -30,31 +30,18 @@ const ClientComponent = () => {
         return () => socket.disconnect();
         
       }, []);
-      console.log(  )
       
     return ( 
     <div>
         <header className="App-header">
         <ul>
         {response.map((user) => (
-          <li>{user.alias}</li>
+          <li key={user.id}>
+               <ul>{user.alias}</ul>
+               <ul>{user.role}</ul>
+               <ul>{user.askTalking}</ul>
+          </li>
         ))}
-        
-        {/* //   <li key={user.id} > 
-          //         <ul>{user.alias}</ul>
-          //         <ul>{user.role}</ul>
-          //         <ul>{user.askTalking}</ul>
-          //    </li> */}
-
-         {/* {response.map ((user) => (
-          
-            user.role != 
-         ))}
-           
-          {/* //   (user.role !== 'teacher') { */}
-
-
-
         </ul>  
       </header>
     </div>
