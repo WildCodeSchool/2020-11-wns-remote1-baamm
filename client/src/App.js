@@ -1,24 +1,18 @@
-import photo from './pictures/photo.jpeg'
+import React, { useState } from "react";
+import ClientComponent from "./ClientComponent";
 import './App.css';
 
 function App() {
+  const [loadClient, setLoadClient] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={photo} className="App-logo" alt="photo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* LOAD OR UNLOAD THE CLIENT */}
+      <button onClick={() => setLoadClient(prevState => !prevState)}>
+        {loadClient ? 'STOP CLIENT' : 'START CLIENT'}
+      </button>
+      {/* SOCKET IO CLIENT*/}
+      {loadClient ? <ClientComponent /> : null}
+    </>
   );
 }
 
