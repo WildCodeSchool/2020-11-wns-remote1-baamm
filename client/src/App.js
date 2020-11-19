@@ -1,14 +1,7 @@
 import React, { useState } from "react";
+
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import Teacher from './components/Teacher';
-import Student from './components/Student';
-import Home from './components/Home';
 
 // function App() {
 //   const [loadClient, setLoadClient] = useState(true);
@@ -26,6 +19,7 @@ import Home from './components/Home';
 // }
 
 function App() {
+
   // const [loadClient, setLoadClient] = useState(true);
 
   return (
@@ -61,4 +55,4 @@ export default App;
         </Route>
       </Switch>
     </Router> */
-    
+

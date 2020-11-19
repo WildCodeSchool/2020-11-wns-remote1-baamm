@@ -7,31 +7,28 @@ const ENDPOINT = "http://localhost:5000";
 const ClientComponent = () => {
     const [response, setResponse] = useState([]);
 
+
     useEffect(() => {
         const socket = socketIOClient(ENDPOINT, {
           transports: ['websocket']
-        });
-        
+        });  
         socket.on("FromAPI", data => {
-          console.log('fromAPI', data)
+          //console.log('fromAPI', data)
           if (data) {
-            console.log('DATA', data)
+            // console.log('DATA', data)
             const liste = [];
             data.forEach(user => {
                 if (user.role === 'student') {
                   liste.push(user);
                 }
             })
-            console.log("LISTE ::: ", liste);
+            //console.log("LISTE ::: ", liste);
             setResponse(liste);
           }
-          
         });
-        return () => socket.disconnect();
-        
+        return () => socket.disconnect();  
       }, []);
-      console.log(  )
-      
+
     return ( 
     <div>
         <header className="App-header">
@@ -47,4 +44,3 @@ const ClientComponent = () => {
 }
 
 export default ClientComponent;
-

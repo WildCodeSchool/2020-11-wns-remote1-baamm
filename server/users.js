@@ -11,7 +11,6 @@ const role = {
     STUDENT: 'student',
     TEACHER: 'teacher'
 }
-// let dateTimeNow = new Date();
 
 var anthony  = new User(1, 'Anthony',  'Lucci',         'Anthony', role.STUDENT, null);
 var aurelien = new User(2, 'Aurélien', 'Landouer',      'Anthony', role.STUDENT, null);
