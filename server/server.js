@@ -39,11 +39,17 @@ io.on("connection", (socket) => {
     io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
   });
 
-  // TEST DE RECUPERATION FROM CLIENT
-  socket.on('Hello from client', () => {
-    console.log("Hello from client");
+  // PARTIE ASKINGTALK
+  socket.on('askingtalk from client', (askingtalk) => {
+    console.log("askingtalk from client ::: ", askingtalk);
+    socket.emit('askingtalk from server', askingtalk);
   });
-  // FIN DU TEST
+  socket.on('cancel askingtalk', (askingtalkid) => {
+    console.log("Annulation de prise de parole depuis le client - id ::: ", askingtalkid);
+    socket.emit('askingtalk deleted', askingtalkid);
+    // TODO : récupérer l'askingtalk et la supprimer
+  })
+  // FIN PARTIE ASKINGTALK
 
 
   // ATTENTION fusion de deux comportements !!!
