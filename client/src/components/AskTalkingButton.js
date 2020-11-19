@@ -12,7 +12,8 @@ export default function AskTalkingButton() {
 
     // correspond à l'objet askingTalk qui sera la demande de prise de parole (avec l'utilisateur, le type d'intervention et la date de demande)
     const [askingTalk, setAskingTalk] = React.useState(null);
-
+    // pour stocker l'id d'un askingTalk à supprimer
+    const [askingTalkId, setAskingTalkId] = React.useState(null);
     // correspond à l'utilisateur connecté -- écrit en dur pour le moment
     const thisUser =
     {
@@ -33,22 +34,28 @@ export default function AskTalkingButton() {
         socket.on('askingtalk deleted', askingTalkId => {
             console.log("Suppression d'un askingTalk depuis le serveur - id ::: ", askingTalkId);
         });
-    }, []);  
+    }, []);
 
-    // useEffect(() => {
+    // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking et cancelAskTalking appelées par le bouton
+    useEffect(() => {
+        if (askingTalk) {
+            console.log("ASKING TALK HERE ::: ", askingTalk);
+            socket.emit('askingtalk from client', askingTalk);
+        } else if (askingTalkId) {
+            console.log("ASKTALKING TO CANCEL ::: ", askingTalkId);
+            socket.emit('cancel askingtalk', askingTalkId);
+        }
+        
+    }, [askingTalk]);
 
-    // }, [askingTalk]);
 
     // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
     const sendAskTalking = (e) => {
-        console.log("ASKING TALK WHEN CLICK ON I WANT TO BLABLA ::: ", askingTalk)
-
         // seul les élèves ont une raison de demander la parole 
         // TODO : retirer ce if et n'afficher le bouton que si l'user est un élève
         if (thisUser.role !== 'student') {
             return alert("C'est aux élèves de demander la parole");
         }
-
         // on "crée" notre demande de parole (plus tard : gérer le type d'intervention)
         setAskingTalk(
             {
@@ -58,16 +65,12 @@ export default function AskTalkingButton() {
                 askingDate: new Date()
             }
         );
-
-        console.log(askingTalk);
-        socket.emit('askingtalk from client', askingTalk);
     }
 
     // fonction appelée par le clic sur le bouton quand on a déjà demandé la parole
     const cancelAskTalking = (e) => {
-        console.log("ASKTALKING TO CANCEL ::: ", askingTalk);
+        setAskingTalkId(askingTalk.id);
         setAskingTalk(null);
-        socket.emit('cancel askingtalk', askingTalk.id);
     }
 
 
