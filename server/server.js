@@ -81,6 +81,16 @@ const getApiAndEmit = socket => {
 
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", response);
+
+  // if (dateAskingTalk) {
+  //   clearInterval(dateAskingTalk);
+  // }
+  // interval = setInterval(() => getApiAndEmit(socket), 1000);
+  // getApiAndEmit(socket);
+  // socket.on("disconnect", () => {
+  //   console.log("Client disconnected");
+  //   clearInterval(dateAskingTalk);
+  // });
 };
 
 
