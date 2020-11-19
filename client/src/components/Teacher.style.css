@@ -32,13 +32,19 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: black;
+  background-color: #eeecec;
 }
 
 .toolsContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     height: 100%;
-    background-color: yellow;
+    background-color: white;
     align-items: center;
+}
+
+.linkTest {
+  padding: 20px 12%;
+  color: black;
 }

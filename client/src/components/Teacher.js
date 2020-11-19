@@ -5,9 +5,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icons'
 import Participants from './Participants';
 import WaitingQueue from './WaitingQueue';
-import Chat from './Chat';
+import ChatRoom from './ChatRoom';
 import AskTalkingButton from './AskTalkingButton';
 import './Teacher.style.css';
 
@@ -28,14 +30,14 @@ function Teacher() {
 
         <Router>
           <div className="navToolsBar">
-            <Link to="/chat">
-              <button>img 1</button>
+            <Link to="/chat" className="linkTest">
+              <FontAwesomeIcon icon={faCommentAlt} />
             </Link>
-            <Link to="/waitingqueue">
-              <button>img 2</button>
+            <Link to="/waitingqueue" className="linkTest">
+              <FontAwesomeIcon icon={faClock} />
             </Link>
-            <Link to="/participants">
-              <button>img 3</button>
+            <Link to="/participants" className="linkTest">
+              <FontAwesomeIcon icon={faUsers} />
             </Link>
           </div>
           <div ></div>
@@ -44,7 +46,7 @@ function Teacher() {
               <WaitingQueue />
             </Route>
             <Route path="/chat">
-              <Chat />
+              <ChatRoom />
             </Route>
             <Route path="/participants">
               <Participants />

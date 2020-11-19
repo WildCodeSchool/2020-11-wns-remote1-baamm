@@ -13,7 +13,7 @@ export default function Participants(props) {
     <div className="toolsContainer">
       <ul>
         {enDur.map((participant) =>
-          <li>
+          <li key={participant.firstname}>
             <img src="" alt="" />
             <h3>{participant.firstname} {participant.lastname} </h3>
             <p>{participant.role}</p>
