@@ -1,15 +1,10 @@
+import React, { useState } from "react";
+// import ClientComponent from "./ClientComponent";
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import Teacher from './components/Teacher';
-import Student from './components/Student';
-import Home from './components/Home';
 
 function App() {
+//  const [loadClient, setLoadClient] = useState(true);
   return (
     <Teacher />
   );
@@ -42,3 +37,15 @@ export default App;
         </Route>
       </Switch>
     </Router> */
+    /*
+    <>
+      {/* LOAD OR UNLOAD THE CLIENT }
+      <button onClick={() => setLoadClient(prevState => !prevState)}>
+        {loadClient ? 'STOP CLIENT' : 'START CLIENT'}
+      </button>
+      {/* SOCKET IO CLIENT}
+      {loadClient ? <ClientComponent /> : null}
+    </>
+  );
+}
+*/

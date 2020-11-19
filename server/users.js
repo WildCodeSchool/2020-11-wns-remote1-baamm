@@ -1,5 +1,5 @@
 function User(id, alias, lastname, firstName, role, askTalking) {
-    this.id         = id,
+    this.id         = is,
     this.alias      = alias,
     this.lastname   = lastname,
     this.firstName  = firstName,
@@ -18,9 +18,3 @@ var brian    = new User(3, 'Brian',    'Lagaude',       'Anthony', role.STUDENT,
 var mansour  = new User(4, 'Mansour',  'Mahamat-Salle', 'Anthony', role.STUDENT, null);
 var mayana   = new User(5, 'Mayana',   'Bastard',       'Anthony', role.STUDENT, null);
 var thomas   = new User(6, 'Thomas',   'Culdaut',       'Thomas',  role.TEACHER, null);
-
-function createUsers() {
-    return [anthony, aurelien, brian];
-}
-
-module.exports = createUsers;
