@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const cors = require('cors');
+
 const index = require("./routes/index");
 const data = require('./data/users');
 
@@ -31,9 +32,6 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
-});
-
-io.on("connection", (socket) => {
   
   // Join a conversation
   const { roomId } = socket.handshake.query;

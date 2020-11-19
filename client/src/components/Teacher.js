@@ -10,6 +10,7 @@ import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icon
 import Participants from './Participants';
 import WaitingQueue from './WaitingQueue';
 import ChatRoom from './ChatRoom';
+import AskTalkingButton from './AskTalkingButton';
 import './Teacher.style.css';
 
 
@@ -20,6 +21,7 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn" /*style={showToolsContain ? { flex: 3 } : { flex: 9 }}*/>
+        <AskTalkingButton />
       </div>
       <div className="rightColumn" >
         {/*<button onClick={() => setShowToolsContain(!showToolsContain)}>Put</button>*/}

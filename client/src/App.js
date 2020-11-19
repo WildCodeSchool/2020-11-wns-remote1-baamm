@@ -1,14 +1,32 @@
 import React, { useState } from "react";
-// import ClientComponent from "./ClientComponent";
+
 import './App.css';
 import Teacher from './components/Teacher';
 
+// function App() {
+//   const [loadClient, setLoadClient] = useState(true);
+//   return (
+//     <Teacher />
+//     /* <>
+//     //   {/* LOAD OR UNLOAD THE CLIENT */}
+//     //   <button onClick={() => setLoadClient(prevState => !prevState)}>
+//     //     {loadClient ? 'STOP CLIENT' : 'START CLIENT'}
+//     //   </button>
+//     //   {/* SOCKET IO CLIENT*/}
+//     //   {loadClient ? <ClientComponent /> : null}
+//     // {/* </> */}
+//   );
+// }
+
 function App() {
-//  const [loadClient, setLoadClient] = useState(true);
+
+  // const [loadClient, setLoadClient] = useState(true);
+
   return (
     <Teacher />
   );
 }
+
 
 export default App;
 
@@ -37,15 +55,4 @@ export default App;
         </Route>
       </Switch>
     </Router> */
-    /*
-    <>
-      {/* LOAD OR UNLOAD THE CLIENT }
-      <button onClick={() => setLoadClient(prevState => !prevState)}>
-        {loadClient ? 'STOP CLIENT' : 'START CLIENT'}
-      </button>
-      {/* SOCKET IO CLIENT}
-      {loadClient ? <ClientComponent /> : null}
-    </>
-  );
-}
-*/
+
