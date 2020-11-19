@@ -27,12 +27,12 @@ export default function AskTalkingButton() {
 
     useEffect(() => {
         // A chaque fois qu'on reçoit un asktalking depuis le serveur
-        socket.on('askingtalk from server', askingTalk => {
-            console.log("Réception d'un nouvel askingTalk depuis le serveur ::: ", askingTalk);
+        socket.on('askingtalk from server', askingTalkArray => {
+            console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ", askingTalkArray);
         });
         // A chaque fois qu'on supprime un asktalking depuis le serveur
-        socket.on('askingtalk deleted', askingTalkId => {
-            console.log("Suppression d'un askingTalk depuis le serveur - id ::: ", askingTalkId);
+        socket.on('askingtalk deleted', askingTalkArray => {
+            console.log("Suppression d'un askingTalk depuis le serveur - new asking talk array ::: ", askingTalkArray);
         });
     }, []);
 
@@ -56,12 +56,17 @@ export default function AskTalkingButton() {
         if (thisUser.role !== 'student') {
             return alert("C'est aux élèves de demander la parole");
         }
+
+        let choosenInterventionType;
+        let isQuestion = window.confirm(`Cliquez sur "ok" pour une question, "annuler" pour une information`);
+        choosenInterventionType = isQuestion ? "question" : "information"; 
+
         // on "crée" notre demande de parole (plus tard : gérer le type d'intervention)
         setAskingTalk(
             {
                 id: Math.floor(Math.random() * 101),
                 user: thisUser,
-                interventionType: 'question',
+                interventionType: choosenInterventionType,
                 askingDate: new Date()
             }
         );
@@ -69,11 +74,14 @@ export default function AskTalkingButton() {
 
     // fonction appelée par le clic sur le bouton quand on a déjà demandé la parole
     const cancelAskTalking = (e) => {
-        setAskingTalkId(askingTalk.id);
-        setAskingTalk(null);
+        let sureToCancel = window.confirm(`Etes-vous sûr(e) de vouloir annuler votre demande d'intervention ?
+        Vous perdrez votre place dans la file d'attente...`);
+        if (sureToCancel) {
+            setAskingTalkId(askingTalk.id);
+            setAskingTalk(null);
+        }
+ 
     }
-
-
 
     return (
         <div>

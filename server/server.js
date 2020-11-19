@@ -4,7 +4,7 @@ const socketIo = require("socket.io");
 const cors = require('cors');
 
 const index = require("./routes/index");
-const data = require('./data/users');
+const data = require('./data/askTalking');
 
 const PORT = 5000;
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
@@ -17,10 +17,16 @@ app.use(cors());
 
 const server = http.createServer(app);
 const io = socketIo(server);
-
 let interval;
 
+let askingTalkArray = data();
+/////////////////////////////////////
+////////// SEBASTIEN ////////////////
+////////////////////////////////////
+let clients = [];
+
 io.on("connection", (socket) => {
+  clients.push(socket);
   console.log("New client connected");
   socket.emit("FromAPI")
     *// if (interval) {
@@ -42,11 +48,22 @@ io.on("connection", (socket) => {
   // PARTIE ASKINGTALK
   socket.on('askingtalk from client', (askingtalk) => {
     console.log("askingtalk from client ::: ", askingtalk);
-    socket.emit('askingtalk from server', askingtalk);
+    askingTalkArray.push(askingtalk);
+    console.log("ICI LE NOUVEL ASKING TALK DU SERVER ::: ", askingTalkArray);
+    clients.forEach(client => {
+      client.emit('askingtalk from server', askingTalkArray);  
+    });
+    //socket.emit('askingtalk from server', askingTalkArray);
   });
   socket.on('cancel askingtalk', (askingtalkid) => {
-    console.log("Annulation de prise de parole depuis le client - id ::: ", askingtalkid);
-    socket.emit('askingtalk deleted', askingtalkid);
+    console.log("Annulation de prise de parole depuis le client - id ::: ", askingTalkArray);
+    askingTalkArray = askingTalkArray.filter((askingtalk) => {
+      return askingtalk.id !== askingtalkid;
+    });
+    console.log("NOUVEAU TABLEAU APRES SUPPRESSION ::: ", askingTalkArray);
+    clients.forEach(client => {
+      client.emit('askingtalk deleted', askingTalkArray);  
+    });
     // TODO : récupérer l'askingtalk et la supprimer
   })
   // FIN PARTIE ASKINGTALK
