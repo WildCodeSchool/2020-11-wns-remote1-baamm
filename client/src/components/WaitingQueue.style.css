@@ -1,0 +1,43 @@
+.waitingContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgb(212, 195, 170);
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.waitingQueueList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.waitIcon {
+  font-size: 50px;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.topContainerQueueOn, .topContainerQueueOff {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topContainerQueueOn {
+  background-color: orange;
+  padding: 10px;
+}
+
+.topContainerQueueOff {
+  background-color: red;
+  padding: 10px;
+}
+
+.askTalking {
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 8%;
+}

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import socketIOClient from "socket.io-client";
 import ClientComponent from "../ClientComponent";
 import AskTalkingButton from './AskTalkingButton';
+import './WaitingQueue.style.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -112,20 +115,29 @@ export default function WaitingQueue(props) {
 
   return (
     <div>
-      { askingTalk &&
-        <button onClick={(e) => { cancelAskTalking(e) }} className="cancelAskTalking">Don't need to blabla anymore</button>
-      }
 
-      { askingTalk === null &&
-        <button onClick={(e) => { sendAskTalking(e) }} className="askTalking">I want to blabla</button>
+      { askingTalk === null ?
+        <div className="topContainerQueueOn">
+          <button onClick={(e) => { sendAskTalking(e) }} className="askTalking">Join the queue</button>
+        </div>
+        :
+        <div className="topContainerQueueOff">
+          <button onClick={(e) => { cancelAskTalking(e) }} className="askTalking">Leave the queue</button>
+        </div>
       }
-      <ul>
+      <ol className="waitingQueueList">
         {waitingQueue.map((askTalking) => (
-          <li key={askTalking.id}>{askTalking.user.alias}, {askTalking.interventionType}</li>
+          <li key={askTalking.id}>
+            <div className="waitingContainer">
+              <FontAwesomeIcon icon={faUser} className="waitIcon" />
+              <div>
+                <p>{askTalking.user.alias}</p>
+                <p>{askTalking.interventionType}</p>
+              </div>
+            </div>
+          </li>
         ))}
-      </ul>
+      </ol>
     </div>
   )
-
-
 }
