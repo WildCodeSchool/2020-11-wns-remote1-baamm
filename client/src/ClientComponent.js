@@ -7,6 +7,7 @@ const ENDPOINT = "http://localhost:5000";
 const ClientComponent = () => {
     const [response, setResponse] = useState([]);
 
+
     useEffect(() => {
         const socket = socketIOClient(ENDPOINT, {
           transports: ['websocket']

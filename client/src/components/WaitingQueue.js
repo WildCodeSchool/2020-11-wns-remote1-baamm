@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from "socket.io-client";
-import ClientComponent from "../ClientComponent";
-import AskTalkingButton from './AskTalkingButton';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +10,7 @@ const socket = socketIOClient(ENDPOINT, {
   transports: ['websocket']
 });
 
-
+const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 ////////////////////////////////////////////////////////////////////
 ////////////// ATTENTION CODE LAID !!! /////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -81,11 +79,6 @@ export default function WaitingQueue(props) {
 
   // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
   const sendAskTalking = (e) => {
-    // seul les élèves ont une raison de demander la parole 
-    // TODO : retirer ce if et n'afficher le bouton que si l'user est un élève
-    if (thisUser.role !== 'student') {
-      return alert("C'est aux élèves de demander la parole");
-    }
 
     let choosenInterventionType;
     let isQuestion = window.confirm(`Cliquez sur "ok" pour une question, "annuler" pour une information`);
@@ -114,30 +107,47 @@ export default function WaitingQueue(props) {
   }
 
   return (
-    <div>
-
-      { askingTalk === null ?
-        <div className="topContainerQueueOn">
-          <button onClick={(e) => { sendAskTalking(e) }} className="askTalking">Join the queue</button>
-        </div>
-        :
+    <div className="waiting-queue">
+      <h2>{userRole}</h2>
+      { userRole === 'student' && askingTalk === null ?
+      <div className="topContainerQueueOn">
+        <button onClick={(e) => { sendAskTalking(e) }}
+          className="askTalking"
+          title="Demander une intervention"
+        >
+          Join the queue
+        </button>
+      </div>
+      :
+        userRole === 'student' &&
         <div className="topContainerQueueOff">
-          <button onClick={(e) => { cancelAskTalking(e) }} className="askTalking">Leave the queue</button>
+          <button onClick={(e) => { cancelAskTalking(e) }}
+            className="askTalking"
+            title={askingTalk.interventionType === 'question' ?
+            "Annuler la question" : "Annuler l'information"}
+          >
+            Leave the queue
+          </button>
         </div>
       }
-      <ol className="waitingQueueList">
-        {waitingQueue.map((askTalking) => (
-          <li key={askTalking.id}>
+      { askingTalk !== null || userRole === 'teacher' ?
+        <ol className="waitingQueueList">
+          {waitingQueue.map((askTalking) => (
             <div className="waitingContainer">
-              <FontAwesomeIcon icon={faUser} className="waitIcon" />
-              <div>
-                <p>{askTalking.user.alias}</p>
-                <p>{askTalking.interventionType}</p>
-              </div>
+            <FontAwesomeIcon icon={faUser} className="waitIcon" />
+            <div>
+              <p>{askTalking.user.alias}</p>
+              <p>{askTalking.interventionType}</p>
             </div>
-          </li>
-        ))}
-      </ol>
+          </div>
+          ))}
+        </ol>
+        :
+        <p>Il y a actuellement {waitingQueue.length} personnes dans la file d'attente</p>
+      }
+
     </div>
   )
+
+
 }
