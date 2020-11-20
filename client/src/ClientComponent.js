@@ -7,23 +7,34 @@ const ENDPOINT = "http://localhost:5000";
 const ClientComponent = () => {
     const [response, setResponse] = useState([]);
 
-  function dateDiff(date1, date2){
-      let diff =  {}               
+    
+
+  function dateDiff(dateAskingTalk){
+    let date2 = new Date();
+      let diff =  []               
       //let date1 = interval;
       // Initialisation du retour
-      let dateTime = date1 - date2 ;
+      let dateTime = date2 - dateAskingTalk ;
       dateTime = Math.floor(dateTime/1000);             // Nombre de secondes entre les 2 dates
       diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
    
       dateTime = Math.floor((dateTime-diff.sec)/60);    // Nombre de minutes (partie entière)
       diff.min = dateTime % 60;                    // Extraction du nombre de minutes
    
-      //dateTime = Math.floor((dateTime-diff.min)/60);    // Nombre d'heures (entières)
-      //diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
-       
+      dateTime = Math.floor((dateTime-diff.min)/60);    // Nombre d'heures (entières)
+      diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
+      
+      //let diffToString = diff.forEach((el) => {
+        
+      //})
+
       return diff;
   }
-   
+
+
+  // let interval = setInterval(() => {
+  //   dateDiff();
+  // }, 1000);
 
 //liste des eleves
     // useEffect(() => {
@@ -59,24 +70,35 @@ const ClientComponent = () => {
               })
               console.log("LISTE ::: ", liste);
               setResponse(liste);
-            }
+            } 
           });
+
 
         return () => socket.disconnect();  
       }, []);
 
-    return ( 
+    return (
     <div>
         <header className="App-header">
         <ul>
         {response.map((user) => (
+          
           // <li key={user.id}>{user.user} <br />{user.interventionType} <br />{user.askingDate} {dateDiff(Date.now, user.askingDate)} <br />  </li>
-          <li key={user.id}>{user.user} <br />{user.interventionType} <br />{user.askingDate}  <br />  </li>
-
+          <li key={user.id}>{user.user}<br />{user.interventionType}<br /> 
+            DATE : {setInterval(() => {
+                dateDiff(new Date(user.askingDate))
+                }, 1000) 
+            }
+             {/* {dateDiff((user.askingDate))}  */}
+             {console.log(dateDiff(new Date(user.askingDate)))} 
+             
+             
+          </li>
+          
         ))}
         
         </ul>  
-      </header>
+      </header> 
     </div>
     );
 

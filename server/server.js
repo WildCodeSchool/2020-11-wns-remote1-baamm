@@ -58,11 +58,11 @@ io.on("connection", (socket) => {
 
 const getApiAndEmit = socket => {
   const response = listAskTalking()//data()
-  let dateAskingTalk = response[0].askingDate;
+  let dateAskingTalk = response[1].askingDate;
   //let dateTime = new Date() - date1;
 
   function dateDiff(date1, date2){
-    let diff = {}                 
+    let diff = []                
     //let date1 = interval;
     // Initialisation du retour
     let dateTime = Date.now() - dateAskingTalk ;
