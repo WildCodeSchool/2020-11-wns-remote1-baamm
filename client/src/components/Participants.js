@@ -1,25 +1,32 @@
 import React from 'react'
+import './WaitingQueue.style.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function Participants(props) {
 
   const enDur = [
-    { lastname: "Rietsch", firstname: "Virgile", role: "Student"  },
+    { lastname: "Rietsch", firstname: "Virgile", role: "Student" },
     { lastname: "Olivier", firstname: "Lauren", role: "Student" },
-    { lastname: "Bastard", firstname: "Mayana", role: "Student"},
-    { lastname: "Culdaut", firstname: "Thomas", role: "Teacher"},
-    { lastname: "Vivier", firstname: "Stéphane", role: "Student"}
+    { lastname: "Bastard", firstname: "Mayana", role: "Student" },
+    { lastname: "Culdaut", firstname: "Thomas", role: "Teacher" },
+    { lastname: "Vivier", firstname: "Stéphane", role: "Student" }
   ]
   return (
-    <div className="toolsContainer">
-      <ul>
+    <div className="">
+      <ol className="waitingQueueList">
         {enDur.map((participant) =>
           <li key={participant.firstname}>
-            <img src="" alt="" />
-            <h3>{participant.firstname} {participant.lastname} </h3>
-            <p>{participant.role}</p>
+            <div className="waitingContainer">
+              <FontAwesomeIcon icon={faUser} className="waitIcon" />
+              <div>
+                <h3>{participant.firstname} {participant.lastname} </h3>
+                <p>{participant.role}</p>
+              </div>
+            </div>
           </li>
         )}
-      </ul>
+      </ol>
     </div>
   )
 }

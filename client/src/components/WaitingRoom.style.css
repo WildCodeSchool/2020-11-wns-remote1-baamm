@@ -1,0 +1,25 @@
+.waitingQueueContainer {
+  flex: 1;
+  width: 100%;
+  min-height: 100px;
+  overflow: auto;
+}
+
+.waitingQueueList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.waitingContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgb(212, 195, 170);
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.waitIcon {
+  font-size: 50px;
+  margin-right: 40px;
+  margin-left: 40px;
+}

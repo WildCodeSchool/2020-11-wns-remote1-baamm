@@ -21,7 +21,6 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn" /*style={showToolsContain ? { flex: 3 } : { flex: 9 }}*/>
-        <AskTalkingButton />
       </div>
       <div className="rightColumn" >
         {/*<button onClick={() => setShowToolsContain(!showToolsContain)}>Put</button>*/}
