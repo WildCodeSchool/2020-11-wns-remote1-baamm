@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from "socket.io-client";
+import './WaitingQueue.style.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHandPointer, faHandRock } from '@fortawesome/free-solid-svg-icons'
 import ClientComponent from "../ClientComponent";
 import AskTalkingButton from './AskTalkingButton';
 
@@ -8,6 +11,8 @@ const ENDPOINT = "http://localhost:5000";
 const socket = socketIOClient(ENDPOINT, {
   transports: ['websocket']
 });
+
+const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 
 
 ////////////////////////////////////////////////////////////////////
@@ -80,9 +85,9 @@ export default function WaitingQueue(props) {
   const sendAskTalking = (e) => {
     // seul les élèves ont une raison de demander la parole 
     // TODO : retirer ce if et n'afficher le bouton que si l'user est un élève
-    if (thisUser.role !== 'student') {
-      return alert("C'est aux élèves de demander la parole");
-    }
+    // if (thisUser.role !== 'student') {
+    //   return alert("C'est aux élèves de demander la parole");
+    // }
 
     let choosenInterventionType;
     let isQuestion = window.confirm(`Cliquez sur "ok" pour une question, "annuler" pour une information`);
@@ -111,19 +116,31 @@ export default function WaitingQueue(props) {
   }
 
   return (
-    <div>
-      { askingTalk &&
-        <button onClick={(e) => { cancelAskTalking(e) }} className="cancelAskTalking">Don't need to blabla anymore</button>
+    <div className="waiting-queue">
+      <h2>{userRole}</h2>
+      { userRole === 'student' && askingTalk === null ?
+        <button onClick={(e) => { sendAskTalking(e) }} className="talking-button ask-talking" title="Demander une intervention"><FontAwesomeIcon icon={faHandPointer} /></button> :
+        userRole === 'student' &&
+        <button onClick={(e) => { cancelAskTalking(e) }} className="talking-button cancel-ask-talking" title={askingTalk.interventionType === 'question' ?
+          "Annuler la question" : "Annuler l'information"}><FontAwesomeIcon icon={faHandRock} /></button>
+      }
+      {/* { askingTalk &&
+        <button onClick={(e) => { cancelAskTalking(e) }} className="talking-button cancel-ask-talking"><FontAwesomeIcon icon={faHandRock} /></button>
       }
 
       { askingTalk === null &&
-        <button onClick={(e) => { sendAskTalking(e) }} className="askTalking">I want to blabla</button>
+        <button onClick={(e) => { sendAskTalking(e) }} className="talking-button ask-talking"><FontAwesomeIcon icon={faHandPointer} /></button>
+      } */}
+      { askingTalk !== null || userRole === 'teacher' ?
+        <ul>
+          {waitingQueue.map((askTalking) => (
+            <li key={askTalking.id}>{askTalking.user.alias}, {askTalking.interventionType}</li>
+          ))}
+        </ul>
+        :
+        <p>Il y a actuellement {waitingQueue.length} personnes dans la file d'attente</p>
       }
-      <ul>
-        {waitingQueue.map((askTalking) => (
-          <li key={askTalking.id}>{askTalking.user.alias}, {askTalking.interventionType}</li>
-        ))}
-      </ul>
+
     </div>
   )
 

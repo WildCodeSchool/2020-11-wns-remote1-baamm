@@ -20,9 +20,7 @@ const io = socketIo(server);
 let interval;
 
 let askingTalkArray = data();
-/////////////////////////////////////
-////////// SEBASTIEN ////////////////
-////////////////////////////////////
+
 let clients = [];
 
 io.on("connection", (socket) => {

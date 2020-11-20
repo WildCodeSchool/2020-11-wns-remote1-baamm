@@ -1,0 +1,24 @@
+.waiting-queue {
+  width: 100%;
+}
+.talking-button {
+  width: 100%;
+  margin: auto;
+  background-color: blue; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.ask-talking {
+  background-color: green;
+}
+
+.cancel-ask-talking {
+  background-color: red;
+}
