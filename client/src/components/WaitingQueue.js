@@ -17,10 +17,7 @@ const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 
 
 export default function WaitingQueue(props) {
-
-  const [waitingQueue, setWaitingQueue] = useState([]);
-
-
+  const [response, setResponse] = useState([]);
   // correspond à l'objet askingTalk qui sera la demande de prise de parole (avec l'utilisateur, le type d'intervention et la date de demande)
   const [askingTalk, setAskingTalk] = useState(null);
   // pour stocker l'id d'un askingTalk à supprimer
@@ -36,45 +33,77 @@ export default function WaitingQueue(props) {
     askTalking: askingTalk
   }
 
-  useEffect(() => {
+  function dateDiff(dateAskingTalk) {
+    let date2 = new Date();
+    let diff = []
+    //let date1 = interval;
+    // Initialisation du retour
+    let dateTime = date2 - dateAskingTalk;
+    dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
+    diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
 
+    dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
+    diff.min = dateTime % 60;                    // Extraction du nombre de minutes
+
+    dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
+    diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
+
+    //let diffToString = diff.forEach((el) => {
+
+    //})
+
+    return diff;
+  }
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT, {
+      transports: ['websocket']
+    });
+    socket.on("FromAPI", listAskTalking => {
+      if (listAskTalking) {
+        const liste = [];
+        listAskTalking.forEach(asktalking => {
+          liste.push(asktalking)
+        })
+        setResponse(liste);
+      }
+    });
+
+    return () => socket.disconnect();
+  }, []);
+
+  useEffect(() => {
     socket.on('FromAPI', data => {
       if (data) {
         const waitingQueueFromServer = [];
         data.map((el) => {
-          console.log("ELEMENT :::: ", el);
           waitingQueueFromServer.push(el);
         });
-        setWaitingQueue(waitingQueueFromServer);
+        setResponse(waitingQueueFromServer);
       }
     });
     // A chaque fois qu'on reçoit un asktalking depuis le serveur
     socket.on('askingtalk from server', askingTalkArray => {
-      console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ", askingTalkArray);
-      setWaitingQueue(askingTalkArray);
+      // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ", askingTalkArray);
+      setResponse(askingTalkArray);
     });
     // A chaque fois qu'on supprime un asktalking depuis le serveur
     socket.on('askingtalk deleted', askingTalkArray => {
-      console.log("Suppression d'un askingTalk depuis le serveur - new asking talk array ::: ", askingTalkArray);
-      setWaitingQueue(askingTalkArray);
+      // console.log("Suppression d'un askingTalk depuis le serveur - new asking talk array ::: ", askingTalkArray);
+      setResponse(askingTalkArray);
     });
   }, []);
 
   // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking et cancelAskTalking appelées par le bouton
   useEffect(() => {
     if (askingTalk) {
-      console.log("ASKING TALK HERE ::: ", askingTalk);
+      // console.log("ASKING TALK HERE ::: ", askingTalk);
       socket.emit('askingtalk from client', askingTalk);
     } else if (askingTalkId) {
-      console.log("ASKTALKING TO CANCEL ::: ", askingTalkId);
+      // console.log("ASKTALKING TO CANCEL ::: ", askingTalkId);
       socket.emit('cancel askingtalk', askingTalkId);
     }
-
   }, [askingTalk]);
-
-  // useEffect(() => {
-
-  // }, [waitingQueue])
 
 
   // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
@@ -103,28 +132,27 @@ export default function WaitingQueue(props) {
       setAskingTalkId(askingTalk.id);
       setAskingTalk(null);
     }
-
   }
 
   return (
     <div className="waiting-queue">
       <h2>{userRole}</h2>
       { userRole === 'student' && askingTalk === null ?
-      <div className="topContainerQueueOn">
-        <button onClick={(e) => { sendAskTalking(e) }}
-          className="askTalking"
-          title="Demander une intervention"
-        >
-          Join the queue
+        <div className="topContainerQueueOn">
+          <button onClick={(e) => { sendAskTalking(e) }}
+            className="askTalking"
+            title="Demander une intervention"
+          >
+            Join the queue
         </button>
-      </div>
-      :
+        </div>
+        :
         userRole === 'student' &&
         <div className="topContainerQueueOff">
           <button onClick={(e) => { cancelAskTalking(e) }}
             className="askTalking"
             title={askingTalk.interventionType === 'question' ?
-            "Annuler la question" : "Annuler l'information"}
+              "Annuler la question" : "Annuler l'information"}
           >
             Leave the queue
           </button>
@@ -132,18 +160,23 @@ export default function WaitingQueue(props) {
       }
       { askingTalk !== null || userRole === 'teacher' ?
         <ol className="waitingQueueList">
-          {waitingQueue.map((askTalking) => (
-            <div className="waitingContainer">
-            <FontAwesomeIcon icon={faUser} className="waitIcon" />
-            <div>
-              <p>{askTalking.user.alias}</p>
-              <p>{askTalking.interventionType}</p>
+          {response.map((askTalking) => (
+            <div className="waitingContainer" key={askTalking.id}>
+              <FontAwesomeIcon icon={faUser} className="waitIcon" />
+              <div>
+                <p>{askTalking.user.alias}</p>
+                <p>{askTalking.interventionType}</p>
+              <p>depuis : {setInterval(() => {
+                  dateDiff(new Date(askTalking.askingDate))
+                }, 1000)
+                }
+              </p>
+              </div>
             </div>
-          </div>
           ))}
         </ol>
         :
-        <p>Il y a actuellement {waitingQueue.length} personnes dans la file d'attente</p>
+        <p>Il y a actuellement {response.length} personnes dans la file d'attente</p>
       }
 
     </div>
