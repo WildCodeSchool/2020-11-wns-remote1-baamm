@@ -22,8 +22,6 @@ export default function WaitingQueue(props) {
   const [askingTalk, setAskingTalk] = useState(null);
   // pour stocker l'id d'un askingTalk à supprimer
   const [askingTalkId, setAskingTalkId] = useState(null);
-
-  const [diff, setDiff] = useState(0);
   // correspond à l'utilisateur connecté -- écrit en dur pour le moment
   const thisUser =
   {
@@ -36,32 +34,31 @@ export default function WaitingQueue(props) {
   }
 
   function dateDiff(dateAskingTalk) {
-    let diff = (new Date() - dateAskingTalk) / 100;
-    // let diff = []
-    // //let date1 = interval;
-    // // Initialisation du retour
-    // let dateTime = date2 - dateAskingTalk;
-    // dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
-    // diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
+    let date2 = new Date();
+    let diff = []
+    //let date1 = interval;
+    // Initialisation du retour
+    let dateTime = date2 - dateAskingTalk;
+    dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
+    diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
 
-    // dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
-    // diff.min = dateTime % 60;                    // Extraction du nombre de minutes
+    dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
+    diff.min = dateTime % 60;                    // Extraction du nombre de minutes
 
-    // dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
-    // diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
+    dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
+    diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
 
-    // //let diffToString = diff.forEach((el) => {
+    //let diffToString = diff.forEach((el) => {
 
     //})
 
-    setDiff(diff);
+    return diff;
   }
 
   useEffect(() => {
-
-  }, [diff])
-
-  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT, {
+      transports: ['websocket']
+    });
     socket.on("FromAPI", listAskTalking => {
       if (listAskTalking) {
         const liste = [];
@@ -169,11 +166,11 @@ export default function WaitingQueue(props) {
               <div>
                 <p>{askTalking.user.alias}</p>
                 <p>{askTalking.interventionType}</p>
-              <p>depuis : {setInterval(() => {
-                  dateDiff(askTalking.askingDate)
+                <p>depuis : {setInterval(() => {
+                  dateDiff(new Date(askTalking.askingDate))
                 }, 1000)
                 }
-              </p>
+                </p>
               </div>
             </div>
           ))}
