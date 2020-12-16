@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
+import { Message } from '../types'
+
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 const SOCKET_SERVER_URL = "http://localhost:5000";
 
-const useChat = (roomId) => {
-  const [messages, setMessages] = useState([]); // Sent and received messages
-  const socketRef = useRef();
+
+
+const useChat = (roomId: string) => {
+  const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
+  const socketRef: MutableRefObject<SocketIOClient.Socket | undefined> = useRef();
 
   useEffect(() => {
     
@@ -17,28 +21,33 @@ const useChat = (roomId) => {
     });
     
     // Listens for incoming messages
-    socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
+    socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message: Message) => {
+      const socketRefCurrentId = (socketRef.current !== undefined) ? socketRef.current.id : null;
       const incomingMessage = {
         ...message,
-        ownedByCurrentUser: message.senderId === socketRef.current.id,
+        ownedByCurrentUser: message.senderId === socketRefCurrentId,
       };
-      setMessages((messages) => [...messages, incomingMessage]);
+      setMessages((messages: Message[]) => [...messages, incomingMessage]);
     });
     
     // Destroys the socket reference
     // when the connection is closed
     return () => {
-      socketRef.current.disconnect();
+      if (socketRef.current !== undefined) {
+        socketRef.current.disconnect();
+      }
     };
   }, [roomId]);
 
   // Sends a message to the server that
   // forwards it to all users in the same room
-  const sendMessage = (messageBody) => {
-    socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-      body: messageBody,
-      senderId: socketRef.current.id,
-    });
+  const sendMessage = (messageBody: string) => {
+    if (socketRef.current !== undefined) {
+      socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
+        body: messageBody,
+        senderId: socketRef.current.id,
+      });
+    }
   };
 
   return { messages, sendMessage };

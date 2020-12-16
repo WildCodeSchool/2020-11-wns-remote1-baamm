@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import socketIOClient from "socket.io-client";
+import { AskingTalk, User } from '../types'
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -7,23 +8,15 @@ const socket = socketIOClient(ENDPOINT, {
     transports: ['websocket']
 });
 
-type AskingTalk = {
-    id: number,
-    user: object,
-    interventionType: string,
-    askingDate: Date
-};
 
 export default function AskTalkingButton() {
-
-    
 
     // correspond à l'objet askingTalk qui sera la demande de prise de parole (avec l'utilisateur, le type d'intervention et la date de demande)
     const [askingTalk, setAskingTalk] = React.useState<AskingTalk | null>(null);
     // pour stocker l'id d'un askingTalk à supprimer
     const [askingTalkId, setAskingTalkId] = React.useState<number |null>(null);
     // correspond à l'utilisateur connecté -- écrit en dur pour le moment
-    const thisUser =
+    const thisUser: User =
     {
         id: Math.floor(Math.random() * 100) + 1,
         alias: 'Youpi',
@@ -54,6 +47,7 @@ export default function AskTalkingButton() {
             socket.emit('cancel askingtalk', askingTalkId);
         }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [askingTalk]);
 
 
@@ -85,24 +79,20 @@ export default function AskTalkingButton() {
         let sureToCancel = window.confirm(`Etes-vous sûr(e) de vouloir annuler votre demande d'intervention ?
         Vous perdrez votre place dans la file d'attente...`);
         if (sureToCancel) {
-            setAskingTalkId(askingTalk.id);
-            setAskingTalk({
-                id: 0,
-                user: {},
-                interventionType: '',
-                askingDate: new Date()
-            });
+            if (askingTalk !== null) {
+                setAskingTalkId(askingTalk.id);
+                setAskingTalk(null);
+            }
         }
- 
     }
 
     return (
         <div>
-            { askingTalk.id !== 0 &&
+            { askingTalk &&
                 <button onClick={() => { cancelAskTalking() }} className="cancelAskTalking">Don't need to blabla anymore</button>
             }
 
-            { askingTalk.id === 0 &&
+            { askingTalk === null &&
                 <button onClick={() => { sendAskTalking() }} className="askTalking">I want to blabla</button>
             }
         </div>
