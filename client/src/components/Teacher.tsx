@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Link,
 } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icon
 import Participants from './Participants';
 import WaitingQueue from './WaitingQueue';
 import ChatRoom from './ChatRoom';
-import AskTalkingButton from './AskTalkingButton';
 import './Teacher.style.css';
 
 function Teacher() {
@@ -17,9 +16,6 @@ function Teacher() {
     <div className="mainContainer">
       <div className="leftColumn" />
       <div className="rightColumn">
-        {/* <button onClick={() => setShowToolsContain(!showToolsContain)}>Put</button> */}
-        {/* <div className={showToolsContain ? "toolsContainerOpen" : "toolsContainerClose"} /*style={showToolsContain ? { flex: 3 } : { flex: 1 }}>
-        </div> */}
 
         <Router>
           <div className="navToolsBar">
