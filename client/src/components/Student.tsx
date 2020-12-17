@@ -1,5 +1,6 @@
+import React from 'react';
 
-function Student(params) {
+function Student() {
    return <p> Hello from Student </p>
 }
 

@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { AskingTalk } from '../types'
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -16,12 +17,12 @@ const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 ////////////////////////////////////////////////////////////////////
 
 
-export default function WaitingQueue(props) {
-  const [response, setResponse] = useState([]);
+export default function WaitingQueue() {
+  const [response, setResponse] = useState<AskingTalk[]>([]);
   // correspond à l'objet askingTalk qui sera la demande de prise de parole (avec l'utilisateur, le type d'intervention et la date de demande)
-  const [askingTalk, setAskingTalk] = useState(null);
+  const [askingTalk, setAskingTalk] = useState<AskingTalk | null>(null);
   // pour stocker l'id d'un askingTalk à supprimer
-  const [askingTalkId, setAskingTalkId] = useState(null);
+  const [askingTalkId, setAskingTalkId] = useState<number | null>(null);
   // correspond à l'utilisateur connecté -- écrit en dur pour le moment
   const thisUser =
   {
@@ -33,35 +34,35 @@ export default function WaitingQueue(props) {
     askTalking: askingTalk
   }
 
-  function dateDiff(dateAskingTalk) {
-    let date2 = new Date();
-    let diff = []
+  function dateDiff(dateAskingTalk: Date) {
+    // let date2 = new Date();
+    // let diff = []
     //let date1 = interval;
     // Initialisation du retour
-    let dateTime = date2 - dateAskingTalk;
-    dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
-    diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
+    // let dateTime = date2 - dateAskingTalk;
+    // dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
+    // diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
 
-    dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
-    diff.min = dateTime % 60;                    // Extraction du nombre de minutes
+    // dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
+    // diff.min = dateTime % 60;                    // Extraction du nombre de minutes
 
-    dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
-    diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
+    // dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
+    // diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
 
     //let diffToString = diff.forEach((el) => {
 
     //})
 
-    return diff;
+    // return diff;
   }
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT, {
       transports: ['websocket']
     });
-    socket.on("FromAPI", listAskTalking => {
+    socket.on("FromAPI", (listAskTalking: AskingTalk[]) => {
       if (listAskTalking) {
-        const liste = [];
+        const liste: AskingTalk[] = [];
         listAskTalking.forEach(asktalking => {
           liste.push(asktalking)
         })
@@ -69,26 +70,26 @@ export default function WaitingQueue(props) {
       }
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.disconnect();
+    }
   }, []);
 
   useEffect(() => {
-    socket.on('FromAPI', data => {
+    socket.on('FromAPI', (data: AskingTalk[]) => {
       if (data) {
-        const waitingQueueFromServer = [];
-        data.map((el) => {
-          waitingQueueFromServer.push(el);
-        });
+        const waitingQueueFromServer: AskingTalk[] = [];
+        data.map((el) => waitingQueueFromServer.push(el));
         setResponse(waitingQueueFromServer);
       }
     });
     // A chaque fois qu'on reçoit un asktalking depuis le serveur
-    socket.on('askingtalk from server', askingTalkArray => {
+    socket.on('askingtalk from server', (askingTalkArray: AskingTalk[]) => {
       // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ", askingTalkArray);
       setResponse(askingTalkArray);
     });
     // A chaque fois qu'on supprime un asktalking depuis le serveur
-    socket.on('askingtalk deleted', askingTalkArray => {
+    socket.on('askingtalk deleted', (askingTalkArray: AskingTalk[]) => {
       // console.log("Suppression d'un askingTalk depuis le serveur - new asking talk array ::: ", askingTalkArray);
       setResponse(askingTalkArray);
     });
@@ -107,7 +108,7 @@ export default function WaitingQueue(props) {
 
 
   // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
-  const sendAskTalking = (e) => {
+  const sendAskTalking = () => {
 
     let choosenInterventionType;
     let isQuestion = window.confirm(`Cliquez sur "ok" pour une question, "annuler" pour une information`);
@@ -125,11 +126,13 @@ export default function WaitingQueue(props) {
   }
 
   // fonction appelée par le clic sur le bouton quand on a déjà demandé la parole
-  const cancelAskTalking = (e) => {
+  const cancelAskTalking = () => {
     let sureToCancel = window.confirm(`Etes-vous sûr(e) de vouloir annuler votre demande d'intervention ?
       Vous perdrez votre place dans la file d'attente...`);
     if (sureToCancel) {
-      setAskingTalkId(askingTalk.id);
+      if (askingTalk !== null) {
+        setAskingTalkId(askingTalk.id);
+      }
       setAskingTalk(null);
     }
   }
@@ -139,7 +142,7 @@ export default function WaitingQueue(props) {
       <h2>{userRole}</h2>
       { userRole === 'student' && askingTalk === null ?
         <div className="topContainerQueueOn">
-          <button onClick={(e) => { sendAskTalking(e) }}
+          <button onClick={() => { sendAskTalking() }}
             className="askTalking"
             title="Demander une intervention"
           >
@@ -149,10 +152,13 @@ export default function WaitingQueue(props) {
         :
         userRole === 'student' &&
         <div className="topContainerQueueOff">
-          <button onClick={(e) => { cancelAskTalking(e) }}
+          <button onClick={() => { cancelAskTalking() }}
             className="askTalking"
-            title={askingTalk.interventionType === 'question' ?
-              "Annuler la question" : "Annuler l'information"}
+            title={askingTalk ? 
+              askingTalk.interventionType === 'question' ?
+                "Annuler la question" : 
+                "Annuler l'information" : 
+              ''}
           >
             Leave the queue
           </button>
@@ -160,7 +166,7 @@ export default function WaitingQueue(props) {
       }
       { askingTalk !== null || userRole === 'teacher' ?
         <ol className="waitingQueueList">
-          {response.map((askTalking) => (
+          {response.map((askTalking: AskingTalk) => (
             <div className="waitingContainer" key={askTalking.id}>
               <FontAwesomeIcon icon={faUser} className="waitIcon" />
               <div>

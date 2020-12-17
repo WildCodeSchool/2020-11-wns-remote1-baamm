@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import useChat from './useChat';
 import './ChatRoom.style.css';
+import { Message } from '../types'
 
-
-export default function ChatRoom(props) {
-  const { roomId } = "Test-Room"
-  const { messages, sendMessage } = useChat(roomId)
+export default function ChatRoom() {
+  const roomId = "Test-Room";
+  const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = useState("");
 
-  const handleNewMessageChange = (e) => {
-    setNewMessage(e.target.value);
+  const handleNewMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setNewMessage(e.currentTarget.value);
   };
 
   const handleSendMessage = () => {
@@ -21,7 +21,7 @@ export default function ChatRoom(props) {
     <div className="toolsContainer">
       <div className="messagesContainer">
         <ol className="messagesList">
-          {messages.map((message, i) => (
+          {messages.map((message: Message, i: number) => (
             <li
               key={i}
               className={`message-item ${message.ownedByCurrentUser ? "my-message" : "receive-message"
@@ -35,7 +35,7 @@ export default function ChatRoom(props) {
       <div className="inputBlock">
         <textarea
           value={newMessage}
-          onChange={handleNewMessageChange}
+          onChange={(e) => handleNewMessageChange}
           placeholder="Write message ..."
           className="inputMessage"
         />

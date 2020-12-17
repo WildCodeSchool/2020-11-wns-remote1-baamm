@@ -3,7 +3,7 @@ import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-export default function Participants(props) {
+export default function Participants() {
 
   const enDur = [
     { lastname: "Rietsch", firstname: "Virgile", role: "Student" },
