@@ -23,6 +23,7 @@ export default function ChatRoom() {
         <ol className="messagesList">
           {messages.map((message: Message, i: number) => (
             <li
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               className={`message-item ${message.ownedByCurrentUser ? 'my-message' : 'receive-message'}`}
             >
@@ -34,11 +35,11 @@ export default function ChatRoom() {
       <div className="inputBlock">
         <textarea
           value={newMessage}
-          onChange={(e) => handleNewMessageChange}
+          onChange={() => handleNewMessageChange}
           placeholder="Write message ..."
           className="inputMessage"
         />
-        <button onClick={handleSendMessage} className="sendMessage">
+        <button type="button" onClick={handleSendMessage} className="sendMessage">
           Send
         </button>
       </div>

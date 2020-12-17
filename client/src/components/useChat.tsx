@@ -7,7 +7,7 @@ import { Message } from '../types';
 const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'; // Name of the event
 const SOCKET_SERVER_URL = 'http://localhost:5000';
 
-const useChat = (roomId: string): void => {
+const useChat = (roomId: string): any => {
   const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
   const socketRef: MutableRefObject<SocketIOClient.Socket | undefined> = useRef();
 
@@ -25,7 +25,7 @@ const useChat = (roomId: string): void => {
         ...message,
         ownedByCurrentUser: message.senderId === socketRefCurrentId,
       };
-      setMessages((messages: Message[]) => [...messages, incomingMessage]);
+      setMessages(() => [...messages, incomingMessage]);
     });
 
     // Destroys the socket reference

@@ -18,7 +18,8 @@ const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 
 export default function WaitingQueue() {
   const [response, setResponse] = useState<AskingTalk[]>([]);
-  // correspond à l'objet askingTalk qui sera la demande de prise de parole (avec l'utilisateur, le type d'intervention et la date de demande)
+  // correspond à l'objet askingTalk qui sera la demande de prise de parole
+  // (avec l'utilisateur, le type d'intervention et la date de demande)
   const [askingTalk, setAskingTalk] = useState<AskingTalk | null>(null);
   // pour stocker l'id d'un askingTalk à supprimer
   const [askingTalkId, setAskingTalkId] = useState<number | null>(null);
@@ -32,27 +33,24 @@ export default function WaitingQueue() {
     askTalking: askingTalk,
   };
 
-  function dateDiff(dateAskingTalk: Date) {
-    // let date2 = new Date();
-    // let diff = []
-    // let date1 = interval;
-    // Initialisation du retour
-    // let dateTime = date2 - dateAskingTalk;
-    // dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
-    // diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
-    // dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
-    // diff.min = dateTime % 60;                    // Extraction du nombre de minutes
-    // dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
-    // diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
-    // let diffToString = diff.forEach((el) => {
-    // })
-    // return diff;
-  }
+  // function dateDiff(/* dateAskingTalk: Date */) {
+  // let date2 = new Date();
+  // let diff = []
+  // let date1 = interval;
+  // Initialisation du retour
+  // let dateTime = date2 - dateAskingTalk;
+  // dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
+  // diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
+  // dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
+  // diff.min = dateTime % 60;                    // Extraction du nombre de minutes
+  // dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
+  // diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
+  // let diffToString = diff.forEach((el) => {
+  // })
+  // return diff;
+  // }
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
-      transports: ['websocket'],
-    });
     socket.on('FromAPI', (listAskTalking: AskingTalk[]) => {
       if (listAskTalking) {
         const liste: AskingTalk[] = [];
@@ -78,17 +76,20 @@ export default function WaitingQueue() {
     });
     // A chaque fois qu'on reçoit un asktalking depuis le serveur
     socket.on('askingtalk from server', (askingTalkArray: AskingTalk[]) => {
-      // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ", askingTalkArray);
+      // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ",
+      // askingTalkArray);
       setResponse(askingTalkArray);
     });
     // A chaque fois qu'on supprime un asktalking depuis le serveur
     socket.on('askingtalk deleted', (askingTalkArray: AskingTalk[]) => {
-      // console.log("Suppression d'un askingTalk depuis le serveur - new asking talk array ::: ", askingTalkArray);
+      // console.log(" Suppression d'un askingTalk depuis le serveur -
+      // new asking talk array ::: ", askingTalkArray);
       setResponse(askingTalkArray);
     });
   }, []);
 
-  // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking et cancelAskTalking appelées par le bouton
+  // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking
+  // et cancelAskTalking appelées par le bouton
   useEffect(() => {
     if (askingTalk) {
       // console.log("ASKING TALK HERE ::: ", askingTalk);
@@ -101,9 +102,8 @@ export default function WaitingQueue() {
 
   // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
   const sendAskTalking = () => {
-    let choosenInterventionType;
     const isQuestion = window.confirm('Cliquez sur "ok" pour une question, "annuler" pour une information');
-    choosenInterventionType = isQuestion ? 'question' : 'information';
+    const choosenInterventionType = isQuestion ? 'question' : 'information';
 
     // on "crée" notre demande de parole (plus tard : gérer le type d'intervention)
     setAskingTalk({
@@ -132,6 +132,7 @@ export default function WaitingQueue() {
       {userRole === 'student' && askingTalk === null ? (
         <div className="topContainerQueueOn">
           <button
+            type="button"
             onClick={() => {
               sendAskTalking();
             }}
@@ -145,11 +146,13 @@ export default function WaitingQueue() {
         userRole === 'student' && (
           <div className="topContainerQueueOff">
             <button
+              type="button"
               onClick={() => {
                 cancelAskTalking();
               }}
               className="askTalking"
               title={
+                // eslint-disable-next-line no-nested-ternary
                 askingTalk
                   ? askingTalk.interventionType === 'question'
                     ? 'Annuler la question'
@@ -170,13 +173,13 @@ export default function WaitingQueue() {
               <div>
                 <p>{askTalking.user.alias}</p>
                 <p>{askTalking.interventionType}</p>
-                <p>
+                {/* <p>
                   depuis :
                   {' '}
                   {setInterval(() => {
-                    dateDiff(new Date(askTalking.askingDate));
+                   dateDiff(new Date(askTalking.askingDate));
                   }, 1000)}
-                </p>
+                </p> */}
               </div>
             </div>
           ))}
@@ -186,7 +189,7 @@ export default function WaitingQueue() {
           Il y a actuellement
           {response.length}
           {' '}
-          personnes dans la file d'attente
+          personnes dans la file d&apos;attente
         </p>
       )}
     </div>

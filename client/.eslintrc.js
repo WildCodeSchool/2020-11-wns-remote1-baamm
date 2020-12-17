@@ -18,7 +18,6 @@ module.exports = {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
   },
-
   extends: [
     'airbnb-typescript',
     // 'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
@@ -30,6 +29,6 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     // "indent": ["error", 2],
-    "comma-dangle": [1, "never"],
+    // "comma-dangle": [1, "never"],
   },
 };
