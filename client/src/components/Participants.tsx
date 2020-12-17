@@ -1,32 +1,36 @@
-import React from 'react'
+import React from 'react';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function Participants() {
-
   const enDur = [
-    { lastname: "Rietsch", firstname: "Virgile", role: "Student" },
-    { lastname: "Olivier", firstname: "Lauren", role: "Student" },
-    { lastname: "Bastard", firstname: "Mayana", role: "Student" },
-    { lastname: "Culdaut", firstname: "Thomas", role: "Teacher" },
-    { lastname: "Vivier", firstname: "Stéphane", role: "Student" }
-  ]
+    { lastname: 'Rietsch', firstname: 'Virgile', role: 'Student' },
+    { lastname: 'Olivier', firstname: 'Lauren', role: 'Student' },
+    { lastname: 'Bastard', firstname: 'Mayana', role: 'Student' },
+    { lastname: 'Culdaut', firstname: 'Thomas', role: 'Teacher' },
+    { lastname: 'Vivier', firstname: 'Stéphane', role: 'Student' },
+  ];
   return (
     <div className="">
       <ol className="waitingQueueList">
-        {enDur.map((participant) =>
+        {enDur.map((participant) => (
           <li key={participant.firstname}>
             <div className="waitingContainer">
               <FontAwesomeIcon icon={faUser} className="waitIcon" />
               <div>
-                <h3>{participant.firstname} {participant.lastname} </h3>
+                <h3>
+                  {participant.firstname}
+                  {' '}
+                  {participant.lastname}
+                  {' '}
+                </h3>
                 <p>{participant.role}</p>
               </div>
             </div>
           </li>
-        )}
+        ))}
       </ol>
     </div>
-  )
+  );
 }

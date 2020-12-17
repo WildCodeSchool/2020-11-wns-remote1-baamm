@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+  BrowserRouter as Router, Switch, Route, Link,
+} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import Participants from './Participants';
 import WaitingQueue from './WaitingQueue';
 import ChatRoom from './ChatRoom';
 import AskTalkingButton from './AskTalkingButton';
 import './Teacher.style.css';
 
-
 function Teacher() {
   // const [showToolsContain, setShowToolsContain] = useState(true)
 
-
   return (
     <div className="mainContainer">
-      <div className="leftColumn" /*style={showToolsContain ? { flex: 3 } : { flex: 9 }}*/>
-      </div>
-      <div className="rightColumn" >
-        {/*<button onClick={() => setShowToolsContain(!showToolsContain)}>Put</button>*/}
-        {/*<div className={showToolsContain ? "toolsContainerOpen" : "toolsContainerClose"} /*style={showToolsContain ? { flex: 3 } : { flex: 1 }}>
-        </div>*/}
+      <div className="leftColumn" />
+      <div className="rightColumn">
+        {/* <button onClick={() => setShowToolsContain(!showToolsContain)}>Put</button> */}
+        {/* <div className={showToolsContain ? "toolsContainerOpen" : "toolsContainerClose"} /*style={showToolsContain ? { flex: 3 } : { flex: 1 }}>
+        </div> */}
 
         <Router>
           <div className="navToolsBar">
@@ -39,7 +33,7 @@ function Teacher() {
               <FontAwesomeIcon icon={faUsers} />
             </Link>
           </div>
-          <div ></div>
+          <div />
           <Switch>
             <Route path="/waitingqueue">
               <WaitingQueue />
@@ -55,6 +49,6 @@ function Teacher() {
       </div>
     </div>
   );
-};
+}
 
 export default Teacher;

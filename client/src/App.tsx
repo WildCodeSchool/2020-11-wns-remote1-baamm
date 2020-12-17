@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 import './App.css';
 import Teacher from './components/Teacher';
@@ -19,17 +19,12 @@ import Teacher from './components/Teacher';
 // }
 
 function App() {
-
   // const [loadClient, setLoadClient] = useState(true);
 
-  return (
-    <Teacher />
-  );
+  return <Teacher />;
 }
 
-
 export default App;
-
 
 /* <Router>
       <div className="App">
@@ -55,4 +50,3 @@ export default App;
         </Route>
       </Switch>
     </Router> */
-

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import useChat from './useChat';
 import './ChatRoom.style.css';
-import { Message } from '../types'
+import { Message } from '../types';
 
 export default function ChatRoom() {
-  const roomId = "Test-Room";
+  const roomId = 'Test-Room';
   const { messages, sendMessage } = useChat(roomId);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
 
   const handleNewMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
     setNewMessage(e.currentTarget.value);
@@ -14,8 +14,8 @@ export default function ChatRoom() {
 
   const handleSendMessage = () => {
     sendMessage(newMessage);
-    setNewMessage("")
-  }
+    setNewMessage('');
+  };
 
   return (
     <div className="toolsContainer">
@@ -24,8 +24,7 @@ export default function ChatRoom() {
           {messages.map((message: Message, i: number) => (
             <li
               key={i}
-              className={`message-item ${message.ownedByCurrentUser ? "my-message" : "receive-message"
-                }`}
+              className={`message-item ${message.ownedByCurrentUser ? 'my-message' : 'receive-message'}`}
             >
               {message.body}
             </li>
@@ -39,14 +38,10 @@ export default function ChatRoom() {
           placeholder="Write message ..."
           className="inputMessage"
         />
-        <button
-          onClick={handleSendMessage}
-          className="sendMessage"
-        >
+        <button onClick={handleSendMessage} className="sendMessage">
           Send
         </button>
       </div>
-
     </div>
-  )
+  );
 }
