@@ -1,7 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['<rootDir>/web-client'],
+  modulePathIgnorePatterns: ['<rootDir>/client'],
   globals: {
     'ts-jest': {
       isolatedModules: true,
