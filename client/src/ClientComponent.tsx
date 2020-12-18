@@ -4,7 +4,11 @@ const ENDPOINT = "http://localhost:5000";
 
 
 const ClientComponent = () => {
+<<<<<<< Updated upstream:client/src/ClientComponent.tsx
   
+=======
+
+>>>>>>> Stashed changes:client/src/ClientComponent.js
   return (
     <div>
       <header className="App-header">
@@ -16,7 +20,6 @@ const ClientComponent = () => {
             
               {/* {dateDiff((user.askingDate))}  */}
               {console.log(dateDiff(new Date(user.askingDate)))}
-
 
             </li>
 
