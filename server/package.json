@@ -8,7 +8,7 @@
     "test": "jest",
     "build": "tsc",
     "lint": "eslint . & echo 'lint complete'",
-    "dev": "ts-node-dev --respawn --transpile-only ./built/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "prod": "tsc && node ./built/src/server.js",
     "debug": "tsc && node --inspect ./built/server.js"
   },
@@ -22,6 +22,7 @@
     "socket.io": "^3.0.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.9",
     "@types/es6-promise": "^3.3.0",
     "@types/express": "^4.17.9",
     "@types/node": "^14.14.14",
