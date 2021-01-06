@@ -1,51 +1,39 @@
 import express from 'express';
-import  http from 'http';
-import { Server, Socket } from 'socket.io';
-import { Handshake } from 'socket.io/dist/socket';
+// import http from 'http';
+
 import cors from 'cors';
 import index from './routes/index'; 
-// import { AskTalking} from './data/askTalking';
-import {createAskTalkings} from './data/askTalking';
+import { createAskTalkings } from './data/askTalking';
 
-
-// const moment = require('moment')
 import moment from 'moment';
-import { diffieHellman } from 'crypto';
-import { kill } from 'process';
+
+import CustomSocket from './CustomSocket'
 
 const PORT: number = 5000;
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
-
 
 const app = express();
 app.use(index);
 app.use(cors());
 
-const httpServer = new http.Server(app);
-
-const io = new Server(httpServer);
+const httpServer = require('http').Server(app);
+// const httpServer = new http.Server(app);
+const io = require('socket.io')(httpServer);
+// const io = new Server(httpServer);
 
 let interval: NodeJS.Timeout;
 
 let askingTalkArray = createAskTalkings();
-let clients: Socket[] = [];
+let clients: CustomSocket[];
 
-interface CustomHandshake extends Handshake{
-  query: {
-    roomId: string
-  }
-}
 
-class CustomSocket extends Socket {
-  readonly handshake!: CustomHandshake;
-}
 
 
 io.on("connection", (socket:CustomSocket) => {
 
   clients.push(socket);
   console.log("New client connected");
-  socket.emit("FromAPI")
+  io.emit("FromAPI")
 
   //interval
   if (interval) {
@@ -155,8 +143,6 @@ const getApiAndEmit = (socket:any) => {
     // Emitting a new message. Will be consumed by the client
 //   socket.emit("FromAPI", response);
 
-
-// Server.listen(PORT, () => {
 httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
