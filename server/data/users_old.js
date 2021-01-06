@@ -23,4 +23,5 @@ function createUsers() {
     return [anthony, aurelien, brian, mansour, mayana, thomas];
 }
 
-module.exports = createUsers;
+
+ module.exports = createUsers;

@@ -120,8 +120,6 @@ const getApiAndEmit = socket => {
   socket.emit("FromAPI", response);
 };
 
-
-
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
