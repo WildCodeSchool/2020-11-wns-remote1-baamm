@@ -1,4 +1,4 @@
-class UserClass 
+export class User
 {
     constructor(private id:number, private alias:string, private firstname:string, private lastname:string, private role:string, private askTalking: any ){
     
@@ -27,45 +27,35 @@ class UserClass
     
 }
 
-
-//function User(id: number, alias: string, lastname: string, firstName:string, role: string, askTalking: any) {
-//    this.id         = id,
-//    this.alias      = alias,
-//    this.lastname   = lastname,
-//    this.firstName  = firstName,
-//    this.role       = role,
-//    this.askTalking = askTalking
-//};
-
 const role = {
     STUDENT: 'student',
     TEACHER: 'teacher'
 }
 
- function createUsers() {
-    const anthony  = new UserClass(1, 'Anthony',  'Lucci',         'Anthony', role.STUDENT, new Date());
-    const aurelien = new UserClass(2, 'Aurélien', 'Landouer',      'Aurélien', role.STUDENT, new Date());
-    const brian    = new UserClass(3, 'Brian',    'Lagaude',       'Brian', role.STUDENT, new Date());
-    const mansour  = new UserClass(4, 'Mansour',  'Mahamat-Salle', 'Mansour', role.STUDENT, new Date());
-    const mayana   = new UserClass(5, 'Mayana',   'Bastard',       'Mayana', role.STUDENT, new Date());
-    const thomas   = new UserClass(6, 'Thomas',   'Culdaut',       'Thomas',  role.TEACHER, new Date());
+export  function createUsers() {
+    const anthony  = new User(1, 'Anthony',  'Lucci',         'Anthony', role.STUDENT, new Date());
+    const aurelien = new User(2, 'Aurélien', 'Landouer',      'Aurélien', role.STUDENT, new Date());
+    const brian    = new User(3, 'Brian',    'Lagaude',       'Brian', role.STUDENT, new Date());
+    const mansour  = new User(4, 'Mansour',  'Mahamat-Salle', 'Mansour', role.STUDENT, new Date());
+    const mayana   = new User(5, 'Mayana',   'Bastard',       'Mayana', role.STUDENT, new Date());
+    const thomas   = new User(6, 'Thomas',   'Culdaut',       'Thomas',  role.TEACHER, new Date());
 
     return [anthony, aurelien, brian, mansour, mayana, thomas];
 }
 
-// class UserBis {
-//     constructor(private id:number) {
-        
-//     }
-
-//     getId(){
-//         return this.id
-//     }
-
-// }
-
-
-//const lambda = new UserBis(8)
-//console.log(lambda.getId)
-
-module.exports = createUsers, UserClass;
+export const Users = [
+    {
+        id: 1,
+        name: 'Anthony',
+        lastName: 'Lucci',
+        role: 'Student',
+        date: new Date(),
+    },
+    {
+        id: 2,
+        name: 'Aurélien',
+        lastName: 'Landouer',
+        role: 'Student',
+        date: new Date(),
+    }
+]

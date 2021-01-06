@@ -2,22 +2,20 @@ import express from 'express';
 import  http from 'http';
 import { Server, Socket } from 'socket.io';
 import { Handshake } from 'socket.io/dist/socket';
-
 import cors from 'cors';
-
 import index from './routes/index'; 
-import data from './data/askTalking';
-import listAskTalking from './data/askTalking';
-import askingDate from './data/askTalking';
+// import { AskTalking} from './data/askTalking';
+import {createAskTalkings} from './data/askTalking';
 
 
 // const moment = require('moment')
 import moment from 'moment';
+import { diffieHellman } from 'crypto';
+import { kill } from 'process';
 
 const PORT: number = 5000;
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
 
-// const client = require("../client/src/App")
 
 const app = express();
 app.use(index);
@@ -29,7 +27,7 @@ const io = new Server(httpServer);
 
 let interval: NodeJS.Timeout;
 
-let askingTalkArray =  data();
+let askingTalkArray = createAskTalkings();
 let clients: Socket[] = [];
 
 interface CustomHandshake extends Handshake{
@@ -146,11 +144,12 @@ io.on("connection", (socket:CustomSocket) => {
 //sortir dans une fonction pour le test et séparer de socket
 //installer Jest et tester 
 const getApiAndEmit = (socket:any) => {
-  const response = listAskTalking();
+  const response = createAskTalkings();
+
   let dateAskingTalk = response[1].askingDate; //date de demande de l'utilisateur
   let now = moment();
 
-  now.diff(dateAskingTalk, 'seconds');
+  // now.diff(dateAskingTalk, 'seconds');
 
 }
     // Emitting a new message. Will be consumed by the client
