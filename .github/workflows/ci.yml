@@ -28,6 +28,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_REPO }}:latest
           directory: client
+          dockerfile: ./client/Dockerfile
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
