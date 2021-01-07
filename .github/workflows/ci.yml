@@ -28,7 +28,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_REPO }}:latest
           uses: docker/build-push-action@v2
-          context: ./client
           file: ./client/Dockerfile
       -
         name: Image digest
