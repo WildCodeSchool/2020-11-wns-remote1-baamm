@@ -27,7 +27,7 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_REPO }}:latest
-          directory: ./client
+          directory: client
           file: ./client/Dockerfile
       -
         name: Image digest
