@@ -23,4 +23,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
          name: buildclient
-         run: cd client && docker build -t mayana64/${{ secrets.DOCKERHUB_REPO }} . && docker push
+         run: cd client && docker build -t mayana64/${{ secrets.DOCKERHUB_REPO }} . && docker push mayana64/${{ secrets.DOCKERHUB_REPO }}
