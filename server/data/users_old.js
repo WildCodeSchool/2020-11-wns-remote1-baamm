@@ -17,7 +17,7 @@ function createUsers() {
     const aurelien = new User(2, 'Aurélien', 'Landouer',      'Aurélien', role.STUDENT, new Date());
     const brian    = new User(3, 'Brian',    'Lagaude',       'Brian', role.STUDENT, new Date());
     const mansour  = new User(4, 'Mansour',  'Mahamat-Salle', 'Mansour', role.STUDENT, new Date());
-    const mayana   = new User(5, 'Mayana',   'Bastard',       'Mayana', role.STUDENT, new Date());
+    const mayana   = new User(5, 'Maiana',   'Bastard',       'Mayana', role.STUDENT, new Date());
     const thomas   = new User(6, 'Thomas',   'Culdaut',       'Thomas',  role.TEACHER, new Date());
 
     return [anthony, aurelien, brian, mansour, mayana, thomas];
