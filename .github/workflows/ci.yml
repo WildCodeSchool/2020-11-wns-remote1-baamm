@@ -22,14 +22,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ secrets.DOCKERHUB_REPO }}:latest
-          directory: client
-          file: ./client/Dockerfile
-      -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+         name: buildclient
+         run: cd client && docker build -t mayana64/${{ secrets.DOCKERHUB_REPO }} . && docker push
