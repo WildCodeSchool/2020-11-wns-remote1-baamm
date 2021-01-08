@@ -2,12 +2,19 @@ name: ci
 
 on:
   push:
-    branches: dev
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
 
 jobs:
-  main:
+  build:
     runs-on: ubuntu-latest
-    steps:
+
+    strategy:
+      matrix:
+        node-version: [12.16.1]
+
+      steps:
       - uses: actions/checkout@v2
       - 
         name: Use Node.js ${{ matrix.node-version }}
