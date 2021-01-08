@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   modulePathIgnorePatterns: ['<rootDir>/client'],
   globals: {
     'ts-jest': {
