@@ -24,7 +24,7 @@ const io = require('socket.io')(httpServer);
 let interval: NodeJS.Timeout;
 
 let askingTalkArray = createAskTalkings();
-let clients: CustomSocket[];
+let clients: CustomSocket[] = [];
 
 
 
