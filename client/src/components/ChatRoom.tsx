@@ -8,10 +8,6 @@ export default function ChatRoom() {
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = useState('');
 
-  const handleNewMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setNewMessage(e.currentTarget.value);
-  };
-
   const handleSendMessage = () => {
     sendMessage(newMessage);
     setNewMessage('');
@@ -35,7 +31,7 @@ export default function ChatRoom() {
       <div className="inputBlock">
         <textarea
           value={newMessage}
-          onChange={() => handleNewMessageChange}
+          onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Write message ..."
           className="inputMessage"
         />

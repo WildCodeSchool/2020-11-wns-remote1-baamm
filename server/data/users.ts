@@ -1,14 +1,15 @@
+
 export const Users = [
     {
         id: 1,
-        alias: 'Anthony',
+        alias: 'Toto',
         name: 'Anthony',
         lastName: 'Lucci',
         role: 'Student',
     },
     {
         id: 2,
-        alias: 'Aurélien',
+        alias: 'Var_dump',
         name: 'Aurélien',
         lastName: 'Landouer',
         role: 'Student',
