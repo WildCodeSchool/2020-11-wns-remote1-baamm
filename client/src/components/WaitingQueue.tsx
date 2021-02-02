@@ -187,6 +187,7 @@ export default function WaitingQueue() {
       ) : (
         <p>
           Il y a actuellement
+          {' '}
           {response.length}
           {' '}
           personnes dans la file d&apos;attente
