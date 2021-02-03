@@ -1,7 +1,8 @@
 
 
 .mainContainer {
-    height: 100%;
+    flex-grow: 1;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,23 +29,3 @@
   height: 100%;
 }
 
-.navToolsBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: #eeecec;
-}
-
-.toolsContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    background-color: white;
-    align-items: center;
-}
-
-.linkTest {
-  padding: 20px 12%;
-  color: black;
-}

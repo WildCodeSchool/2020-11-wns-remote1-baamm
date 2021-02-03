@@ -4,24 +4,12 @@
 }
 
 .App {
-  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  background-color: goldenrod;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: yellowgreen;
 }
 
-.backgroundTeacher {
-  background-color: pink; 
+.menu {
+  background-color: blue;
 }
-
-.toolsContainerOpen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.toolsContainerClose {
-  display: none;
-};
