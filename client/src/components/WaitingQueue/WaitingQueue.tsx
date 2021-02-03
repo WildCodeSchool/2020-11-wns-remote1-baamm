@@ -32,10 +32,10 @@ export default function WaitingQueue() {
   };
 
   useEffect(() => {
-    socket.on('FromAPI', (listAskTalking: AskingTalk[]) => {
-      if (listAskTalking) {
+    socket.on('FromAPI', (askingTalkArray: AskingTalk[]) => {
+      if (askingTalkArray) {
         const liste: AskingTalk[] = [];
-        listAskTalking.forEach((asktalking) => {
+        askingTalkArray.forEach((asktalking) => {
           liste.push(asktalking);
         });
         setResponse(liste);
