@@ -4,9 +4,9 @@ import {
 } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
-import Participants from './Participants';
-import WaitingQueue from './WaitingQueue';
-import ChatRoom from './ChatRoom';
+import Participants from '../Participants/Participants';
+import WaitingQueue from '../WaitingQueue/WaitingQueue';
+import ChatRoom from '../ChatRoom/ChatRoom';
 import './Teacher.style.css';
 
 function Teacher() {

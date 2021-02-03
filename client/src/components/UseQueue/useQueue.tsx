@@ -2,7 +2,7 @@ import {
   MutableRefObject, useEffect, useRef, useState,
 } from 'react';
 import socketIOClient from 'socket.io-client';
-import { User } from '../types';
+import { User } from '../../types';
 
 const NEW_WAITING_STUDENT_EVENT = 'newWaitingStudent'; // Name of the event
 const SOCKET_SERVER_URL = 'http://localhost:5000';

@@ -3,6 +3,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
+// ! composant en dur avec la liste de participants à l'appel dans l'onglet de droite. A REVOIR
+
 export default function Participants() {
   const enDur = [
     { lastname: 'Rietsch', firstname: 'Virgile', role: 'Student' },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import useChat from './useChat';
+import useChat from '../UseChat/useChat';
 import './ChatRoom.style.css';
-import { Message } from '../types';
+import { Message } from '../../types';
 
 export default function ChatRoom() {
   const roomId = 'Test-Room';
