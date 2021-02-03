@@ -3,7 +3,7 @@ import express from 'express';
 
 import cors from 'cors';
 import index from './routes/index'; 
-import { createAskTalkings } from './data/askTalking';
+import { AskTalkings } from './data/askTalking';
 
 import moment from 'moment';
 
@@ -23,17 +23,23 @@ const io = require('socket.io')(httpServer);
 
 let interval: NodeJS.Timeout;
 
+<<<<<<< HEAD
+let askingTalkArray = AskTalkings;
+let clients: CustomSocket[] = [];
+=======
 let askingTalkArray = createAskTalkings();
 let clients: CustomSocket[] = [];
 
 
 
+>>>>>>> dev
 
 io.on("connection", (socket:CustomSocket) => {
 
   clients.push(socket);
   console.log("New client connected");
-  io.emit("FromAPI")
+  console.log("*********THIS IS ASKTALKINGS BABY " +AskTalkings)
+  io.emit("FromAPI", askingTalkArray)
 
   //interval
   if (interval) {
@@ -132,7 +138,7 @@ io.on("connection", (socket:CustomSocket) => {
 //sortir dans une fonction pour le test et séparer de socket
 //installer Jest et tester 
 const getApiAndEmit = (socket:any) => {
-  const response = createAskTalkings();
+  const response = AskTalkings;
 
   let dateAskingTalk = response[1].askingDate; //date de demande de l'utilisateur
   let now = moment();

@@ -6,7 +6,6 @@ export const Users = [
         name: 'Anthony',
         lastName: 'Lucci',
         role: 'Student',
-        date: new Date(),
     },
     {
         id: 2,
@@ -14,6 +13,5 @@ export const Users = [
         name: 'Aurélien',
         lastName: 'Landouer',
         role: 'Student',
-        date: new Date(),
     }
 ]
