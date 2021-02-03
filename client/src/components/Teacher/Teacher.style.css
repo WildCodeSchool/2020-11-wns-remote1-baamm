@@ -11,7 +11,8 @@
 }
 
 .leftColumn {
-  background-image: url("../../pictures/casimir.jpg");
+  /* background-image: url("../../pictures/casimir.jpg"); */
+  background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -19,6 +20,7 @@
   justify-content: center;
   align-items: center;
   flex: 3;
+  display: flex;
 }
 
 .rightColumn {
