@@ -3,8 +3,6 @@ import { render, screen } from '@testing-library/react';
 import Test from './Test';
 import Participants from '../components/Participants';
 
-// Test
-
 describe('Pain au chocolat ou Chocolatine', () => {
   it('return Chocolatine', () => {
     expect(Test('Chocolatine')).toEqual('on dit Chocolatine');
