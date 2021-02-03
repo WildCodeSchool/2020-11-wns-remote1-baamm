@@ -1,9 +1,10 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { AskingTalk } from '../types';
+import { AskingTalk } from '../../types';
 
 const ENDPOINT = 'http://localhost:5000';
 
@@ -12,9 +13,6 @@ const socket = socketIOClient(ENDPOINT, {
 });
 
 const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
-/// /////////////////////////////////////////////////////////////////
-/// /////////// ATTENTION CODE LAID !!! /////////////////////////////
-/// /////////////////////////////////////////////////////////////////
 
 export default function WaitingQueue() {
   const [response, setResponse] = useState<AskingTalk[]>([]);
@@ -32,23 +30,6 @@ export default function WaitingQueue() {
     role: 'student',
     askTalking: askingTalk,
   };
-
-  // function dateDiff(/* dateAskingTalk: Date */) {
-  // let date2 = new Date();
-  // let diff = []
-  // let date1 = interval;
-  // Initialisation du retour
-  // let dateTime = date2 - dateAskingTalk;
-  // dateTime = Math.floor(dateTime / 1000);             // Nombre de secondes entre les 2 dates
-  // diff.sec = dateTime % 60;                    // Extraction du nombre de secondes
-  // dateTime = Math.floor((dateTime - diff.sec) / 60);    // Nombre de minutes (partie entière)
-  // diff.min = dateTime % 60;                    // Extraction du nombre de minutes
-  // dateTime = Math.floor((dateTime - diff.min) / 60);    // Nombre d'heures (entières)
-  // diff.hour = dateTime % 24;                   // Extraction du nombre d'heures
-  // let diffToString = diff.forEach((el) => {
-  // })
-  // return diff;
-  // }
 
   useEffect(() => {
     socket.on('FromAPI', (listAskTalking: AskingTalk[]) => {
@@ -100,12 +81,12 @@ export default function WaitingQueue() {
     }
   }, [askingTalk]);
 
-  // fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
+  // * fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
   const sendAskTalking = () => {
     const isQuestion = window.confirm('Cliquez sur "ok" pour une question, "annuler" pour une information');
     const choosenInterventionType = isQuestion ? 'question' : 'information';
 
-    // on "crée" notre demande de parole (plus tard : gérer le type d'intervention)
+    // * on "crée" notre demande de parole (plus tard : gérer le type d'intervention)
     setAskingTalk({
       id: Math.floor(Math.random() * 101),
       user: thisUser,
@@ -114,7 +95,7 @@ export default function WaitingQueue() {
     });
   };
 
-  // fonction appelée par le clic sur le bouton quand on a déjà demandé la parole
+  // * fonction appelée par le clic sur le bouton quand on a déjà demandé la parole
   const cancelAskTalking = () => {
     const sureToCancel = window.confirm(`Etes-vous sûr(e) de vouloir annuler votre demande d'intervention ?
       Vous perdrez votre place dans la file d'attente...`);
@@ -173,13 +154,6 @@ export default function WaitingQueue() {
               <div>
                 <p>{askTalking.user.alias}</p>
                 <p>{askTalking.interventionType}</p>
-                {/* <p>
-                  depuis :
-                  {' '}
-                  {setInterval(() => {
-                   dateDiff(new Date(askTalking.askingDate));
-                  }, 1000)}
-                </p> */}
               </div>
             </div>
           ))}
