@@ -23,16 +23,8 @@ const io = require('socket.io')(httpServer);
 
 let interval: NodeJS.Timeout;
 
-<<<<<<< HEAD
 let askingTalkArray = AskTalkings;
 let clients: CustomSocket[] = [];
-=======
-let askingTalkArray = createAskTalkings();
-let clients: CustomSocket[] = [];
-
-
-
->>>>>>> dev
 
 io.on("connection", (socket:CustomSocket) => {
 

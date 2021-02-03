@@ -2,7 +2,7 @@ import {
   MutableRefObject, useEffect, useRef, useState,
 } from 'react';
 import socketIOClient from 'socket.io-client';
-import { Message } from '../types';
+import { Message } from '../../types';
 
 const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'; // Name of the event
 const SOCKET_SERVER_URL = 'http://localhost:5000';

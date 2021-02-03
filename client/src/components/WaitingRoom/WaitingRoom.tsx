@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import useQueue from './useQueue';
+import React, { useReducer, useState } from 'react';
 import './WaitingRoom.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { User } from '../types';
+import useQueue from '../UseQueue/useQueue';
+import { User } from '../../types';
 
 export default function WaitingRoom() {
   const roomId = 'QueueRoom';
@@ -32,36 +32,28 @@ export default function WaitingRoom() {
     setJoinQueue(true);
   }
 
-  const handleNewFirstName = (e: React.FormEvent<HTMLInputElement>) => {
-    setFirstName(e.currentTarget.value);
-  };
-
-  const handleNewLastName = (e: React.FormEvent<HTMLInputElement>) => {
-    setLastName(e.currentTarget.value);
-  };
-
   return (
     <div className="toolsContainer">
       <div>
         {joinQueue ? (
-          <button onClick={leaveWaitingList}>Leave the Queue</button>
+          <button onClick={leaveWaitingList} type="button">Leave the Queue</button>
         ) : (
           <div>
-            <textarea value={lastName} onChange={(e) => handleNewLastName} placeholder="Nom" className="inputMessage" />
+            <textarea value={lastName} onChange={(e) => setLastName(e.currentTarget.value)} placeholder="Nom" className="inputMessage" />
             <textarea
               value={firstName}
-              onChange={(e) => handleNewFirstName}
+              onChange={(e) => setFirstName(e.currentTarget.value)}
               placeholder="Prénom"
               className="inputMessage"
             />
-            <button onClick={addToWaitingList}>Join the Queue</button>
+            <button onClick={addToWaitingList} type="button">Join the Queue</button>
           </div>
         )}
       </div>
       <div className="waitingQueueContainer">
         <ol className="waitingQueueList">
-          {waitingStudents.map((student: User, i: number) => (
-            <li key={i}>
+          {waitingStudents.map((student: User) => (
+            <li key={student.id}>
               <div className="waitingContainer">
                 <FontAwesomeIcon icon={faUser} className="waitIcon" />
                 <div>
