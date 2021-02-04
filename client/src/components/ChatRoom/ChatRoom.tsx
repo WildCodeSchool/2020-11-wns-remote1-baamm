@@ -36,7 +36,7 @@ export default function ChatRoom() {
           className="inputMessage"
         />
         <button type="button" onClick={handleSendMessage} className="sendMessage">
-          Send
+          Envoyer
         </button>
       </div>
     </div>
