@@ -1,16 +1,37 @@
-import express from 'express';
-import cors from 'cors';
-import index from './routes/index'; 
+import bodyParser from "body-parser";
+import express from "express";
+
 import { AskTalkings } from './data/askTalking';
-import moment from 'moment';
 import CustomSocket from './CustomSocket'
+
+import connectDB from "./config/database";
+// import auth from "./routes/api/auth";
+// import user from "./routes/api/user";
+// import profile from "./routes/api/profile";
+
+const app = express();
+
+// Connect to MongoDB
+connectDB();
+
+// Express configuration
+app.set("port", process.env.PORT || 5000);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// @route   GET /
+// @desc    Test Base API
+// @access  Public
+app.get("/", (_req, res) => {
+  res.send("API Running");
+});
+
+// app.use("/api/auth", auth);
+// app.use("/api/user", user);
+// app.use("/api/profile", profile);
 
 const PORT: number = 5000;
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
-
-const app = express();
-app.use(index);
-app.use(cors());
 
 const httpServer = require('http').Server(app);
 const io = require('socket.io')(httpServer);
