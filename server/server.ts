@@ -1,16 +1,32 @@
+import bodyParser from 'body-parser';
 import express from 'express';
+import connectDB from './config/database';
 import cors from 'cors';
 import index from './routes/index'; 
 import { AskTalkings } from './data/askTalking';
 import moment from 'moment';
 import CustomSocket from './CustomSocket'
 
+
+// !
+const app = express();
+
+connectDB();
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+
+app.get("/", (_req, res) => {
+  res.send("API Running");
+});
+
+// app.use("/api/user", user);
+// !
 const PORT: number = 5000;
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
-
-const app = express();
-app.use(index);
-app.use(cors());
 
 const httpServer = require('http').Server(app);
 const io = require('socket.io')(httpServer);

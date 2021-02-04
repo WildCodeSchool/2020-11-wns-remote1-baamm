@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import mongoose from 'mongoose';
+import registerRoute from './register';
 
 const router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-    res.send({ response: "I am alive" }).status(200);
-});
+router.use("/user", registerRoute);
 
 export default router;
