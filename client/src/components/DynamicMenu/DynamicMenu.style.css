@@ -1,0 +1,45 @@
+.closedContainer {
+  display: flex;
+  justify-content: center;
+  width: 4vw;
+  height: 100vh;
+  background-color: #ff5757;
+  transition: width 0.5s;
+  box-shadow: -0.2px 0px 8px grey;
+}
+
+.openedContainer {
+  width: 30vw;
+  height: 100vh;
+  transition: width 0.5s;
+  box-shadow: -0.2px 0px 8px grey;
+}
+
+.hiddenButton {
+  display: none;
+}
+
+.closedNavbar {
+  display: flex;
+  flex-direction: column;
+}
+
+.optionsIcon {
+  border-width: 1px;
+  border-top-color: black;
+  border-top-style: solid;
+  position: absolute;
+  bottom: 2%;
+}
+
+.linkTest {
+  padding: 1vw;
+  color: black;
+}
+
+.navToolsBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #ff5757;
+}
