@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCommentAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
-import Webcam from 'react-webcam';
+// import Webcam from 'react-webcam';
 import Participants from '../Participants/Participants';
 import WaitingQueue from '../WaitingQueue/WaitingQueue';
 import ChatRoom from '../ChatRoom/ChatRoom';
@@ -16,7 +16,7 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn">
-        <Webcam style={{ borderRadius: 45 }} />
+        {/* <Webcam style={{ borderRadius: 45 }} /> */}
       </div>
       <div className="rightColumn">
 
