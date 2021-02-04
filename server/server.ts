@@ -5,8 +5,8 @@ import { AskTalkings } from './data/askTalking';
 import CustomSocket from './CustomSocket'
 
 import connectDB from "./config/database";
-// import auth from "./routes/api/auth";
-// import user from "./routes/api/user";
+import authRoute from "./routes/api/auth";
+import postRoute from "./routes/api/post";
 // import profile from "./routes/api/profile";
 
 const app = express();
@@ -26,9 +26,11 @@ app.get("/", (_req, res) => {
   res.send("API Running");
 });
 
-// app.use("/api/auth", auth);
-// app.use("/api/user", user);
+app.use("/api/user", authRoute);
+app.use("/api/posts", postRoute);
 // app.use("/api/profile", profile);
+
+
 
 const PORT: number = 5000;
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
