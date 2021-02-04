@@ -33,11 +33,6 @@ io.on("connection", (socket:CustomSocket) => {
   const roomId = socket.handshake.query.roomId;
   socket.join(roomId);
 
-  // * Listen for new messages
-  socket.on(NEW_CHAT_MESSAGE_EVENT, (data: String) => {
-    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-  });
-
   // * PARTIE ASKINGTALK
   // TODO typer correctement le askingtalk
   // * quand on reçoit une demande de parole envoyé du client

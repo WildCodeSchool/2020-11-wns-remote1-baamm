@@ -11,6 +11,15 @@ const useChat = (roomId: string): any => {
   const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
   const socketRef: MutableRefObject<SocketIOClient.Socket | undefined> = useRef();
 
+  const addMessage = (message: Message) => {
+    const socketRefCurrentId = socketRef.current !== undefined ? socketRef.current.id : null;
+    const incomingMessage = {
+      ...message,
+      ownedByCurrentUser: message.senderId === socketRefCurrentId,
+    };
+    setMessages((oldMessages) => [...oldMessages, incomingMessage]);
+  };
+
   useEffect(() => {
     // Creates a WebSocket connection
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
@@ -19,17 +28,8 @@ const useChat = (roomId: string): any => {
     });
 
     // Listens for incoming messages
-    socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message: Message) => {
-      const socketRefCurrentId = socketRef.current !== undefined ? socketRef.current.id : null;
-      const incomingMessage = {
-        ...message,
-        ownedByCurrentUser: message.senderId === socketRefCurrentId,
-      };
-      setMessages(() => [...messages, incomingMessage]);
-    });
-
-    // Destroys the socket reference
-    // when the connection is closed
+    socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, addMessage);
+    // Destroys the socket reference when the connection is closed
     return () => {
       if (socketRef.current !== undefined) {
         socketRef.current.disconnect();
