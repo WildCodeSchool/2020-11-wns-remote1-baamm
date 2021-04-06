@@ -1,7 +1,7 @@
 import {
   MutableRefObject, useEffect, useRef, useState,
 } from 'react';
-import { io, Socket } from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import { Message } from '../../types';
 
 const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'; // Name of the event
@@ -9,7 +9,7 @@ const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 const useChat = (roomId: string): any => {
   const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
-  const socketRef: MutableRefObject<Socket | undefined> = useRef();
+  const socketRef: MutableRefObject<typeof Socket | undefined> = useRef();
 
   const addMessage = (message: Message) => {
     const socketRefCurrentId = socketRef.current !== undefined ? socketRef.current.id : null;
@@ -26,6 +26,7 @@ const useChat = (roomId: string): any => {
       query: { roomId },
       transports: ['websocket'],
     });
+    // eslint-disable-next-line no-console
     console.log('Connect');
 
     // Listens for incoming messages
@@ -34,6 +35,7 @@ const useChat = (roomId: string): any => {
     return () => {
       if (socketRef.current !== undefined) {
         socketRef.current.disconnect();
+        // eslint-disable-next-line no-console
         console.log('Disconnect');
       }
     };

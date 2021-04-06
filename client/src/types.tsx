@@ -19,3 +19,8 @@ export type Message = {
   body: string;
   ownedByCurrentUser: boolean;
 };
+
+export type ChatContextType = {
+  messages: Message[];
+  sendMessage: (messageBody: string) => void;
+};

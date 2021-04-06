@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 import { AskingTalk, User } from '../../types';
 
 const ENDPOINT = 'http://localhost:5000';
