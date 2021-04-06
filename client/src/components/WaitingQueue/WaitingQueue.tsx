@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import { io } from 'socket.io-client';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import { AskingTalk } from '../../types';
 
 const ENDPOINT = 'http://localhost:5000';
 
-const socket = socketIOClient(ENDPOINT, {
+const socket = io(ENDPOINT, {
   transports: ['websocket'],
 });
 

@@ -1,7 +1,7 @@
 import {
   MutableRefObject, useEffect, useRef, useState,
 } from 'react';
-import socketIOClient from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import { User } from '../../types';
 
 const NEW_WAITING_STUDENT_EVENT = 'newWaitingStudent'; // Name of the event
@@ -9,11 +9,11 @@ const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 const useQueue = (roomId: string) => {
   const [waitingStudents, setWaitingStudents] = useState<User[]>([]);
-  const socketRef: MutableRefObject<SocketIOClient.Socket | undefined> = useRef();
+  const socketRef: MutableRefObject<Socket | undefined> = useRef();
 
   useEffect(() => {
     // Creates a WebSocket connection
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
+    socketRef.current = io(SOCKET_SERVER_URL, {
       query: { roomId },
       transports: ['websocket'],
     });

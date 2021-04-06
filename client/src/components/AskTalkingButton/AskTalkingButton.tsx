@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { AskingTalk, User } from '../../types';
 
 const ENDPOINT = 'http://localhost:5000';
 
-const socket = socketIOClient(ENDPOINT, {
+const socket = io(ENDPOINT, {
   transports: ['websocket'],
 });
 
