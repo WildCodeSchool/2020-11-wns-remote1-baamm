@@ -21,10 +21,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 33px;
+  border-radius: 12px;
 }
 
 .topContainerQueueOn {
-  background-color: orange;
+  background-color: #5B6D9F;
   padding: 10px;
 }
 
@@ -35,9 +37,13 @@
 
 .askTalking {
   background-color: transparent;
+  border: none;
   color: white;
   font-size: 20px;
-  border-color: white;
-  border-style: solid;
-  border-radius: 8%;
+  width: 100%;
+  padding: 4px 30px;
+}
+
+.askTalking:focus {
+  outline: none;
 }
