@@ -2,7 +2,7 @@ import { ConnectionOptions, connect } from "mongoose";
 
 const connectDB = async () => {
   try {
-    const mongoURI: string = 'mongodb+srv://<pseudo>:<password>@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority';
+    const mongoURI: string = 'mongodb+srv://mansourM:mansour1234@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority';
     const options: ConnectionOptions = {
       useNewUrlParser: true,
       useCreateIndex: true,

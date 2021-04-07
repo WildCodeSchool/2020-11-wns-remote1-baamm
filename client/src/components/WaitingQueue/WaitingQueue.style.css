@@ -68,3 +68,7 @@
 .FingerIcon {
   margin-right: 10px;
 }
+
+.askTalking:focus {
+  outline: none;
+}
