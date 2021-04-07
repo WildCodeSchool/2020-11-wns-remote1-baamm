@@ -1,12 +1,28 @@
+.WaitingQueue {
+  height: 90%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ecefe6;
+}
+
+.WaitingLi {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .waitingContainer {
   display: flex;
   align-items: center;
   background-color: rgb(212, 195, 170);
   margin-bottom: 25px;
-  width: 100%;
+  width: 80%;
+  border-top-left-radius: 32px;
+  border-bottom-left-radius: 32px;
 }
 
 .waitingQueueList {
+  overflow-y: auto;
   list-style-type: none;
   padding: 0;
 }
@@ -21,27 +37,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 33px;
-  border-radius: 12px;
-}
-
-.topContainerQueueOn {
-  background-color: #5B6D9F;
   padding: 10px;
 }
 
-.topContainerQueueOff {
-  background-color: red;
-  padding: 10px;
-}
-
-.askTalking {
-  background-color: transparent;
-  border: none;
-  color: white;
+.askTalking, .cancelTalking {
+  height: 50px;
+  background-color: #5b6d9f;
+  border-radius: 16px;
+  width: 75%;
+  color: #ecefe6;
   font-size: 20px;
-  width: 100%;
-  padding: 4px 30px;
+  border: solid 1px #5b6d9f;
+}
+
+.askTalking:focus, .cancelTalking:focus {
+  outline: none;
+}
+
+.askTalking:hover {
+  background-color: #ecefe6;
+  color: #5b6d9f;
+  cursor: pointer;
+}
+
+.cancelTalking:hover {
+  background-color: #ecefe6;
+  color: #5b6d9f;
+  cursor: pointer;
+}
+.FingerIcon {
+  margin-right: 10px;
 }
 
 .askTalking:focus {

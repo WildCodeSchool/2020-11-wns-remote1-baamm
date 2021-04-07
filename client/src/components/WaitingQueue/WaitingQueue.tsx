@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHandPointDown, faHandPointUp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AskingTalk } from '../../types';
 
 const ENDPOINT = 'http://localhost:5000';
@@ -108,54 +108,20 @@ export default function WaitingQueue() {
   };
 
   return (
-    <div className="waiting-queue">
-      <h2>{userRole}</h2>
-      {userRole === 'student' && askingTalk === null ? (
-        <div className="topContainerQueueOn">
-          <button
-            type="button"
-            onClick={() => {
-              sendAskTalking();
-            }}
-            className="askTalking"
-            title="Demander une intervention"
-          >
-            Join the queue
-          </button>
-        </div>
-      ) : (
-        userRole === 'student' && (
-          <div className="topContainerQueueOff">
-            <button
-              type="button"
-              onClick={() => {
-                cancelAskTalking();
-              }}
-              className="askTalking"
-              title={
-                // eslint-disable-next-line no-nested-ternary
-                askingTalk
-                  ? askingTalk.interventionType === 'question'
-                    ? 'Annuler la question'
-                    : "Annuler l'information"
-                  : ''
-              }
-            >
-              Leave the queue
-            </button>
-          </div>
-        )
-      )}
+    <div className="WaitingQueue">
+      {/* <h2>{userRole}</h2> */}
       {askingTalk !== null || userRole === 'teacher' ? (
         <ol className="waitingQueueList">
           {response.map((askTalking: AskingTalk) => (
-            <div className="waitingContainer" key={askTalking.id}>
-              <FontAwesomeIcon icon={faUser} className="waitIcon" />
-              <div>
-                <p>{askTalking.user.alias}</p>
-                <p>{askTalking.interventionType}</p>
+            <li className="WaitingLi">
+              <div className="waitingContainer" key={askTalking.id}>
+                <FontAwesomeIcon icon={faUser} className="waitIcon" />
+                <div>
+                  <p>{askTalking.user.alias}</p>
+                  <p>{askTalking.interventionType}</p>
+                </div>
               </div>
-            </div>
+            </li>
           ))}
         </ol>
       ) : (
@@ -166,6 +132,44 @@ export default function WaitingQueue() {
           {' '}
           personnes dans la file d&apos;attente
         </p>
+      )}
+      {userRole === 'student' && askingTalk === null ? (
+        <div className="topContainerQueueOn">
+          <button
+            type="button"
+            onClick={() => {
+              sendAskTalking();
+            }}
+            className="askTalking"
+            title="Demander une intervention"
+          >
+            <FontAwesomeIcon className="FingerIcon" icon={faHandPointUp} />
+            Lever la main
+          </button>
+        </div>
+      ) : (
+        userRole === 'student' && (
+          <div className="topContainerQueueOff">
+            <button
+              type="button"
+              onClick={() => {
+                cancelAskTalking();
+              }}
+              className="cancelTalking"
+              title={
+                // eslint-disable-next-line no-nested-ternary
+                askingTalk
+                  ? askingTalk.interventionType === 'question'
+                    ? 'Annuler la question'
+                    : "Annuler l'information"
+                  : ''
+              }
+            >
+              <FontAwesomeIcon className="FingerIcon" icon={faHandPointDown} />
+              Baisser la main
+            </button>
+          </div>
+        )
       )}
     </div>
   );
