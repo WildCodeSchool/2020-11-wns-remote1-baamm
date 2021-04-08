@@ -1,5 +1,5 @@
 import React from 'react';
-// import './WaitingQueue.style.css';
+import './Participants.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,10 +17,12 @@ export default function Participants() {
     <div className="">
       <ol className="waitingQueueList">
         {enDur.map((participant) => (
-          <li key={participant.firstname}>
-            <div className="waitingContainer">
-              <FontAwesomeIcon icon={faUser} className="waitIcon" />
-              <div>
+          <li className="ParticipantsItem" key={participant.firstname}>
+            <div className={participant.role === 'Student' ? 'ParticipantContainer Student' : 'ParticipantContainer Teacher'}>
+              <div className="ParticipantIcon">
+                <FontAwesomeIcon size="3x" icon={faUser} />
+              </div>
+              <div className="ParticipantText">
                 <h3>
                   {participant.firstname}
                   {' '}

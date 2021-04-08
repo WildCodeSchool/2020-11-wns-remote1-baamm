@@ -4,7 +4,7 @@ import express from "express";
 import { AskTalkings } from './data/askTalking';
 import CustomSocket from './CustomSocket'
 
-import connectDB from "./config/database";
+import connectDB from "./config/databaseExample";
 import authRoute from "./routes/api/auth";
 import postRoute from "./routes/api/post";
 // import profile from "./routes/api/profile";
