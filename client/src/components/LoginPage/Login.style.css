@@ -1,0 +1,102 @@
+.pageContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: space-around;
+  background-image: url('http://eskipaper.com/images/abstract-wallpaper-10.jpg');
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #171b29;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 45vw;
+}
+
+.titleContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputBlock {
+  margin-bottom: 1vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+  align-self: flex-end;
+  font-size: 10px;
+  color: red;
+}
+
+input[type="submit"] {
+  background: #ff5757;
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 20px;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 5px;
+  display: block;
+  appearance: none;
+  border-radius: 4px;
+  width: 20vw;
+  font-weight: lighter;
+  border-radius: 50px;
+}
+
+.hello {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom : 2px solid lightgrey;
+  background-color: #ecefe6;
+  border-radius: 10px;
+}
+
+.fieldInput {
+  border: none;
+  height: 90%;
+  width: 100%;
+  background-color: #ecefe6;
+  color: #5C657F;
+}
+
+.fieldInput::placeholder {
+  color: #5C657F;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.fieldInput:focus {
+  outline: none;
+}
+
+h1 {
+  color: #ffffff;
+  padding: 0;
+}
+
+.inputIcon {
+  padding: 1.5vh 1.5vh 1.5vh 0;
+  color: #5C657F;
+}
