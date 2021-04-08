@@ -1,12 +1,12 @@
-import bodyParser from "body-parser";
-import express from "express";
+import bodyParser from 'body-parser';
+import express from 'express';
 import cors from 'cors';
 
 import { AskTalkings } from './data/askTalking';
 import CustomSocket from './CustomSocket'
 
-import connectDB from "./config/databaseExample";
-import { signupRouter } from "./routes/signup";
+import connectDB from './config/databaseExample';
+import { signupRouter } from './routes/signup';
 import { signinRouter } from './routes/signin';
 // import profile from "./routes/api/profile";
 
