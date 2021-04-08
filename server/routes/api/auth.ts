@@ -4,21 +4,18 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const authRoute = Router();
+
 authRoute.post('/register', async (req: Request, res: Response) => {
 
   // * Check if User is already in database
   const emailExist = await User.findOne({ email: req.body.email })
-  if (emailExist) return res.status(400).send('Email already exist')
-
-  // * Hash passwords
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  if (emailExist) return res.status(400).send('Email  exist')
 
   // * Create New User 
   const user = new User({
     name: req.body.name,
     email: req.body.email,
-    password: hashedPassword
+    password: req.body.password
   });
   try {
     const savedUser = await user.save();
@@ -41,8 +38,14 @@ authRoute.post('/login', async (req: Request, res: Response) => {
   // * Create and assign token
   // TODO Faire le token proprement
   process.env.TOKEN_SECRET = 'prout';
-  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET!);
-  res.send(token)
+  //const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET!);
+  //res.send(token)
+
+  const token = jwt.sign({
+    _id: user._id
+}, process.env.TOKEN_SECRET, { expiresIn: '3 hours' })
+
+return res.json({ access_token: token })
 });
 
 export default authRoute;
