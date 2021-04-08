@@ -1,15 +1,17 @@
 import bodyParser from "body-parser";
 import express from "express";
+import cors from 'cors';
 
 import { AskTalkings } from './data/askTalking';
 import CustomSocket from './CustomSocket'
 
 import connectDB from "./config/databaseExample";
-import authRoute from "./routes/api/auth";
-import postRoute from "./routes/api/post";
+import { signupRouter } from "./routes/signup";
+import { signinRouter } from './routes/signin';
 // import profile from "./routes/api/profile";
 
 const app = express();
+app.use(cors());
 
 // Connect to MongoDB
 connectDB();
@@ -26,8 +28,8 @@ app.get("/", (_req, res) => {
   res.send("API Running");
 });
 
-app.use("/api/user", authRoute);
-app.use("/api/posts", postRoute);
+app.use(signupRouter);
+app.use(signinRouter);
 // app.use("/api/profile", profile);
 
 
@@ -61,6 +63,7 @@ io.on("connection", (socket:CustomSocket) => {
   // * quand on reçoit une demande de parole envoyé du client
   // * on l'ajoute à la liste des demandes de parole existante
   // * et on renvoie cette liste avec 'askingtalk from server'
+  // askingtalk => raiseHand
   socket.on('askingtalk from client', (askingtalk:any) => {
     askingTalkArray.push(askingtalk);
     clients.forEach(client => {
