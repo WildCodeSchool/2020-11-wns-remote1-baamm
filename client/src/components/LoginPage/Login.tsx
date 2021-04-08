@@ -4,6 +4,7 @@ import './Login.style.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 type FormValues = {
   firstName: string;
@@ -12,9 +13,28 @@ type FormValues = {
   password: string;
 };
 
-function ConnexionBlock() {
+// function submitForm(e) {
+//   e.preventDefault();
+//   const url = 'http://localhost:8000/auth/login';
+//   axios.post(url, { username, password })
+//     .then((res) => res.data)
+//     .then((res) => {
+//       dispatch({
+//         type: 'CHANGE_TOKEN',
+//         newToken: res.token,
+//       });
+//       history.push('/trott');
+//     })
+//     .catch(() => {
+//       alert('Vos informations sont incorrectes');
+//     });
+// }
+
+function SignIn() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
+    axios.post('http://localhost:5000/api/users/signin', { email, password });
+  };
 
   return (
     <div className="menuContainer">
@@ -42,9 +62,16 @@ function ConnexionBlock() {
   );
 }
 
-function RegisterBlock() {
+function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = ({
+    email, password, firstName, lastName,
+  }) => {
+    axios.post('http://localhost:5000/api/users/signup', {
+      firstName, lastName, email, password,
+    })
+      .then((res) => console.log(res));
+  };
 
   return (
     <div className="menuContainer">
@@ -89,8 +116,8 @@ function RegisterBlock() {
 export default function LoginPage() {
   return (
     <div className="pageContainer">
-      <ConnexionBlock />
-      <RegisterBlock />
+      <SignIn />
+      <SignUp />
     </div>
   );
 }
