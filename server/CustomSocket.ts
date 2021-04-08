@@ -7,6 +7,6 @@ interface CustomHandshake extends Handshake{
     }
   }
   
-  export default class CustomSocket extends Socket {
-    readonly handshake!: CustomHandshake;
-  }
+export default class CustomSocket extends Socket {
+  readonly handshake!: CustomHandshake;
+}

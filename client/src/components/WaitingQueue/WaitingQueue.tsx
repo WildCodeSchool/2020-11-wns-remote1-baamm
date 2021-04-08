@@ -56,13 +56,13 @@ export default function WaitingQueue() {
       }
     });
     // A chaque fois qu'on reçoit un asktalking depuis le serveur
-    socket.on('askingtalk from server', (askingTalkArray: AskingTalk[]) => {
+    socket.on('raiseHandServer', (askingTalkArray: AskingTalk[]) => {
       // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ",
       // askingTalkArray);
       setResponse(askingTalkArray);
     });
     // A chaque fois qu'on supprime un asktalking depuis le serveur
-    socket.on('askingtalk deleted', (askingTalkArray: AskingTalk[]) => {
+    socket.on('lowerHandServer', (askingTalkArray: AskingTalk[]) => {
       // console.log(" Suppression d'un askingTalk depuis le serveur -
       // new asking talk array ::: ", askingTalkArray);
       setResponse(askingTalkArray);
@@ -73,11 +73,11 @@ export default function WaitingQueue() {
   // et cancelAskTalking appelées par le bouton
   useEffect(() => {
     if (askingTalk) {
-      // console.log("ASKING TALK HERE ::: ", askingTalk);
-      socket.emit('askingtalk from client', askingTalk);
+      console.log('ASKING TALK HERE ::: ', askingTalk);
+      socket.emit('raiseHandClient', askingTalk);
     } else if (askingTalkId) {
       // console.log("ASKTALKING TO CANCEL ::: ", askingTalkId);
-      socket.emit('cancel askingtalk', askingTalkId);
+      socket.emit('lowerHandClient', askingTalkId);
     }
   }, [askingTalk]);
 
