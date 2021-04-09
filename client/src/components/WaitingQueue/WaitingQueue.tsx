@@ -1,16 +1,17 @@
 /* eslint-disable no-alert */
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import React, { useContext, useEffect, useState } from 'react';
+// import io from 'socket.io-client';
 import './WaitingQueue.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointDown, faHandPointUp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AskingTalk } from '../../types';
+import SocketContext from '../../context/SocketContext';
 
-const ENDPOINT = 'http://localhost:5000';
+// const ENDPOINT = 'http://localhost:5000';
 
-const socket = io(ENDPOINT, {
-  transports: ['websocket'],
-});
+// const socket = io(ENDPOINT, {
+//   transports: ['websocket'],
+// });
 
 const userRole = Math.floor(Math.random() * 2) === 0 ? 'student' : 'teacher';
 
@@ -31,55 +32,52 @@ export default function WaitingQueue() {
     askTalking: askingTalk,
   };
 
-  useEffect(() => {
-    socket.on('FromAPI', (askingTalkArray: AskingTalk[]) => {
-      if (askingTalkArray) {
-        const liste: AskingTalk[] = [];
-        askingTalkArray.forEach((asktalking) => {
-          liste.push(asktalking);
-        });
-        setResponse(liste);
+  const { socketRef } = useContext(SocketContext);
+  const socket = socketRef.current;
+  if (socket) {
+    useEffect(() => {
+      socket.on('FromAPI', (askingTalkArray: AskingTalk[]) => {
+        if (askingTalkArray) {
+          const liste: AskingTalk[] = [];
+          askingTalkArray.forEach((asktalking) => {
+            liste.push(asktalking);
+          });
+          setResponse(liste);
+        }
+      });
+    }, []);
+
+    useEffect(() => {
+      socket.on('FromAPI', (data: AskingTalk[]) => {
+        if (data) {
+          const waitingQueueFromServer: AskingTalk[] = [];
+          data.map((el) => waitingQueueFromServer.push(el));
+          setResponse(waitingQueueFromServer);
+        }
+      });
+      // A chaque fois qu'on reçoit un asktalking depuis le serveur
+      socket.on('raiseHandServer', (askingTalkArray: AskingTalk[]) => {
+        // askingTalkArray);
+        setResponse(askingTalkArray);
+      });
+      // A chaque fois qu'on supprime un asktalking depuis le serveur
+      socket.on('lowerHandServer', (askingTalkArray: AskingTalk[]) => {
+        // new asking talk array ::: ", askingTalkArray);
+        setResponse(askingTalkArray);
+      });
+    }, []);
+
+    // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking
+    // et cancelAskTalking appelées par le bouton
+    useEffect(() => {
+      if (askingTalk) {
+        // eslint-disable-next-line no-console
+        socket.emit('raiseHandClient', askingTalk);
+      } else if (askingTalkId) {
+        socket.emit('lowerHandClient', askingTalkId);
       }
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    socket.on('FromAPI', (data: AskingTalk[]) => {
-      if (data) {
-        const waitingQueueFromServer: AskingTalk[] = [];
-        data.map((el) => waitingQueueFromServer.push(el));
-        setResponse(waitingQueueFromServer);
-      }
-    });
-    // A chaque fois qu'on reçoit un asktalking depuis le serveur
-    socket.on('raiseHandServer', (askingTalkArray: AskingTalk[]) => {
-      // console.log("Réception d'un nouvel askingTalkArray depuis le serveur ::: ",
-      // askingTalkArray);
-      setResponse(askingTalkArray);
-    });
-    // A chaque fois qu'on supprime un asktalking depuis le serveur
-    socket.on('lowerHandServer', (askingTalkArray: AskingTalk[]) => {
-      // console.log(" Suppression d'un askingTalk depuis le serveur -
-      // new asking talk array ::: ", askingTalkArray);
-      setResponse(askingTalkArray);
-    });
-  }, []);
-
-  // déclenché par les changements sur AskingTalk, donc dans les fonctions sendAskTalking
-  // et cancelAskTalking appelées par le bouton
-  useEffect(() => {
-    if (askingTalk) {
-      console.log('ASKING TALK HERE ::: ', askingTalk);
-      socket.emit('raiseHandClient', askingTalk);
-    } else if (askingTalkId) {
-      // console.log("ASKTALKING TO CANCEL ::: ", askingTalkId);
-      socket.emit('lowerHandClient', askingTalkId);
-    }
-  }, [askingTalk]);
+    }, [askingTalk]);
+  }
 
   // * fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
   const sendAskTalking = () => {

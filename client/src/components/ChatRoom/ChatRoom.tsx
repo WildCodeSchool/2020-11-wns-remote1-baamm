@@ -2,15 +2,15 @@ import React, { useContext, useState } from 'react';
 // import useChat from '../UseChat/useChat';
 import './ChatRoom.style.css';
 import { Message } from '../../types';
-import ChatContext from '../../context/ChatContext';
+import SocketContext from '../../context/SocketContext';
 
 export default function ChatRoom() {
-  const ChatContextType = useContext(ChatContext);
+  const SocketContextType = useContext(SocketContext);
   const [newMessage, setNewMessage] = useState('');
 
-  if (undefined !== ChatContextType) {
+  if (undefined !== SocketContextType) {
     const handleSendMessage = () => {
-      ChatContextType.sendMessage(newMessage);
+      SocketContextType.sendMessage(newMessage);
       setNewMessage('');
     };
 
@@ -18,7 +18,7 @@ export default function ChatRoom() {
       <div className="toolsContainer">
         <div className="messagesContainer">
           <ol className="messagesList">
-            {ChatContextType.messages.map((message: Message, i: number) => (
+            {SocketContextType.messages.map((message: Message, i: number) => (
               <li
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}

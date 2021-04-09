@@ -26,10 +26,8 @@ export default function AskTalkingButton() {
 
   useEffect(() => {
     if (askingTalk) {
-      //  console.log('ASKING TALK HERE ::: ', askingTalk);
       socket.emit('askingtalk from client', askingTalk);
     } else if (askingTalkId) {
-      //  console.log('ASKTALKING TO CANCEL ::: ', askingTalkId);
       socket.emit('cancel askingtalk', askingTalkId);
     }
   }, [askingTalk]);

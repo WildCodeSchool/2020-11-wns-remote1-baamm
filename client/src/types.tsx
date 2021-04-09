@@ -1,3 +1,6 @@
+import { MutableRefObject } from 'react';
+import { Socket } from 'socket.io-client';
+
 export type AskingTalk = {
   id: number;
   user: User;
@@ -20,7 +23,8 @@ export type Message = {
   ownedByCurrentUser: boolean;
 };
 
-export type ChatContextType = {
+export type SocketContextType = {
   messages: Message[];
   sendMessage: (messageBody: string) => void;
+  socketRef: MutableRefObject<typeof Socket | undefined>
 };

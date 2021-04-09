@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatContext from './context/ChatContext';
+import SocketContext from './context/SocketContext';
 import './App.css';
 import Teacher from './components/Teacher/Teacher';
 import DynamicMenu from './components/DynamicMenu/DynamicMenu';
@@ -7,13 +7,13 @@ import useChat from './components/UseChat/useChat';
 
 function App() {
   const roomId = 'Test-Room';
-  const { messages, sendMessage } = useChat(roomId);
+  const { messages, sendMessage, socketRef } = useChat(roomId);
   return (
     <div className="App">
-      <ChatContext.Provider value={{ messages, sendMessage }}>
+      <SocketContext.Provider value={{ messages, sendMessage, socketRef }}>
         <Teacher />
         <DynamicMenu />
-      </ChatContext.Provider>
+      </SocketContext.Provider>
     </div>
   );
 }

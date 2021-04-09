@@ -49,9 +49,7 @@ io.on("connection", (socket) => {
     // PARTIE ASKINGTALK
     //déclarer type string de askingtalk à préciser
     socket.on('askingtalk from client', (askingtalk) => {
-        console.log("askingtalk from client ::: ", askingtalk);
         askingTalkArray.push(askingtalk);
-        console.log("ICI LE NOUVEL ASKING TALK DU SERVER ::: ", askingTalkArray);
         clients.forEach(client => {
             client.emit('askingtalk from server', askingTalkArray);
         });
@@ -62,7 +60,6 @@ io.on("connection", (socket) => {
         askingTalkArray = askingTalkArray.filter((askingtalk) => {
             return askingtalk.id !== askingtalkid;
         });
-        console.log("NOUVEAU TABLEAU APRES SUPPRESSION ::: ", askingTalkArray);
         clients.forEach(client => {
             client.emit('askingtalk deleted', askingTalkArray);
         });

@@ -1,56 +1,36 @@
-import { Socket } from "socket.io";
-import express from "express";
-import { Server } from "http";
 import { IoEvent } from "./constants";
 import Asktalking from '../models/AskTalking'
-import CustomSocket from "../CustomSocket";
 
 class WaitingQueue {
-    private io: Socket;
-    // private httpServer: Server;
-    // private port: string | number;
+    private socket: any;
+    private roomId: string | number;
     public askingTalkArray: typeof Asktalking[];
-    private clients: CustomSocket[];
 
     constructor(
-        io: Socket,
-        // httpServer: Server,
-        // port: string | number,
-        clients: CustomSocket[] ) {
+        socket: any,
+        roomId: string | number ) {
             this.askingTalkArray = [];
-            this.clients = clients;
-            // this.httpServer = httpServer;
-            // this.port = port;
-            this.io = io;
+            this.socket = socket;
+            this.roomId = roomId;
             this.waitingQueueListen();
     }
 
-    private waitingQueueListen(): void {
-        console.log('I WAS THERE !!!');
+    public waitingQueueListen(): void {
+        console.log('I WAS IN WAITINGQUEUE !!!!');
 
-        // this.httpServer.listen(this.port, () => {
-        //     console.log('Running server on port %s', this.port);
-        //  });
-
-        this.io.on(IoEvent.RAISE_HAND_CLIENT, (askingtalk:any) => {
+        this.socket.on(IoEvent.RAISE_HAND_CLIENT, (askingtalk:any) => {
             this.askingTalkArray.push(askingtalk);
-            console.log("ASKINGTALK ::::: ", askingtalk);
-            this.clients.forEach(client => {
-              client.emit(IoEvent.RAISE_HAND_SERVER, this.askingTalkArray); 
-            });
+            console.log('askingtalkarray ::: ', this.askingTalkArray);
+            this.socket.in(this.roomId).emit(IoEvent.RAISE_HAND_SERVER, this.askingTalkArray)
           });
         
-        this.io.on(IoEvent.LOWER_HAND_CLIENT, (askingtalkid: Number) => {
+        this.socket.on(IoEvent.LOWER_HAND_CLIENT, (askingtalkid: Number) => {
             this.askingTalkArray = this.askingTalkArray.filter((askingtalk: any) => {
                 return askingtalk.id !== askingtalkid;
             });
-            this.clients.forEach(client => {
-                client.emit(IoEvent.LOWER_HAND_SERVER, this.askingTalkArray);  
-            });
+            this.socket.in(this.roomId).emit(IoEvent.LOWER_HAND_SERVER, this.askingTalkArray);  
             })
     }
 }
-
-
 
 export default WaitingQueue;
