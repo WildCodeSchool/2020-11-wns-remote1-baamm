@@ -3,7 +3,7 @@ services:
     restart: always
 
   server:
-    command: sh -c "npm run build && npm run prod"
+    command: npm run prod
     expose:
       - 5000
     volumes:
@@ -23,7 +23,7 @@ services:
       - client-build:/app/build
     environment:
       - NODE_ENV=production
-      - REACT_APP_API_URL=https://baam.wns.wilders
+      - REACT_APP_API_URL=/api
   nginx:
     image: nginx:1.19.10
     restart: always
