@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 const router = Router();
 
-router.post('/api/users/signin', async (req: Request, res: Response) => {
+router.post('/users/signin', async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // * Check if email exist
