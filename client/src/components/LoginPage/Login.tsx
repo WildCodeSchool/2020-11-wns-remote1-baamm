@@ -33,7 +33,7 @@ type FormValues = {
 function SignIn() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    axios.post(`${process.env.REACT_APP_API_URL}/api/users/signin`, { email, password });
+    axios.post(`${process.env.REACT_APP_API_URL}/users/signin`, { email, password });
   };
 
   return (
@@ -67,7 +67,7 @@ function SignUp() {
   const onSubmit: SubmitHandler<FormValues> = ({
     email, password, firstName, lastName,
   }) => {
-    axios.post(`${process.env.REACT_APP_API_URL}/api/users/signup`, {
+    axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
       firstName, lastName, email, password,
     })
       // eslint-disable-next-line no-console
