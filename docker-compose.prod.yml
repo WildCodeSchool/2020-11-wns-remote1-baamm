@@ -23,7 +23,7 @@ services:
       - client-build:/app/build
     environment:
       - NODE_ENV=production
-      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_API_URL=https://baam.wns.wilders
   nginx:
     image: nginx:1.19.10
     restart: always
