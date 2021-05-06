@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointDown, faHandPointUp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AskingTalk } from '../../types';
 
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = process.env.REACT_APP_API_URL!;
 
 const socket = io(ENDPOINT, {
   transports: ['websocket'],

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import io from 'socket.io-client';
 import { AskingTalk, User } from '../../types';
 
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = process.env.REACT_APP_API_URL!;
 
 const socket = io(ENDPOINT, {
   transports: ['websocket'],

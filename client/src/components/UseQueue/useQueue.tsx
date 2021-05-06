@@ -5,7 +5,7 @@ import io, { Socket } from 'socket.io-client';
 import { User } from '../../types';
 
 const NEW_WAITING_STUDENT_EVENT = 'newWaitingStudent'; // Name of the event
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = process.env.REACT_APP_API_URL!;
 
 const useQueue = (roomId: string) => {
   const [waitingStudents, setWaitingStudents] = useState<User[]>([]);
