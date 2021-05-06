@@ -10,7 +10,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
       // TODO Faire le token proprement
         process.env.TOKEN_SECRET = 'prout';
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
+        // req.user = verified;
         next();
     } catch (error) {
         res.status(400).send('Invalid Token');
