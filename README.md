@@ -40,3 +40,9 @@ install Better Comments for more info on comments in this project
     Test serveur: 
     - curl http://localhost:8000/api/posts
     - docker logs <nom du container>
+
+
+    TODO 
+    - enlever les mots de passes en dur dans les docker-compose.yml
+    - supprimer le package json a la racine
+    
