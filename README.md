@@ -2,47 +2,63 @@
 
 install Better Comments for more info on comments in this project
 
-
 ## `TODO`
-  - réduire menu à droite
-  - insérer le module de caméra
-  - mettre le système de timer dans la file d'attente
+
+- réduire menu à droite
+- insérer le module de caméra
+- mettre le système de timer dans la file d'attente
+- enlever les mots de passes en dur dans les docker-compose.yml
+- supprimer le package json a la racine
 
 ## `FIX`
-  - Les élèves dans la file d'attente ne s'affiche pas au début
-  - Corriger les sockets qui se remplace
+
+- Les élèves dans la file d'attente ne s'affiche pas au début
+- Corriger les sockets qui se remplace
+
+## Documentation Deployment
+
+### - ssh dflt@<IP> mot de passe -> voir Discord BAAM dans les épinglés
+
+      - mettre a jour le caddy :        $ systemctl reload caddy
+      - lancer le fichier exécutable :  $ PORT=$PORT_NUMBER ./deploy_branch_dev.sh
 
 
-## Documentation  Deployment
+### - Installation de Caddy
 
-  ### - ssh dflt@<IP>   mot de passe  -> voir Discord BAAM dans les épinglés
-
-  ### - Installation de Caddy 
     - suivre le tuto  :  'caddyDoc...'
     - vérifier si caddy est bien fonctionnel avec la commande systemctl status caddy
     - modifier le password : sudo nano caddy/Caddyfile -> remplacer ':80' par nom de domaine
     - relancer le caddy avec systemctl reload caddy
 
-  ### - projet:
-    Ajouter les dockerfile
-    - server/dockerfile
-    - client/dockerfile
+### - projet:
+Ajouter les dockerfile - server/dockerfile - client/dockerfile
 
     - docker-compose.yml  complété par un docker-compose.prod.yml  ou un docker-compose.dev.yml  qui nous permettra de préciser les commandes à exécuter selon les variables d'environnement, les ports et les volumes du server / client / nginx
 
     - nginx.conf: configuration de nginx permettant de définir la route d'api
-  
 
-  ### Lancement 
+### Lancement
+
     Commande de lancement de docker
     - GATEWAY_PORT=8000 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
 
-    Test serveur: 
+    Test serveur:
     - curl http://localhost:8000/api/posts
     - docker logs <nom du container>
 
 
-    TODO 
-    - enlever les mots de passes en dur dans les docker-compose.yml
-    - supprimer le package json a la racine
-    
+baam.wns.wilders.dev {
+  reverse_proxy localhost:8000
+
+  log {
+    output file /var/log/caddy/production.log
+  }
+}
+
+staging.baam.wns.wilders.dev {
+  reverse_proxy localhost:8001
+
+  log {
+    output file /var/log/caddy/staging.log
+  }
+}
