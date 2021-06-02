@@ -1,1 +1,7 @@
 node_modules
+/server/.env
+/server/.env.development
+/server/.env.production
+/client/.env
+/client/.env.development
+/client/.env.production

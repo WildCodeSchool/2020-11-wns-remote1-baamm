@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+
+  server:
+    command: sh -c "npm run build && npm start"
+    expose:
+      - 5000
+    volumes:
+      - server-built:/server/built
+    restart: always
+    environment:
+      - DB_USERNAME=mayanaB
+      - DB_PASSWORD=mayana1234
+      - DB_NAME=baammcluster
+      - NODE_ENV=development
+
+  client:
+    command: sh -c "npm run build && npm start"
+    expose:
+      - 3000
+    volumes:
+      - client-build:/app/build
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=localhost:5000
+
+  nginx:
+    image: nginx:1.19.10
+    restart: always
+    ports:
+      - ${GATEWAY_PORT}:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - client-build:/client-build
+      - server-built:/server-built
+
+volumes:
+  client-build:
+  server-built:

@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 
 const router = Router();
 
-router.post('/api/users/signup', async (req: Request, res: Response) => {
+router.post('/users/signup', async (req: Request, res: Response) => {
   const { email, password, firstName, lastName } = req.body;
 
   // * Check if User is already in database

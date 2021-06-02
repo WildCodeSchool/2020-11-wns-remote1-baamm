@@ -8,4 +8,4 @@ COPY tsconfig.json tsconfig.json
 COPY ./src ./src
 COPY ./public ./public
 
-CMD npm start
+# CMD npm start
