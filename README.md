@@ -15,12 +15,12 @@ install Better Comments for more info on comments in this project
 
 ## Documentation  Deployment
 
-  ### - ssh dflt@<IP>  
+  ### - ssh dflt@<IP>   mot de passe  -> voir Discord BAAM dans les épinglés
 
   ### - Installation de Caddy 
     - suivre le tuto  :  'caddyDoc...'
     - vérifier si caddy est bien fonctionnel avec la commande systemctl status caddy
-    - modifier le password : sudo nano caddy/Caddyfile -> remplacer ':80' par bom de domaine
+    - modifier le password : sudo nano caddy/Caddyfile -> remplacer ':80' par nom de domaine
     - relancer le caddy avec systemctl reload caddy
 
   ### - projet:
@@ -35,7 +35,7 @@ install Better Comments for more info on comments in this project
 
   ### Lancement 
     Commande de lancement de docker
-    - GATEWAY_PORT=8000 docker-compose -f docker docker-compose.yml -f docker-compose.prod.yml up --build
+    - GATEWAY_PORT=8000 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
 
     Test serveur: 
     - curl http://localhost:8000/api/posts
