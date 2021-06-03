@@ -16,6 +16,7 @@ services:
       - DB_PASSWORD=mayana1234
       - DB_NAME=baammcluster
       - NODE_ENV=production
+      - JWT_KEY=toto
 
   client:
     command: sh -c "npm run build"
