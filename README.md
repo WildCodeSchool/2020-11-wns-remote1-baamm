@@ -9,6 +9,7 @@ install Better Comments for more info on comments in this project
 - mettre le système de timer dans la file d'attente
 - enlever les mots de passes en dur dans les docker-compose.yml
 - supprimer le package json a la racine
+- régler le "multi" chargement du wallpaper
 
 ## `FIX`
 
