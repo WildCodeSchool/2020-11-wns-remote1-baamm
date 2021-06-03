@@ -34,7 +34,7 @@ function SignIn() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
     // eslint-disable-next-line no-console
-    console.log("PROCESS.ENV.BLABLA : ", process.env.REACT_APP_API_URL);
+    console.log('PROCESS.ENV.BLABLA : ', process.env.REACT_APP_API_URL);
     axios.post(`${process.env.REACT_APP_API_URL}/users/signin`, { email, password });
   };
 

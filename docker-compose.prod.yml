@@ -28,7 +28,7 @@ services:
       # pour tester les requêtes en local
       #- REACT_APP_API_URL=http://localhost:8000
       # pour déployer
-      - REACT_APP_API_URL=https://staging.baam.wns.wilders.dev/api
+      - REACT_APP_API_URL=toto
 
   nginx:
     image: nginx:1.19.10
