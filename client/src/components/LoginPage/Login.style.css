@@ -1,7 +1,6 @@
 .pageContainer {
   display: flex;
   flex-direction: row;
-  width: 100vw;
   justify-content: space-around;
   background-image: url('http://eskipaper.com/images/abstract-wallpaper-10.jpg');
 }
