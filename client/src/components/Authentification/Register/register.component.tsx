@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,11 +11,13 @@ export default function Register() {
   const [message, setMessage] = useState('');
 
   function handleRegister(data: any) {
+    const roles = [data.roles];
     AuthService.register(
       data.firstname,
       data.lastname,
       data.email,
       data.password,
+      roles,
     ).then(
       (response) => {
         setMessage(response.data.message);
@@ -46,16 +49,34 @@ export default function Register() {
           {!status && (
             <div>
               <div className="form-group">
-                <input placeholder="Prénom" {...register('firstname')} />
-                <input placeholder="Nom" {...register('lastname')} />
-                <input placeholder="Email" {...register('email', { required: true })} />
-                {errors.email && <span>This field is required</span>}
+                <input type="text" placeholder="Prénom" {...register('firstname', { maxLength: 80 })} />
+                <input type="text" placeholder="Nom" {...register('lastname', { maxLength: 100 })} />
+                <input type="email" placeholder="Email@mail.com" {...register('email', { required: true, pattern: /^\S+@\S+$/i })} />
                 <input type="password" placeholder="Password" {...register('password', { required: true })} />
-                {errors.password && <span>This field is required</span>}
+                <p>Quel est votre status ?</p>
+                <div>
+                  <label htmlFor="Student">
+                    <input id="Student" {...register('roles', { required: true })} type="radio" value="student" checked />
+                    Elève
+                  </label>
+                </div>
+                <div>
+                  <label htmlFor="Teacher">
+                    <input id="Teacher" {...register('roles', { required: true })} type="radio" value="teacher" />
+                    Professeur
+                  </label>
+                </div>
               </div>
               <div>
                 <input type="submit" />
               </div>
+            </div>
+          )}
+
+          {errors && (
+            <div className="form-group">
+              <div>{errors.email && <span>Une adresse email est requise</span>}</div>
+              <div>{errors.password && <span>Un mot de passe est requis</span>}</div>
             </div>
           )}
 
