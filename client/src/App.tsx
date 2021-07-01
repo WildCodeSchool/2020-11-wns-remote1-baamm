@@ -6,7 +6,7 @@ import './App.css';
 import AuthService from './services/auth.service';
 
 import Login from './components/Authentification/Login/login.component';
-import Register from './components/Authentification/Register/register.component';
+import Register from './components/Authentification/Register/Register';
 import Home from './components/Home/home.component';
 import Profile from './components/Participants/profile.component';
 import BoardUser from './components/Board/board-user.component';
@@ -35,7 +35,7 @@ export default function App() {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to="/" className="navbar-brand">
-          bezKoder
+          BAAMM Project
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
@@ -73,7 +73,7 @@ export default function App() {
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/profile" className="nav-link">
-                {currentUser.id}
+                {currentUser.firstname}
               </Link>
             </li>
             <li className="nav-item">
