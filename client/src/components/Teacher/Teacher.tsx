@@ -1,5 +1,5 @@
 import React from 'react';
-// import Webcam from 'react-webcam';
+import VideoChat from '../VideoCall/VideoCall';
 import './Teacher.style.css';
 
 function Teacher() {
@@ -8,7 +8,7 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn">
-        {/* <Webcam style={{ borderRadius: 45 }} /> */}
+        <VideoChat />
       </div>
     </div>
   );
