@@ -16,6 +16,7 @@ services:
       - DB_PASSWORD=mayana1234
       - DB_NAME=baammcluster
       - NODE_ENV=development
+      - DB_URL=mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority
 
   client:
     command: sh -c "npm run build && npm start"
