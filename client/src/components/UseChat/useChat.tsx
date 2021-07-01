@@ -5,12 +5,13 @@ import io, { Socket } from 'socket.io-client';
 import { Message } from '../../types';
 
 const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'; // Name of the event
-const SOCKET_SERVER_URL = 'https://staging.baam.wns.wilders.dev/';
+const SOCKET_SERVER_URL = process.env.REACT_APP_API_URL!;
 
 const useChat = (roomId: string): any => {
   const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
   const socketRef: MutableRefObject<typeof Socket | undefined> = useRef();
 
+  // add a message to the existing array of messages
   const addMessage = (message: Message) => {
     const socketRefCurrentId = socketRef.current !== undefined ? socketRef.current.id : null;
     const incomingMessage = {
@@ -42,7 +43,7 @@ const useChat = (roomId: string): any => {
   }, [roomId]);
 
   // Sends a message to the server that
-  // forwards it to all users in the same room
+  // dispatches it to all users in the same room
   const sendMessage = (messageBody: string) => {
     if (socketRef.current !== undefined) {
       socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
