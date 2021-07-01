@@ -21,9 +21,7 @@ export default function VideoChat() {
   const [userName, setUserName] = useState('');
   const [receivingCall, setReceivingCall] = useState(false);
   const [streaming, setStream] = useState();
-  const [screenShare, setScreenShare] = useState(false);
   const connectionRef = useRef<any>();
-  const screenVideo = useRef<any | undefined>();
   const myVideo = useRef<any | undefined>();
   const userVideo = useRef<any | undefined>();
   const mediaDevices = navigator.mediaDevices as any;
@@ -48,8 +46,15 @@ export default function VideoChat() {
 
   const getScreen = async () => {
     mediaDevices.getDisplayMedia({ video: true, audio: false }).then((streamDevice: any) => {
-      screenVideo.current.srcObject = streamDevice;
-    }).then(setScreenShare(true));
+      setStream(streamDevice);
+      myVideo.current.srcObject = streamDevice;
+    });
+  };
+
+  const stopShare = async () => {
+    mediaDevices.getUserMedia({ video: true, audio: false }).then((streamDevice: any) => {
+      myVideo.current.srcObject = streamDevice;
+    });
   };
 
   const callUser = (id: any) => {
@@ -109,20 +114,15 @@ export default function VideoChat() {
     <>
       <div className="videoContainer">
         <button type="button" onClick={() => getScreen()}>Share Screen</button>
-        <button type="button" onClick={() => setScreenShare(false)}>Stop Share</button>
+        <button type="button" onClick={() => stopShare()}>Stop Share</button>
 
         <div className="video">
-          {streaming && <video playsInline muted ref={myVideo} autoPlay className={screenShare ? 'webcam-resize' : 'webcam-full'} />}
+          {streaming && <video playsInline muted ref={myVideo} autoPlay className="webcam-full" />}
         </div>
 
         <div className="video">
-          {streaming && <video playsInline muted ref={userVideo} autoPlay className={screenShare ? 'webcam-resize' : 'webcam-full'} />}
+          {streaming && <video playsInline muted ref={userVideo} autoPlay className="webcam-full" />}
         </div>
-
-        <div className="screenShare">
-          {screenShare && <video playsInline muted ref={screenVideo} autoPlay style={{ width: '80%' }} />}
-        </div>
-
       </div>
 
       <div className="myId">
