@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import UserService from '../services/user.service';
+import UserService from '../../services/user.service';
 
-export default function Home() {
+export default function BoardAdmin() {
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    UserService.getPublicContent().then(
+    UserService.getAdminBoard().then(
       (response) => {
         setContent(response.data);
       },
