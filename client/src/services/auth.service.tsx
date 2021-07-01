@@ -19,11 +19,12 @@ const logout = () => {
   localStorage.removeItem('user');
 };
 
-const register = (firstname: String, lastname: String, email: String, password: String) => axios.post(`${API_URL}signup`, {
+const register = (firstname: String, lastname: String, email: String, password: String, roles: any) => axios.post(`${API_URL}signup`, {
   firstname,
   lastname,
   email,
   password,
+  roles,
 });
 
 const getCurrentUser = () => JSON.parse(localStorage.getItem('user') || '{}');

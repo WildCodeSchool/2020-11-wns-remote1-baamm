@@ -6,7 +6,7 @@ import './App.css';
 import AuthService from './services/auth.service';
 
 import Login from './components/Authentification/Login/login.component';
-import Register from './components/Authentification/Register/register.component';
+import Register from './components/Authentification/Register/Register';
 import Home from './components/Home/home.component';
 import Profile from './components/Participants/profile.component';
 import BoardUser from './components/Board/board-user.component';
@@ -35,19 +35,19 @@ export default function App() {
 
   return (
     <div>
-      <div style={{ display: 'none' }}>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to="/" className="navbar-brand">
-            bezKoder
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to="/home" className="nav-link">
-                Home
-              </Link>
-            </li>
 
-            {showModeratorBoard && (
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <Link to="/" className="navbar-brand">
+          BAAMM Project
+        </Link>
+        <div className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to="/home" className="nav-link">
+              Home
+            </Link>
+          </li>
+
+          {showModeratorBoard && (
               <li className="nav-item">
                 <Link to="/mod" className="nav-link">
                   Moderator Board
@@ -63,20 +63,11 @@ export default function App() {
               </li>
             )}
 
-            {currentUser && (
-              <li className="nav-item">
-                <Link to="/user" className="nav-link">
-                  User
-                </Link>
-              </li>
-            )}
-          </div>
-
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to="/profile" className="nav-link">
-                  {currentUser.id}
+                  {currentUser.firstname}
                 </Link>
               </li>
               <li className="nav-item">
