@@ -9,7 +9,7 @@ import Peer from 'simple-peer';
 import io from 'socket.io-client';
 import './VideoCall.css';
 
-const socket = io('http://localhost:5001');
+const socket = io('http://localhost:5000');
 
 export default function VideoChat() {
   const [callAccepted, setCallAccepted] = useState(false);
