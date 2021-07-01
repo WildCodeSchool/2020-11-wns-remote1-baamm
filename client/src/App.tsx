@@ -12,6 +12,8 @@ import Profile from './components/Participants/profile.component';
 import BoardUser from './components/Board/board-user.component';
 import BoardModerator from './components/Board/board-moderator.component';
 import BoardAdmin from './components/Board/board-admin.component';
+import Teacher from './components/Teacher/Teacher';
+import DynamicMenu from './components/DynamicMenu/DynamicMenu';
 
 export default function App() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -103,6 +105,12 @@ export default function App() {
         <Switch>
           <Route exact path={['/', '/home']} component={Home} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/chatroom">
+            <div className="App">
+              <Teacher />
+              <DynamicMenu />
+            </div>
+          </Route>
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/user" component={BoardUser} />
