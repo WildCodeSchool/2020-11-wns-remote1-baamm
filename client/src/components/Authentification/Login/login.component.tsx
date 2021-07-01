@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
-import AuthService from '../services/auth.service';
+import AuthService from '../../../services/auth.service';
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
