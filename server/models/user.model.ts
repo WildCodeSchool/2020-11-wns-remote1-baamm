@@ -1,11 +1,12 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { IRole } from './role.model';
 
 interface IUser {
-  firstname: String;
-  lastname: String;
-  email: String;
-  password: String;
-  // roles : tableau de String ?
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  roles: IRole[];
 }
 
 interface UserDoc extends IUser, Document {}

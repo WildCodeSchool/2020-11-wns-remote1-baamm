@@ -46,7 +46,7 @@ httpServer.listen(PORT, () => {
 });
 
 function initial() {
-  Role.estimatedDocumentCount((err, count) => {
+  Role.estimatedDocumentCount(undefined, (err: any, count: number) => {
     if (!err && count === 0) {
       new Role({
         name: "admin"

@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import config from "../config/auth.config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import Role from '../models/role.model';
+import Role, { RoleDoc } from '../models/role.model';
 import User from '../models/user.model';
+
 
 const signup = (req :Request, res :Response) => {
   const user = new User({
@@ -42,7 +43,7 @@ const signup = (req :Request, res :Response) => {
         }
       );
     } else {
-      Role.findOne({ name: "user" }, (err, role) => {
+      Role.findOne({ name: "user" }, (err :any, role :RoleDoc) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
