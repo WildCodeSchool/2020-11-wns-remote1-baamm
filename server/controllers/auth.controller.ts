@@ -1,12 +1,11 @@
-const config = require("../config/auth.config");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+import { Request, Response } from 'express';
+import config from "../config/auth.config";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import Role from '../models/role.model';
+import User from '../models/user.model';
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-
-exports.signup = (req, res) => {
+const signup = (req :Request, res :Response) => {
   const user = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -63,7 +62,7 @@ exports.signup = (req, res) => {
   });
 };
 
-exports.signin = (req, res) => {
+const signin = (req :Request, res :Response) => {
   User.findOne({
     email: req.body.email
   })
@@ -109,3 +108,10 @@ exports.signin = (req, res) => {
       });
     });
 };
+
+const AuthController = {
+  signin,
+  signup
+}
+export default AuthController;
+

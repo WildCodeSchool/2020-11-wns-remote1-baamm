@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+import { RequestHandler } from 'express';
+import jwt from "jsonwebtoken";
+import config from "../config/auth.config";
+import User from '../models/user.model';
+import Role from '../models/role.model';
 
-const verifyToken = (req, res, next) => {
+const verifyToken :RequestHandler = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) {
@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const isAdmin = (req, res, next) => {
+const isAdmin :RequestHandler = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -51,7 +51,7 @@ const isAdmin = (req, res, next) => {
   });
 };
 
-const isModerator = (req, res, next) => {
+const isModerator :RequestHandler = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -87,4 +87,5 @@ const authJwt = {
   isAdmin,
   isModerator
 };
-module.exports = authJwt;
+
+export default authJwt;

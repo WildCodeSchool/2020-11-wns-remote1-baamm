@@ -1,8 +1,9 @@
-import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
-
-import db from "./models";
+import Role from './models/role.model';
+import mongoose from 'mongoose';
+import { authRouter } from './routes/auth.routes';
+import { userRouter } from './routes/user.routes';
 
 require('dotenv').config()
 
@@ -13,13 +14,10 @@ const app = express();
 
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const Role = db.role;
-
-db.mongoose
-  .connect(process.env.DB_URL, {
+mongoose.connect('mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -38,8 +36,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to BAAMM Project." });
 });
 
-require("./routes/auth.routes")(app);
-require("./routes/user.routes")(app);
+app.use(authRouter);
+app.use(userRouter);
 
 const PORT: any = process.env.PORT || 5000;
 const httpServer = require('http').Server(app);
@@ -48,11 +46,11 @@ httpServer.listen(PORT, () => {
 });
 
 function initial() {
-  Role.estimatedDocumentCount((err: any, count: any) => {
+  Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Role({
         name: "admin"
-      }).save((err: any) => {
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -62,7 +60,7 @@ function initial() {
 
       new Role({
         name: "moderator"
-      }).save((err: any) => {
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -72,7 +70,7 @@ function initial() {
 
       new Role({
         name: "teacher"
-      }).save((err: any) => {
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
@@ -82,7 +80,7 @@ function initial() {
 
       new Role({
         name: "student"
-      }).save((err: any) => {
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
