@@ -1,12 +1,12 @@
-const config = require("../config/auth.config");
-const db = require("../models");
-const User = db.user;
-const Role = db.role;
+import { Request, Response } from 'express';
+import config from "../config/auth.config";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import Role, { RoleDoc } from '../models/role.model';
+import User from '../models/user.model';
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
 
-exports.signup = (req, res) => {
+const signup = (req :Request, res :Response) => {
   const user = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -43,7 +43,7 @@ exports.signup = (req, res) => {
         }
       );
     } else {
-      Role.findOne({ name: "user" }, (err, role) => {
+      Role.findOne({ name: "user" }, (err :any, role :RoleDoc) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -63,14 +63,12 @@ exports.signup = (req, res) => {
   });
 };
 
-exports.signin = (req, res) => {
+const signin = (req :Request, res :Response) => {
   User.findOne({
     email: req.body.email
   })
     .populate("roles", "-__v")
     .exec((err, user) => {
-      console.log('@@@', user);
-      console.log('###', err);
       if (err) {
         res.status(500).send({ message: err });
         return;
@@ -99,13 +97,22 @@ exports.signin = (req, res) => {
       const authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
-        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+        authorities.push(user.roles[i].name.toUpperCase());
       }
       res.status(200).send({
         id: user._id,
         email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
         roles: authorities,
         accessToken: token
       });
     });
 };
+
+const AuthController = {
+  signin,
+  signup
+}
+export default AuthController;
+

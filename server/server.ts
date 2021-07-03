@@ -1,8 +1,9 @@
-import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
-
-import db from "./models";
+import Role from './models/role.model';
+import mongoose from 'mongoose';
+import { authRouter } from './routes/auth.routes';
+import { userRouter } from './routes/user.routes';
 
 require('dotenv').config()
 
@@ -13,13 +14,10 @@ const app = express();
 
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const Role = db.role;
-
-db.mongoose
-  .connect(process.env.DB_URL, {
+mongoose.connect('mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -38,8 +36,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to BAAMM Project." });
 });
 
-require("./routes/auth.routes")(app);
-require("./routes/user.routes")(app);
+app.use(authRouter);
+app.use(userRouter);
 
 const PORT: any = process.env.PORT || 5000;
 const httpServer = require('http').Server(app);
@@ -48,36 +46,46 @@ httpServer.listen(PORT, () => {
 });
 
 function initial() {
-  Role.estimatedDocumentCount((err: any, count: any) => {
+  Role.estimatedDocumentCount(undefined, (err: any, count: number) => {
     if (!err && count === 0) {
       new Role({
-        name: "user"
-      }).save((err: any) => {
+        name: "admin"
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'user' to roles collection");
+        console.log("Added 'admin' to roles collection");
       });
 
       new Role({
         name: "moderator"
-      }).save((err: any) => {
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'moderator' to roles collection");
+        console.log("Added 'moderator' to roles collection");
       });
 
       new Role({
-        name: "admin"
-      }).save((err: any) => {
+        name: "teacher"
+      }).save((err) => {
         if (err) {
           console.log("error", err);
         }
 
-        console.log("added 'admin' to roles collection");
+        console.log("Added 'teacher' to roles collection");
+      });
+
+      new Role({
+        name: "student"
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("Added 'student' to roles collection");
       });
     }
   });
