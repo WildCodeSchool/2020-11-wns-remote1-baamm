@@ -15,4 +15,6 @@ router.get("/api/room/all", controller.allRooms);
 
 router.post("/api/room/create", controller.createRoom);
 
+router.post("/api/room/join", controller.joinRoom);
+
 export { router as roomRouter }

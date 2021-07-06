@@ -23,9 +23,30 @@ const createRoom :RequestHandler = (req, res) => {
   });
 };
 
+const joinRoom :RequestHandler = (req, res) => {
+  Room.findOne({
+    name: req.body.roomName
+  })
+    .exec((err, room) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (!room) {
+        return res.status(404).send({ message: "Room introuvable" });
+      }
+
+      res.status(200).send({
+        id: room._id,
+      });
+    });
+};
+
 const RoomController = {
   allRooms,
   createRoom,
+  joinRoom,
 }
 
 export default RoomController;
