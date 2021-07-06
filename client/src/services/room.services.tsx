@@ -12,8 +12,8 @@ const createRoom = async (name: String, type: String, session: String) => axios
   })
   .then((response) => response.data);
 
-const joinRoom = async (roomID: String) => axios
-  .post(`${API_URL}create`, { roomID })
+const joinRoom = async (roomName: String) => axios
+  .post(`${API_URL}join`, { roomName })
   .then((response) => response.data);
 
 const RoomService = {

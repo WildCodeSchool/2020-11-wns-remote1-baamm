@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import RoomService from '../../../services/room.services';
@@ -7,15 +7,21 @@ import RoomService from '../../../services/room.services';
 export default function JoinRoom() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const history = useHistory();
+  const [message, setMessage] = useState('');
 
   function joinRoom(data: any) {
     RoomService.joinRoom(data.roomID).then(
-      () => {
-        history.push(`/room/${data.roomID}`);
-        window.location.reload();
+      (res) => {
+        history.push(`/room/${res.id}`);
       },
       (error) => {
-        console.log(error);
+        const resMessage = (error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString();
+
+        setMessage(resMessage);
       },
     );
   }
@@ -32,6 +38,17 @@ export default function JoinRoom() {
             <input type="submit" value="Rejoindre" />
           </div>
         </div>
+
+        {message && (
+          <div className="form-group">
+            <div
+              className="alert alert-danger"
+              role="alert"
+            >
+              {message}
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );
