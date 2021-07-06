@@ -11,7 +11,7 @@ export default function JoinRoom() {
   function joinRoom(data: any) {
     RoomService.joinRoom(data.roomID).then(
       () => {
-        history.push('/room');
+        history.push(`/room/${data.roomID}`);
         window.location.reload();
       },
       (error) => {

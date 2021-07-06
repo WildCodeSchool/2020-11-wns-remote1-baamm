@@ -22,18 +22,35 @@
 	align-content: center;
 }
 
+.myId2 {
+	display: none;
+}
+
 .call-button {
 	text-align: center;
 	margin-top: 2rem;
 }
 
 .videoContainer {
-		
 	justify-content: center;
-	align-content: center;
+	align-items: center;
 	width: 100%;
 	height: 100%;
 	margin-top: 5rem;
+}
+.second-screen {
+	width: 50vw;
+	height: 50vh;
+}
+
+.second-webcam {
+	display: none;
+}
+
+.video {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .webcam-full {
@@ -41,11 +58,12 @@
 }
 
 .webcam-resize {
-	width: 15%;
+	width: 40%;
+	padding: 2vw;
 	justify-content: start;
 }
 
 .caller {
 	text-align: center;
-	color: #fff;
+	color: #000;
 }

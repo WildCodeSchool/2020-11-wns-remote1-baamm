@@ -1,17 +1,16 @@
 import React from 'react';
-import VideoRoom from '../Room/Room';
-import './Teacher.style.css';
+import VideoChat from '../VideoCall/VideoCall';
 
-function Teacher() {
+function Student() {
   // const [showToolsContain, setShowToolsContain] = useState(true)
 
   return (
     <div className="mainContainer">
       <div className="leftColumn">
-        <VideoRoom />
+        <VideoChat />
       </div>
     </div>
   );
 }
 
-export default Teacher;
+export default Student;

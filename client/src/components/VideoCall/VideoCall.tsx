@@ -22,7 +22,7 @@ export default function VideoChat() {
   const [receivingCall, setReceivingCall] = useState(false);
   const [streaming, setStream] = useState();
   const connectionRef = useRef<any>();
-  const myVideo = useRef<any | undefined>();
+  const myVideo = useRef<any | MediaStream>();
   const userVideo = useRef<any | undefined>();
   const mediaDevices = navigator.mediaDevices as any;
 
@@ -113,19 +113,17 @@ export default function VideoChat() {
   return (
     <>
       <div className="videoContainer">
-        <button type="button" onClick={() => getScreen()}>Share Screen</button>
-        <button type="button" onClick={() => stopShare()}>Stop Share</button>
-
-        <div className="video">
-          {streaming && <video playsInline muted ref={myVideo} autoPlay className="webcam-full" />}
+        <div className="videoButton">
+          <button type="button" onClick={() => getScreen()}>Share Screen</button>
+          <button type="button" onClick={() => stopShare()}>Stop Share</button>
         </div>
-
-        <div className="video">
-          {streaming && <video playsInline muted ref={userVideo} autoPlay className="webcam-full" />}
+        <div className={callAccepted ? 'groupVideo' : 'video'}>
+          {streaming && <video playsInline muted ref={myVideo} autoPlay className={callAccepted ? 'webcam-resize' : 'webcam-full'} />}
+          {streaming && <video playsInline muted ref={userVideo} autoPlay className={callAccepted ? 'webcam-resize' : 'second-webcam'} />}
         </div>
       </div>
 
-      <div className="myId">
+      <div className={callAccepted ? 'myId2' : 'myId'}>
         <TextField
           id="filled-basic"
           label="Name"

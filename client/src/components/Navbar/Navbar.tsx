@@ -19,7 +19,7 @@ const NavBar = ({ currentUser }: any) => (
 
       {currentUser && (
         <li className="nav-item">
-          <Link to="/meet" className="nav-link">
+          <Link to="/room" className="nav-link">
             Meets
           </Link>
         </li>
