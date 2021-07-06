@@ -1,29 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-import './Home.css';
+import UserService from '../../services/user.service';
 
-const Home = () => {
-  const [roomName, setRoomName] = React.useState('');
+export default function Home() {
+  const [content, setContent] = useState('');
 
-  const handleRoomNameChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setRoomName(event.currentTarget.value);
-  };
+  useEffect(() => {
+    UserService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        setContent((error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString());
+      },
+    );
+  }, []);
 
   return (
-    <div className="home-container">
-      <input
-        type="text"
-        placeholder="Room"
-        value={roomName}
-        onChange={handleRoomNameChange}
-        className="text-input-field"
-      />
-      <Link to={`/${roomName}`} className="enter-room-button">
-        Join room
-      </Link>
+    <div className="container">
+      <header className="jumbotron">
+        <h3>{content}</h3>
+      </header>
     </div>
   );
-};
-
-export default Home;
+}

@@ -1,8 +1,6 @@
 import { RequestHandler } from 'express';
 import jwt from "jsonwebtoken";
 import config from "../config/auth.config";
-import User from '../models/user.model';
-import Role from '../models/role.model';
 
 declare global {
   namespace Express {
@@ -24,82 +22,8 @@ const verifyToken: RequestHandler = (req, res, next) => {
   next();
 };
 
-const isAdmin: RequestHandler = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-
-    if (!user) {
-      res.status(500).send({ message: 'User not found' });
-      return;
-    }
-
-    Role.find(
-      {
-        _id: { $in: user.roles }
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
-            next();
-            return;
-          }
-        }
-
-        res.status(403).send({ message: "Require Admin Role!" });
-        return;
-      }
-    );
-  });
-};
-
-const isModerator: RequestHandler = (req, res, next) => {
-  User.findById(req.userId).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-
-    if (!user) {
-      res.status(500).send({ message: 'User not found' });
-      return;
-    }
-
-    Role.find(
-      {
-        _id: { $in: user.roles }
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
-            next();
-            return;
-          }
-        }
-
-        res.status(403).send({ message: "Require Moderator Role!" });
-        return;
-      }
-    );
-  });
-};
-
 const authJwt = {
   verifyToken,
-  isAdmin,
-  isModerator
 };
 
 export default authJwt;

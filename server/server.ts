@@ -1,11 +1,11 @@
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import Role from './models/role.model';
 import mongoose from 'mongoose';
 import { socketVideo } from './socket/serverVideo';
 import { authRouter } from './routes/auth.routes';
 import { userRouter } from './routes/user.routes';
+import { roomRouter } from './routes/room.routes';
 
 require('dotenv').config()
 
@@ -38,12 +38,14 @@ app.get("/", (req, res) => {
 
 app.use(authRouter);
 app.use(userRouter);
+app.use(roomRouter);
 
 const PORT: any = process.env.PORT || 5000;
 const httpServer = new http.Server(app);
 httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
 socketVideo(httpServer);
 
 // Express configuration

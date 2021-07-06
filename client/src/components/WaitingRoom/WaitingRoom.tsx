@@ -1,8 +1,8 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import './WaitingRoom.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import useQueue from '../UseQueue/useQueue';
+import useQueue from '../hooks/useQueue';
 import { User } from '../../types';
 
 export default function WaitingRoom() {
