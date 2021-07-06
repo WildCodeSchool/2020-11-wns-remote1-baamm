@@ -18,13 +18,13 @@ router.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
 
 router.get(
   "/api/test/mod",
-  [authJwt.verifyToken, authJwt.isModerator],
+  [authJwt.verifyToken],
   controller.moderatorBoard
 );
 
 router.get(
   "/api/test/admin",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [authJwt.verifyToken],
   controller.adminBoard
 );
 

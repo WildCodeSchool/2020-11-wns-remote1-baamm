@@ -1,0 +1,36 @@
+.generalContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: brown;
+}
+
+.leftColumnContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 3;
+}
+
+.rightColumnContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.blocContainer {
+  width: 80%;
+  background-color: chartreuse;
+  margin: 5% 0;
+}
+
+.roomBlock {
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
+}
+
+.room-mainBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

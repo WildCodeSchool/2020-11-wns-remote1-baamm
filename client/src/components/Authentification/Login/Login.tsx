@@ -1,50 +1,67 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import './Login.style.css';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
-async function loginUser(credentials :any) {
-  return fetch('http://localhost:5000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(credentials),
-  })
-    .then((data) => data);
-}
+import AuthService from '../../../services/auth.service';
 
-interface Props {
-  setToken: any;
-}
+export default function Login() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const history = useHistory();
+  const [message, setMessage] = useState('');
 
-export default function Login({ setToken }: Props) {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  function handleLogin(data: any) {
+    setMessage('');
 
-  const handleSubmit = async (event :any) => {
-    event.preventDefault();
-    const token = await loginUser({
-      email,
-      password,
-    });
-    setToken(token);
-  };
+    AuthService.login(data.email, data.password).then(
+      () => {
+        history.push('/profile');
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage = (error.response
+          && error.response.data
+          && error.response.data.message)
+          || error.message
+          || error.toString();
+
+        setMessage(resMessage);
+      },
+    );
+  }
 
   return (
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">
-          <p>Email</p>
-          <input type="text" onChange={(e :any) => setEmail(e.target.value)} />
-        </label>
-        <label htmlFor="password">
-          <p>Password</p>
-          <input type="password" onChange={(e :any) => setPassword(e.target.value)} />
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+    <div className="col-md-12">
+      <div className="card card-container">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
+        />
+
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <div>
+            <div className="form-group">
+              <input placeholder="Email" {...register('email', { required: true })} />
+              {errors.email && <span>This field is required</span>}
+
+              <input type="password" placeholder="Password" {...register('password', { required: true })} />
+              {errors.password && <span>This field is required</span>}
+            </div>
+            <div>
+              <input type="submit" />
+            </div>
+          </div>
+
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
+              </div>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
