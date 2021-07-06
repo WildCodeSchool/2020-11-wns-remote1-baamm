@@ -21,15 +21,10 @@ services:
 
   client:
     command: sh -c "npm run build"
-    expose:
-      - 3000
     volumes:
       - client-build:/app/build
     environment:
       - NODE_ENV=production
-      # pour tester les requêtes en local
-      #- REACT_APP_API_URL=http://localhost:8000
-      # pour déployer
       - REACT_APP_API_URL=https://staging.baam.wns.wilders.dev
 
   nginx:
@@ -40,7 +35,6 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - client-build:/client-build
-      - server-built:/server-built
       - ./nginx/logs:/var/log/nginx
 
 volumes:
