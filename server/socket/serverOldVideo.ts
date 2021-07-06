@@ -1,4 +1,3 @@
-import { log } from 'console';
 import http from 'http';
 import { Socket, Server } from 'socket.io';
 
@@ -42,6 +41,24 @@ const socketIO = (httpServer: http.Server) => {
       io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
     });
 
+    socket.emit("me", socket.id)
+
+    socket.on("disconnect", () => {
+      socket.broadcast.emit("callEnded")
+    })
+  
+    socket.on("callUser", (data: any) => {
+      io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+    })
+  
+    socket.on("answerCall", (data: any) => {
+      io.to(data.to).emit("callAccepted", data.signal)
+    })  
+  
+    socket.on("shareScreen", (data: any) => {
+      io.to(data.to).emit("shareScreen", data.signal)
+    })  
+  
     socket.on("disconnect", () => {
       const roomID = socketToRoom[socket.id];
       let room = users[roomID];
