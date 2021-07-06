@@ -4,12 +4,10 @@ services:
   mongodb:
     restart: always
 
-  server:
-    command: npm run prod
+  bam-backend:
+    command: sh -c "npm run build && npm run start"
     expose:
-      - 5000
-    volumes:
-      - server-built:/server/built
+      - 8000
     restart: always
     environment:
       - DB_USERNAME=mayanaB
@@ -19,7 +17,7 @@ services:
       - JWT_KEY=baamm-secret-key
       - DB_URL=mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority
 
-  client:
+  bam-frontend:
     command: sh -c "npm run build"
     volumes:
       - client-build:/app/build
