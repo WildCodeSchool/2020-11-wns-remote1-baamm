@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoChat from '../VideoCall/VideoCall';
+import VideoRoom from '../Room/Room';
 import './Teacher.style.css';
 
 function Teacher() {
@@ -8,7 +8,7 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn">
-        <VideoChat />
+        <VideoRoom />
       </div>
     </div>
   );

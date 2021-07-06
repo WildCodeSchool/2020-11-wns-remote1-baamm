@@ -1,7 +1,16 @@
 import React from 'react';
+import VideoChat from '../VideoCall/VideoCall';
 
 function Student() {
-  return <p> Hello from Student </p>;
+  // const [showToolsContain, setShowToolsContain] = useState(true)
+
+  return (
+    <div className="mainContainer">
+      <div className="leftColumn">
+        <VideoChat />
+      </div>
+    </div>
+  );
 }
 
 export default Student;

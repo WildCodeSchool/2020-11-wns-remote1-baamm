@@ -1,7 +1,9 @@
 import express from 'express';
+import http from 'http';
 import cors from 'cors';
 import Role from './models/role.model';
 import mongoose from 'mongoose';
+import { socketIO } from './serverVideo';
 import { authRouter } from './routes/auth.routes';
 import { userRouter } from './routes/user.routes';
 
@@ -11,7 +13,6 @@ import { AskTalkings } from './data/askTalking';
 import CustomSocket from './CustomSocket'
 
 const app = express();
-
 app.use(cors());
 
 app.use(express.json());
@@ -27,7 +28,7 @@ mongoose.connect('mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/
     console.log("Successfully connect to MongoDB.");
     initial();
   })
-  .catch(err => {
+  .catch((err: any) => {
     console.error("Connection error", err);
     process.exit();
   });
@@ -40,10 +41,11 @@ app.use(authRouter);
 app.use(userRouter);
 
 const PORT: any = process.env.PORT || 5000;
-const httpServer = require('http').Server(app);
+const httpServer = new http.Server(app);
 httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+socketIO(httpServer);
 
 function initial() {
   Role.estimatedDocumentCount(undefined, (err: any, count: number) => {
@@ -96,12 +98,11 @@ app.set("port", process.env.PORT || 5000);
 
 const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
 
-const io = require("socket.io")(httpServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: [ "GET", "POST" ]
-  }
-})
+const io = require("socket.io")(httpServer)
+
+const users : any = {}
+
+const socketToRoom : any = {}
 
 let interval: NodeJS.Timeout;
 let askingTalkArray = AskTalkings;
@@ -175,7 +176,15 @@ io.on("connection", (socket: CustomSocket) => {
   socket.on("shareScreen", (data: any) => {
     io.to(data.to).emit("shareScreen", data.signal)
   })  
-  
+
+  socket.on('disconnect', () => {
+      const roomID = socketToRoom[socket.id];
+      let room = users[roomID];
+      if (room) {
+          room = room.filter((id: string) => id !== socket.id);
+          users[roomID] = room;
+      }
+  });  
 });
 
 
