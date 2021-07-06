@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import Role from './models/role.model';
 import mongoose from 'mongoose';
 import { authRouter } from './routes/auth.routes';
 import { userRouter } from './routes/user.routes';
+import { roomRouter } from './routes/room.routes';
 
 require('dotenv').config()
 
@@ -25,7 +25,6 @@ mongoose.connect('mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-    initial();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -38,58 +37,13 @@ app.get("/", (req, res) => {
 
 app.use(authRouter);
 app.use(userRouter);
+app.use(roomRouter);
 
 const PORT: any = process.env.PORT || 5000;
 const httpServer = require('http').Server(app);
 httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-function initial() {
-  Role.estimatedDocumentCount(undefined, (err: any, count: number) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "admin"
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("Added 'admin' to roles collection");
-      });
-
-      new Role({
-        name: "moderator"
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("Added 'moderator' to roles collection");
-      });
-
-      new Role({
-        name: "teacher"
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("Added 'teacher' to roles collection");
-      });
-
-      new Role({
-        name: "student"
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("Added 'student' to roles collection");
-      });
-    }
-  });
-}
 
 // Express configuration
 app.set("port", process.env.PORT || 5000);

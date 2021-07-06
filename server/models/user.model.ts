@@ -1,12 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IRole } from './role.model';
 
 interface IUser {
   firstname: string;
   lastname: string;
   email: string;
   password: string;
-  roles: IRole[];
+  role: string;
 }
 
 interface UserDoc extends IUser, Document {}
@@ -16,12 +15,7 @@ const UserSchema = new Schema({
   lastname: String,
   email: String,
   password: String,
-  roles: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Role"
-    }
-  ]
+  role: String,
 });
 
 const User = mongoose.model<UserDoc>("User", UserSchema);

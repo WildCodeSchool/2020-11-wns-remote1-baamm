@@ -11,13 +11,12 @@ export default function Register() {
   const [message, setMessage] = useState('');
 
   function handleRegister(data: any) {
-    const roles = [data.roles];
     AuthService.register(
       data.firstname,
       data.lastname,
       data.email,
       data.password,
-      roles,
+      data.role,
     ).then(
       (response) => {
         setMessage(response.data.message);
@@ -56,13 +55,13 @@ export default function Register() {
                 <p>Quel est votre status ?</p>
                 <div>
                   <label htmlFor="Student">
-                    <input id="Student" {...register('roles', { required: true })} type="radio" value="student" checked />
+                    <input id="Student" {...register('role', { required: true })} type="radio" value="STUDENT" checked />
                     Elève
                   </label>
                 </div>
                 <div>
                   <label htmlFor="Teacher">
-                    <input id="Teacher" {...register('roles', { required: true })} type="radio" value="teacher" />
+                    <input id="Teacher" {...register('role', { required: true })} type="radio" value="TEACHER" />
                     Professeur
                   </label>
                 </div>
