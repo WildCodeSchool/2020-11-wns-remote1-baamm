@@ -3,12 +3,7 @@ import { Socket, Server } from 'socket.io';
 
 
 const socketIO = (httpServer: http.Server) => {
-  const io = new Server(httpServer, {
-    cors: {
-      origin: "http://localhost:3000",
-      methods: [ "GET", "POST" ]
-    }
-  });
+  const io = new Server(httpServer);
   const socketToRoom: Record<string, string> = {};
   const users: Record< string, string[]> = {};
 
