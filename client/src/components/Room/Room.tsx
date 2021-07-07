@@ -118,11 +118,14 @@ const VideoRoom = () => {
 
       socket.on('receiving returned signal', (payload: any) => {
         const item = peersRef.current.find((p: any) => p.peerID === payload.id);
-        item.peer.signal(payload.signal);
+        item?.peer?.signal(payload.signal);
       });
     });
-  }, [roomId]);
+  }, []);
 
+  useEffect(() => {
+    console.log(peers);
+  }, [peers]);
   return (
     <Container>
       <StyledVideo muted ref={userVideo} autoPlay playsInline />
