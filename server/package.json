@@ -24,7 +24,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.15",
     "nodemon": "^2.0.6",
-    "socket.io": "^3.0.1"
+    "socket.io": "^4.1.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
