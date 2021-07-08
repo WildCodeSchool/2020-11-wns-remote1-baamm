@@ -3,7 +3,12 @@ import { Socket, Server } from 'socket.io';
 import { AskTalkings } from '../data/askTalking';
 
 const socketVideo = (httpServer: http.Server) => {
-  const io = new Server(httpServer);
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "https://staging.baam.wns.wilders.dev/",
+      methods: [ "GET", "POST" ]
+    }
+  });
   const socketToRoom: Record<string, string> = {};
   const users: Record<string, string[]> = {};
   const usersInTheRoom: Record<string, string[]> = {};
