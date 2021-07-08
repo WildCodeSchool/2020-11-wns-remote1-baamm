@@ -6,12 +6,14 @@ import './Teacher.style.css';
 
 function Teacher() {
   // const [showToolsContain, setShowToolsContain] = useState(true)
+  const videoStatus = true;
+  const microStatus = true;
 
   return (
     <div className="mainContainer">
       <div className="leftColumn">
         {/* <VideoRoom /> */}
-        <VideoGroup videoStatus microStatus />
+        <VideoGroup videoStatus={videoStatus} microStatus={microStatus} />
       </div>
     </div>
   );

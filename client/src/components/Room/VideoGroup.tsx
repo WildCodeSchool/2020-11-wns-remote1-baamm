@@ -4,8 +4,6 @@ import { useParams } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 import Peer, { SignalData } from 'simple-peer';
 import socket from '../../socket/Socket';
-// import './VideoGroup.css';
-// import { currentUser } from '../../cache';
 
 interface IParams {
   id: string;
@@ -71,19 +69,21 @@ const Video = ({
   }, [peer]);
 
   return (
-    // eslint-disable-next-line jsx-a11y/media-has-caption
-    <video
-      style={{
-        margin: '2%',
-        height: '25%',
-        width: '25%',
-        borderRadius: '10px',
-        objectFit: 'cover',
-      }}
-      playsInline
-      autoPlay
-      ref={ref}
-    />
+    <>
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      <video
+        style={{
+          margin: '2%',
+          height: '25%',
+          width: '25%',
+          borderRadius: '10px',
+          objectFit: 'cover',
+        }}
+        playsInline
+        autoPlay
+        ref={ref}
+      />
+    </>
   );
 };
 
@@ -94,6 +94,8 @@ const VideoGroup = ({
   const params = useParams<IParams>();
   const [peerId, setPeerId] = useState<string>('');
   const peersRef = useRef<IPeerWithId[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [screenShare, setScreenShare] = useState(false);
 
   const roomId = params.roomID;
 
@@ -148,6 +150,31 @@ const VideoGroup = ({
     return peer;
   };
 
+  const addScreen = () => {
+    const mediaDevices = navigator.mediaDevices as any;
+    mediaDevices.getDisplayMedia({ video: true, audio: false })
+      .then((stream: MediaStream) => {
+        console.log('Add Screen');
+        // ? ref.current.srcObject = stream;
+        // eslint-disable-next-line prefer-template
+        const userID = socket.id + '_screenShare';
+        const peer = createPeer(userID, socket.id, stream);
+        if (
+          !peersRef.current.find(
+            (peerWithId) => userID === peerWithId.peerID,
+          )
+        ) {
+          peersRef.current.push({
+            peerID: userID,
+            peer,
+            micro: true,
+            video: true,
+          });
+        }
+        setScreenShare(true);
+      });
+  };
+
   useEffect(() => {
     if (roomId) {
       navigator.mediaDevices
@@ -188,6 +215,8 @@ const VideoGroup = ({
                 video: false,
               });
             }
+            console.log('USER JOINED', peersRef);
+            setScreenShare(!screenShare);
           });
 
           socket.on('receiving returned signal', (payload: IPayload) => {
@@ -209,16 +238,19 @@ const VideoGroup = ({
 
   return (
     <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
+
       {peersRef?.current.map((peer: IPeerWithId) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Video
-          key={peer.peerID}
-          peer={peer.peer}
-          microStatus={microStatus}
-          videoStatus={videoStatus}
-          peerId={peerId}
-          videoPeerId={peer.peerID}
-        />
+        <>
+          <Video
+            key={peer.peerID}
+            peer={peer.peer}
+            microStatus={microStatus}
+            videoStatus={videoStatus}
+            peerId={peerId}
+            videoPeerId={peer.peerID}
+          />
+          <button type="button" onClick={() => addScreen()}>share screen</button>
+        </>
       ))}
     </Container>
   );
