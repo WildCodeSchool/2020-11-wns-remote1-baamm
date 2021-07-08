@@ -6,10 +6,8 @@ function Teacher() {
   // const [showToolsContain, setShowToolsContain] = useState(true)
 
   return (
-    <div className="mainContainer">
-      <div className="leftColumn">
-        <VideoRoom />
-      </div>
+    <div className="leftColumn">
+      <VideoRoom />
     </div>
   );
 }
