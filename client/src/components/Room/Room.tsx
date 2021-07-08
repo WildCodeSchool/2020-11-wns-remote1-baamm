@@ -1,22 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'simple-peer';
-import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import socket from '../../socket/Socket';
-
-const Container = styled.div`
-    padding: 20px;
-    display: flex;
-    height: 100vh;
-    width: 90%;
-    margin: auto;
-    flex-wrap: wrap;
-`;
-
-const StyledVideo = styled.video`
-    height: 40%;
-    width: 50%;
-`;
+import './Room.css';
 
 interface IParams {
   id: string;
@@ -124,13 +110,13 @@ const VideoRoom = () => {
   }, [roomId]);
 
   return (
-    <Container>
-      <StyledVideo muted ref={userVideo} autoPlay playsInline />
+    <div className="allVideosContainer">
+      <video className="video" muted ref={userVideo} autoPlay playsInline />
       {peers.map((peer, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Video key={index} peer={peer} />
       ))}
-    </Container>
+    </div>
   );
 };
 

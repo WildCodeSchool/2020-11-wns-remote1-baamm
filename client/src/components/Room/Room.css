@@ -1,0 +1,12 @@
+.allVideosContainer {
+  padding: 20px;
+  display: flex;
+  width: 90%;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.video {
+  height: 40%;
+  width: 50%;
+}
