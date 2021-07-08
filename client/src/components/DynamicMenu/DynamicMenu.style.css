@@ -1,22 +1,31 @@
+.menuContainer {
+  background-color: #ffffff;
+  transition: width 0.5s;
+}
+
+.menuBar {
+  display: flex;
+  width: 100%;
+}
+
+.menuBarOpen {
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 8px 6px -5px #bbbdbe;
+}
+.menuBarClose {
+  flex-direction: column;
+}
+
 .closedContainer {
   display: flex;
   justify-content: center;
   width: 4vw;
-  height: 100vh;
-  background-color: #323A57;
-  transition: width 0.5s;
-  box-shadow: -0.2px 0px 8px grey;
 }
 
 .openedContainer {
   width: 30vw;
-  height: 100vh;
-  transition: width 0.5s;
-  box-shadow: -0.2px 0px 8px grey;
-}
-
-.hiddenButton {
-  display: none;
 }
 
 .closedNavbar {
@@ -24,21 +33,32 @@
   flex-direction: column;
 }
 
-.optionsIcon {
-  border-width: 1px;
-  border-top-color: #D1D1D7;
-  border-top-style: solid;
-  position: absolute;
-  bottom: 2%;
+.buttonBarContainer {
+  border: none;
+  background: none;
+  width: 100%;
+}
+.buttonBarContainerOpen {
+  padding: 1.2vh;
+  border-bottom: 5px solid #ffffff;
 }
 
-.linkTest {
-  color: #D1D1D7;
+.buttonBarContainerClose {
+  padding: 3vh 0;
 }
 
-.navToolsBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: #323A57;
+.buttonBarContainerClose:hover {
+  border-left: 5px solid #4ea75c;
+}
+
+.buttonBarContainerOpen:hover {
+  border-bottom: 5px solid #4ea75c;
+}
+
+.buttonBarIcon {
+  color: #4ea75c;
+}
+
+.ongletContainer {
+  height: 100%;
 }
