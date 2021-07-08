@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './WaitingRoom.style.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import useQueue from '../hooks/useQueue';
-import { User } from '../../types';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
+// import useQueue from '../../hooks/useQueue';
+import { User } from '../../../types';
 
 export default function WaitingRoom() {
-  const roomId = 'QueueRoom';
-  const { waitingStudents, sendWaitingList } = useQueue(roomId);
+  // const roomId = 'QueueRoom';
+  // const { waitingStudents, sendWaitingList } = useQueue(roomId);
   const [newStudent, setNewStudent] = useState<User | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,7 +27,7 @@ export default function WaitingRoom() {
       askTalking: null,
     });
     if (newStudent !== null) {
-      sendWaitingList(newStudent);
+      // sendWaitingList(newStudent);
     }
     setJoinQueue(true);
   }
@@ -52,7 +52,7 @@ export default function WaitingRoom() {
       </div>
       <div className="waitingQueueContainer">
         <ol className="waitingQueueList">
-          {waitingStudents.map((student: User) => (
+          {/* {waitingStudents.map((student: User) => (
             <li key={student.id}>
               <div className="waitingContainer">
                 <FontAwesomeIcon icon={faUser} className="waitIcon" />
@@ -66,7 +66,7 @@ export default function WaitingRoom() {
                 </div>
               </div>
             </li>
-          ))}
+          ))} */}
         </ol>
       </div>
     </div>
