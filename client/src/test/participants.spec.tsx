@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Test from './Test';
-import Participants from '../components/Participants/Participants';
+import Participants from '../components/DynamicMenu/Participants/Participants';
 
 describe('Pain au chocolat ou Chocolatine', () => {
   it('return Chocolatine', () => {

@@ -10,11 +10,9 @@ function Teacher() {
   const microStatus = true;
 
   return (
-    <div className="mainContainer">
-      <div className="leftColumn">
-        {/* <VideoRoom /> */}
-        <VideoGroup videoStatus={videoStatus} microStatus={microStatus} />
-      </div>
+    <div className="leftColumn">
+      {/* <VideoRoom /> */}
+      <VideoGroup videoStatus={videoStatus} microStatus={microStatus} />
     </div>
   );
 }

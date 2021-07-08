@@ -1,0 +1,47 @@
+.listContainer {
+  height: 94.5%;
+  overflow-y: scroll;
+}
+
+.userItem {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  width: 80%;
+  border-radius: 50px 0 0 50px;
+  background-color: #4ea75c;
+  color: #ecefe6;
+  padding: 1vh 0;
+}
+
+.roleInfo {
+  margin-left: 20px;
+  padding-bottom: 10px;
+  color: #9fa1a2;
+  border-bottom: 4px dotted #9fa1a2 ;
+}
+
+.logo {
+  height: 7vh;
+}
+
+.userInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 75%;
+}
+
+.userFullName {
+  font-size: 30px;
+  margin: 0;
+}
+
+

@@ -5,53 +5,46 @@ import {
   faHome, faSignOutAlt, faSignInAlt, faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import AuthService from '../../services/auth.service';
+import './Navbar.css';
 
 function logOut() {
   AuthService.logout();
 }
 
 const NavBar = ({ currentUser }: any) => (
-  <nav className="navbar navbar-expand navbar-dark bg-dark">
-    <Link to="/" className="navbar-brand">
+  <nav className="navBarContainer">
+    <Link to="/" className="nav-link">
       <FontAwesomeIcon icon={faHome} />
     </Link>
-    <div className="navbar-nav mr-auto">
+    <div className="conditionnal-navbar">
 
       {currentUser && (
-        <li className="nav-item">
-          <Link to="/room" className="nav-link">
-            Meets
-          </Link>
-        </li>
+        <Link to="/room" className="nav-link">
+          Meets
+        </Link>
       )}
     </div>
 
     {currentUser ? (
-      <div className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link to="/profile" className="nav-link">
-            {currentUser.fullname}
-          </Link>
-        </li>
-        <li className="nav-item">
-          <a href="/login" className="nav-link" onClick={logOut}>
-            <FontAwesomeIcon icon={faSignOutAlt} />
-          </a>
-        </li>
+      <div className="nav-connected">
+        <Link to="/profile" className="nav-link">
+          {currentUser.firstname}
+          {' '}
+          {currentUser.lastname}
+        </Link>
+        <a href="/login" className="nav-link" onClick={logOut}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+        </a>
       </div>
     ) : (
-      <div className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link to="/login" className="nav-link">
-            <FontAwesomeIcon icon={faSignInAlt} />
-          </Link>
-        </li>
+      <div className="nav-notConnected">
+        <Link to="/login" className="nav-link">
+          <FontAwesomeIcon icon={faSignInAlt} />
+        </Link>
 
-        <li className="nav-item">
-          <Link to="/register" className="nav-link">
-            <FontAwesomeIcon icon={faUserPlus} />
-          </Link>
-        </li>
+        <Link to="/register" className="nav-link">
+          <FontAwesomeIcon icon={faUserPlus} />
+        </Link>
       </div>
     )}
   </nav>

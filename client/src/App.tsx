@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import AuthService from './services/auth.service';
@@ -29,14 +28,14 @@ export default function App() {
     <>
       <NavBar currentUser={currentUser} />
 
-      <div className="container mt-3">
+      <div className="pageContainer">
         <Switch>
           <Route exact path={['/', '/home']} component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/chatroom" component={Student} />
           <Route path="/room" exact component={MeetUp} />
           <Route path="/room/:roomID">
-            <div className="App">
+            <div className="roomContainer">
               <Teacher />
               <DynamicMenu />
             </div>

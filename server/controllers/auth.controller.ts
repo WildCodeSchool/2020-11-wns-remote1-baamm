@@ -56,7 +56,8 @@ const signin = (req: Request, res: Response) => {
 
       res.status(200).send({
         id: user._id,
-        fullname: `${user.firstname} ${user.lastname}`,
+        firstname: user.firstname,
+        lastname: user.lastname,
         role: user.role,
         accessToken: token
       });
