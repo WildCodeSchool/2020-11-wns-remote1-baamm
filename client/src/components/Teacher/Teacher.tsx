@@ -1,5 +1,7 @@
 import React from 'react';
-import VideoRoom from '../Room/Room';
+// import VideoRoom from '../Room/Room';
+import VideoGroup from '../Room/VideoGroup';
+
 import './Teacher.style.css';
 
 function Teacher() {
@@ -8,7 +10,8 @@ function Teacher() {
   return (
     <div className="mainContainer">
       <div className="leftColumn">
-        <VideoRoom />
+        {/* <VideoRoom /> */}
+        <VideoGroup videoStatus microStatus />
       </div>
     </div>
   );
