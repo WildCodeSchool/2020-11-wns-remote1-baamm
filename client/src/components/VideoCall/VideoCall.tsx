@@ -42,7 +42,7 @@ export default function VideoChat() {
       setUserName(data.name);
       setCallerSignal(data.signal);
     });
-  }, []);
+  }, [mediaDevices]);
 
   const getScreen = async () => {
     mediaDevices.getDisplayMedia({ video: true, audio: false }).then((streamDevice: any) => {

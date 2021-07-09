@@ -107,11 +107,8 @@ const VideoRoom = () => {
   }, []);
 
   return (
-    <div className="videoContainer">
-      <div className="videoBox">
-        {/* <video className="video" muted ref={userVideo} autoPlay playsInline /> */}
-        <Video />
-      </div>
+    <div className="allVideosContainer">
+      {/* <video className="video" muted ref={userVideo} autoPlay playsInline /> */}
       {peers.map((peer, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <VideoPeer key={index} peer={peer} />

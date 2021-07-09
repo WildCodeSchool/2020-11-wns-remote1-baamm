@@ -9,9 +9,6 @@ import { roomRouter } from './routes/room.routes';
 
 require('dotenv').config()
 
-import { AskTalkings } from './data/askTalking';
-import CustomSocket from './CustomSocket'
-
 const app = express();
 app.use(cors());
 

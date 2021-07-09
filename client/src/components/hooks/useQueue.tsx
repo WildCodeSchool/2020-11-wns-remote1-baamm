@@ -1,25 +1,17 @@
 import {
-  MutableRefObject, useEffect, useRef, useState,
+  useEffect, useState,
 } from 'react';
-import io, { Socket } from 'socket.io-client';
+import socket from '../../socket/Socket';
 import { User } from '../../types';
 
 const NEW_WAITING_STUDENT_EVENT = 'newWaitingStudent'; // Name of the event
-const SOCKET_SERVER_URL = process.env.REACT_APP_API_URL!;
 
 const useQueue = (roomId: string) => {
   const [waitingStudents, setWaitingStudents] = useState<User[]>([]);
-  const socketRef: MutableRefObject<typeof Socket | undefined> = useRef();
 
   useEffect(() => {
-    // Creates a WebSocket connection
-    socketRef.current = io(SOCKET_SERVER_URL, {
-      query: { roomId },
-      transports: ['websocket'],
-    });
-
     // Listens for incoming waiting student
-    socketRef.current.on(NEW_WAITING_STUDENT_EVENT, (student: User) => {
+    socket.on(NEW_WAITING_STUDENT_EVENT, (student: User) => {
       const waitingStudent = {
         ...student,
       };
@@ -29,8 +21,8 @@ const useQueue = (roomId: string) => {
     // Destroys the socket reference
     // when the connection is closed
     return () => {
-      if (socketRef.current !== undefined) {
-        socketRef.current.disconnect();
+      if (socket !== undefined) {
+        socket.disconnect();
       }
     };
   }, [roomId]);
@@ -38,8 +30,8 @@ const useQueue = (roomId: string) => {
   // Sends a message to the server that
   // forwards it to all users in the same room
   const sendWaitingList = (newStudent: User) => {
-    if (socketRef.current !== undefined) {
-      socketRef.current.emit(NEW_WAITING_STUDENT_EVENT, {
+    if (socket !== undefined) {
+      socket.emit(NEW_WAITING_STUDENT_EVENT, {
         body: newStudent,
       });
     }
