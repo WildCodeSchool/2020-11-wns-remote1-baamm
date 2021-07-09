@@ -20,12 +20,14 @@ services:
       - DB_URL=mongodb+srv://Totow:jecode4wcs@baammcluster.wxcnu.mongodb.net/db_baamm?retryWrites=true&w=majority
 
   client:
-    command: sh -c "npm run build"
-    volumes:
-      - client-build:/app/build
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
     environment:
       - NODE_ENV=production
       - REACT_APP_API_URL=https://staging.baam.wns.wilders.dev
+    ports:
+      - 2000:5000
 
   nginx:
     image: nginx:1.19.10

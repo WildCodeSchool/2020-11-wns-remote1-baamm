@@ -70,7 +70,7 @@ export default function WaitingQueue() {
     } else {
       socket.emit('cancel askingtalk', user.id);
     }
-  }, [askingTalk]);
+  }, [askingTalk, user.firstname, user.lastname, user.id]);
 
   // * fonction appelée par le clic sur le bouton quand on n'a pas encore demandé la parole
   // const sendAskTalking = () => {

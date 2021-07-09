@@ -29,7 +29,7 @@ export default function Participants() {
       setAllUsers(users);
     });
     console.log('ALL USERS', allUsers);
-  }, []);
+  }, [allUsers]);
 
   return (
     <div className="listContainer">
