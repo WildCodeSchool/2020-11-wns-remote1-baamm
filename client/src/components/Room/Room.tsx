@@ -1,22 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Peer from 'simple-peer';
-import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import socket from '../../socket/Socket';
 
-const Container = styled.div`
-    padding: 20px;
-    display: flex;
-    height: 100vh;
-    width: 90%;
-    margin: auto;
-    flex-wrap: wrap;
-`;
-
-const StyledVideo = styled.video`
-    height: 40%;
-    width: 50%;
-`;
+import Video from './Video';
+import './Room.css';
 
 interface IParams {
   id: string;
@@ -27,7 +15,7 @@ interface IPeer {
   peer: Peer.Instance
 }
 
-const Video = ({ peer }: IPeer) => {
+const VideoPeer = ({ peer }: IPeer) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -40,13 +28,8 @@ const Video = ({ peer }: IPeer) => {
 
   return (
     // eslint-disable-next-line jsx-a11y/media-has-caption
-    <video playsInline autoPlay ref={videoRef} />
+    <video className="video" playsInline autoPlay ref={videoRef} style={{ border: 1, borderStyle: 'solid', borderColor: 'red' }} />
   );
-};
-
-const videoConstraints = {
-  height: window.innerHeight / 2,
-  width: window.innerWidth / 2,
 };
 
 const VideoRoom = () => {
@@ -54,7 +37,7 @@ const VideoRoom = () => {
   const [peers, setPeers] = useState<Peer.Instance[]>([]);
 
   // const socketRef = useRef<any>();
-  const userVideo = useRef<any | undefined>();
+  // const userVideo = useRef<any | undefined>();
   const peersRef = useRef<any>([]);
   const roomId = params.roomID;
 
@@ -91,8 +74,8 @@ const VideoRoom = () => {
   useEffect(() => {
     // socketRef.current = io.connect('localhost:5000/', { transports: ['websocket'] });
     // eslint-disable-next-line max-len
-    navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false }).then((stream: MediaStream) => {
-      userVideo.current.srcObject = stream;
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((stream: MediaStream) => {
+      // userVideo.current.srcObject = stream;
       socket.emit('join room', roomId);
       socket.on('all users', (users: any) => {
         users.forEach((userID: any) => {
@@ -123,17 +106,17 @@ const VideoRoom = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(peers);
-  }, [peers]);
   return (
-    <Container>
-      <StyledVideo muted ref={userVideo} autoPlay playsInline />
+    <div className="videoContainer">
+      <div className="videoBox">
+        {/* <video className="video" muted ref={userVideo} autoPlay playsInline /> */}
+        <Video />
+      </div>
       {peers.map((peer, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Video key={index} peer={peer} />
+        <VideoPeer key={index} peer={peer} />
       ))}
-    </Container>
+    </div>
   );
 };
 
