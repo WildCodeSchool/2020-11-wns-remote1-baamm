@@ -236,7 +236,7 @@ const VideoGroup = ({
         })
         .catch((err) => console.log('erreur dans getUserMedia : ', err));
     }
-  }, [roomId, screenShare]);
+  }, [roomId]);
 
   return (
     <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
