@@ -11,4 +11,4 @@ COPY ./public ./public
 
 RUN npm run build
 
-CMD serve -s build
+CMD serve -l 3000 -s build 
