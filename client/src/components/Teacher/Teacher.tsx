@@ -1,6 +1,6 @@
 import React from 'react';
 // import VideoRoom from '../Room/Room';
-import VideoGroup from '../Room/VideoGroup';
+import ChatRoom from '../Room/ChatRoom';
 
 import './Teacher.style.css';
 
@@ -12,7 +12,7 @@ function Teacher() {
   return (
     <div className="leftColumn">
       {/* <VideoRoom /> */}
-      <VideoGroup videoStatus={videoStatus} microStatus={microStatus} />
+      <ChatRoom videoStatus={videoStatus} microStatus={microStatus} />
     </div>
   );
 }

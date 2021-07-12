@@ -87,7 +87,7 @@ const Video = ({
   );
 };
 
-const VideoGroup = ({
+const ChatRoom = ({
   videoStatus,
   microStatus,
 }: IVideoProps): JSX.Element => {
@@ -258,4 +258,4 @@ const VideoGroup = ({
   );
 };
 
-export default VideoGroup;
+export default ChatRoom;
