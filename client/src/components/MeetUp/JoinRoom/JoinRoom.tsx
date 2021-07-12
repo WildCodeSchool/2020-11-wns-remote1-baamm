@@ -2,7 +2,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import RoomService from '../../../services/room.services';
+import './JoinRoom.style.css';
 
 export default function JoinRoom() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -27,17 +30,16 @@ export default function JoinRoom() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(joinRoom)}>
-        <div>
-          <div className="form-group">
-            <input placeholder="RoomID" {...register('roomID', { required: true })} />
-            {errors.roomID && <span>This field is required</span>}
-          </div>
-          <div>
-            <input type="submit" value="Rejoindre" />
-          </div>
+    <div className="join-container">
+      <h3>Rejoignez une Room !</h3>
+      <form onSubmit={handleSubmit(joinRoom)} className="form-container">
+        <div className="inputs-container">
+          <input placeholder="RoomID" {...register('roomID', { required: true })} />
         </div>
+        <button type="submit" className="inputButton">
+          <FontAwesomeIcon icon={faDoorOpen} className="submit_icon" />
+          <p>Rejoindre</p>
+        </button>
 
         {message && (
           <div className="form-group">
@@ -47,6 +49,12 @@ export default function JoinRoom() {
             >
               {message}
             </div>
+          </div>
+        )}
+
+        {errors && (
+          <div className="error-container">
+            {errors.roomID && <span className="error">* Vous devez entrer un ID</span>}
           </div>
         )}
       </form>
