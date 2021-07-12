@@ -87,13 +87,14 @@ const Video = ({
   );
 };
 
-const VideoGroup = ({
+const ChatRoom = ({
   videoStatus,
   microStatus,
 }: IVideoProps): JSX.Element => {
   const params = useParams<IParams>();
   const [peerId, setPeerId] = useState<string>('');
   const peersRef = useRef<IPeerWithId[]>([]);
+  const [peers, setPeers] = useState<Peer.Instance[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [screenShare, setScreenShare] = useState(false);
 
@@ -150,39 +151,40 @@ const VideoGroup = ({
     return peer;
   };
 
-  const addScreen = () => {
-    const mediaDevices = navigator.mediaDevices as any;
-    mediaDevices.getDisplayMedia({ video: true, audio: false })
-      .then((stream: MediaStream) => {
-        console.log('Add Screen');
-        // ? ref.current.srcObject = stream;
-        // eslint-disable-next-line prefer-template
-        const userID = socket.id + '_screenShare';
-        const peer = createPeer(userID, socket.id, stream);
-        if (
-          !peersRef.current.find(
-            (peerWithId) => userID === peerWithId.peerID,
-          )
-        ) {
-          peersRef.current.push({
-            peerID: userID,
-            peer,
-            micro: true,
-            video: true,
-          });
-        }
-        setScreenShare(true);
-      });
-  };
+  // const addScreen = () => {
+  //   const mediaDevices = navigator.mediaDevices as any;
+  //   mediaDevices.getDisplayMedia({ video: true, audio: false })
+  //     .then((stream: MediaStream) => {
+  //       console.log('Add Screen');
+  //       // ? ref.current.srcObject = stream;
+  //       // eslint-disable-next-line prefer-template
+  //       const userID = socket.id + '_screenShare';
+  //       const peer = createPeer(userID, socket.id, stream);
+  //       if (
+  //         !peersRef.current.find(
+  //           (peerWithId) => userID === peerWithId.peerID,
+  //         )
+  //       ) {
+  //         peersRef.current.push({
+  //           peerID: userID,
+  //           peer,
+  //           micro: true,
+  //           video: true,
+  //         });
+  //       }
+  //       setScreenShare(true);
+  //     });
+  // };
 
   useEffect(() => {
     if (roomId) {
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
+        .getUserMedia({ video: true, audio: false })
         .then((stream: MediaStream) => {
           socket.emit('join room', roomId);
 
           socket.on('all users', (users: string[]) => {
+            const usersPeers: Peer.Instance[] = [];
             users.forEach((userID: string) => {
               const peer = createPeer(userID, socket.id, stream);
               if (
@@ -193,12 +195,14 @@ const VideoGroup = ({
                 peersRef.current.push({
                   peerID: userID,
                   peer,
-                  micro: true,
+                  micro: false,
                   video: true,
                 });
                 setPeerId(userID);
               }
+              usersPeers.push(peer);
             });
+            setPeers(usersPeers);
           });
 
           socket.on('user joined', (payload: IPayload) => {
@@ -214,6 +218,7 @@ const VideoGroup = ({
                 micro: true,
                 video: false,
               });
+              setPeers([...peers, peer]);
             }
             console.log('USER JOINED', peersRef);
             setScreenShare(!screenShare);
@@ -225,6 +230,7 @@ const VideoGroup = ({
               (p) => p.peerID === payload.id,
             );
             item?.peer?.signal(payload.signal);
+            console.log('RECEIVING Signal');
           });
 
           socket.on('removeUserVideo', (socketId: string) => {
@@ -234,7 +240,7 @@ const VideoGroup = ({
         })
         .catch((err) => console.log('erreur dans getUserMedia : ', err));
     }
-  }, [roomId, screenShare]);
+  }, []);
 
   return (
     <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -249,11 +255,11 @@ const VideoGroup = ({
             peerId={peerId}
             videoPeerId={peer.peerID}
           />
-          <button type="button" onClick={() => addScreen()}>share screen</button>
+          {/* <button type="button" onClick={() => addScreen()}>share screen</button> */}
         </>
       ))}
     </Container>
   );
 };
 
-export default VideoGroup;
+export default ChatRoom;
