@@ -1,32 +1,24 @@
 .generalContainer {
   display: flex;
   flex-direction: row;
-  background-color: brown;
-}
-
-.leftColumnContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 3;
-}
-
-.rightColumnContainer {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.blocContainer {
-  width: 80%;
-  background-color: chartreuse;
-  margin: 5% 0;
+  background-color: white;
+  height: 92vh;
 }
 
 .roomBlock {
   display: flex;
   flex-direction: column;
   margin: 10%;
+}
+
+.actionsContainer {
+  flex: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
 }
 
 .room-mainBlock {

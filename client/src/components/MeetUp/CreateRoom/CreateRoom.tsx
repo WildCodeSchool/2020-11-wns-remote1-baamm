@@ -29,7 +29,7 @@ export default function CreateRoom() {
   }
 
   return (
-    <div className="blocContainer">
+    <div className="">
       <form onSubmit={handleSubmit(handleLogin)}>
         <div>
           <div className="form-group">

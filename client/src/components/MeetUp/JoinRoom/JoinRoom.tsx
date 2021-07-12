@@ -27,7 +27,7 @@ export default function JoinRoom() {
   }
 
   return (
-    <div className="blocContainer">
+    <div>
       <form onSubmit={handleSubmit(joinRoom)}>
         <div>
           <div className="form-group">
