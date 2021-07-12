@@ -28,7 +28,7 @@ export default function ListRooms() {
       {content && content.map((room: any) => (
         <div className="room-Block">
           <div className="logo-Block">
-            <img src={owlLogo} alt="Logo" className="logo" />
+            <img src={owlLogo} alt="Logo" className="logo_Room" />
           </div>
           <div className="room-info-container">
             <p>
