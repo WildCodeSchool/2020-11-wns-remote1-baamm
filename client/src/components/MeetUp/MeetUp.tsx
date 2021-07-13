@@ -12,15 +12,12 @@ export default function Test() {
   const currentUser = AuthService.getCurrentUser();
   return (
     <div className="generalContainer">
-
-      <div className="leftColumnContainer">
+      <div className="actionsContainer">
         {currentUser.role === 'TEACHER' && <CreateRoom />}
         <JoinRoom />
       </div>
 
-      <div className="rightColumnContainer">
-        <ListRooms />
-      </div>
+      <ListRooms />
     </div>
   );
 }

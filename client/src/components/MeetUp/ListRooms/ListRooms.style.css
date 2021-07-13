@@ -1,0 +1,61 @@
+.blocContainer {
+  border-left: solid 3px #cccccc;
+  background-color: #f4f6f6;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.blocContainer h3 {
+  color: #4ea55b;
+}
+
+.room-Block {
+  display: flex;
+  flex-direction: row;
+  height: 12vh;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  border : solid 5px #4ea55b;
+  border-radius: 0 50px 0 30px;
+  margin-bottom: 5vh;
+  background-color: #4ea55b;
+}
+
+.logo-Block {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border-right: dotted 5px #4ea55b;
+}
+
+.logo_Room {
+  height: 70%;
+}
+
+.room-info-container {
+  flex: 3;
+  height: 100%;
+  background-color: white;
+  border-top-right-radius: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-info-container p {
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,72 @@
+.create-container h3 {
+  color: #4ea55b;
+}
+
+.create-container {
+  border-radius: 0 50px 0 50px;
+  border: solid 5px #4ea55b;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh 0;
+  background-color: #f4f6f6;
+  margin-bottom: 3vh;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1vh;
+}
+
+.inputs-container input {
+  margin-bottom: 1vh;
+}
+
+.inputButton {
+  background-color: #4ea55b;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  padding: 1vh;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+}
+
+.inputButton p {
+  padding: 0;
+  margin: 0;
+  color: #f4f6f6;
+}
+
+.submit_icon {
+  color: #f4f6f6;
+  margin-right: 0.5vw;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.5vh 5vw;
+  margin-top: 2vh;
+}
+
+.error {
+  width: 100%;
+  padding: 0 5vw;
+  margin-bottom: 0.5vh;
+  background-color: rgba(216, 0, 0, 0.479);
+  border: solid 3px rgba(216, 0, 0, 0.781);
+  color: white
+}

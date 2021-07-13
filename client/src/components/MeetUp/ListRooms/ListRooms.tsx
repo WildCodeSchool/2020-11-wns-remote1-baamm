@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import RoomService from '../../../services/room.services';
+import './ListRooms.style.css';
+import owlLogo from '../../../pictures/owlStudent.png';
 
 export default function ListRooms() {
   const [content, setContent] = useState([]);
-  console.log(content);
 
   useEffect(() => {
     RoomService.getAllRooms().then(
@@ -22,23 +23,25 @@ export default function ListRooms() {
 
   return (
     <div className="blocContainer">
-      <h3>Liste de vos rooms</h3>
+      <h3>Vos Rooms</h3>
 
       {content && content.map((room: any) => (
-        <div className="roomBlock">
-          <div className="room-mainBlock">
+        <div className="room-Block">
+          <div className="logo-Block">
+            <img src={owlLogo} alt="Logo" className="logo_Room" />
+          </div>
+          <div className="room-info-container">
             <p>
               Nom :
               {' '}
               {room.name}
             </p>
-            <p style={{ alignSelf: 'flex-end' }}>{room.type}</p>
+            <p>
+              Session :
+              {' '}
+              {room.session}
+            </p>
           </div>
-          <p>
-            Session :
-            {' '}
-            {room.session}
-          </p>
         </div>
       ))}
     </div>
