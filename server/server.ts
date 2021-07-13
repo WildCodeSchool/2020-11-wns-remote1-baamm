@@ -2,10 +2,10 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { socketVideo } from './socket/sockets';
 import { authRouter } from './routes/auth.routes';
 import { userRouter } from './routes/user.routes';
 import { roomRouter } from './routes/room.routes';
+import { globalSockets } from './socket/globalSockets';
 
 require('dotenv').config()
 
@@ -43,7 +43,7 @@ httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
-socketVideo(httpServer);
+globalSockets(httpServer);
 
 // Express configuration
 app.set("port", process.env.PORT || 5000);
