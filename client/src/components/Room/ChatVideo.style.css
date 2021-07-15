@@ -1,0 +1,38 @@
+.allVideosContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.video_navBar {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  padding: 1% 5%;
+}
+
+.button_container {
+  padding: 0 2vw;
+}
+
+.video_navBar_button {
+  border: solid 2px #4ea55b;
+  height: 8vh;
+  width: 8vh;
+  border-radius: 50px;
+  font-size: 2.5vh;
+  color: #4ea55b;
+}
+
+.video_container {
+  margin: 2%;
+  min-height: 30%;
+  width: 25%;
+  border-radius: 15;
+  border-width: 3;
+  border-style: solid;
+  border-color: #4ea55b;
+}

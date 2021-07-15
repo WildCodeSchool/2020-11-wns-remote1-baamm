@@ -41,7 +41,7 @@ export default function ChatRoom() {
   }
   return (
     <div>
-      <p>ERROR !!!</p>
+      <p>Pas de tchat disponible</p>
     </div>
   );
 }

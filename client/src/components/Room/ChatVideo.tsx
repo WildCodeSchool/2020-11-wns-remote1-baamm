@@ -2,8 +2,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMicrophoneAlt,
+  faMicrophoneAltSlash,
+  faVideo,
+  faVideoSlash,
+} from '@fortawesome/free-solid-svg-icons';
 import Peer, { SignalData } from 'simple-peer';
 import socket from '../../socket/Socket';
+import './ChatVideo.style.css';
 
 interface IParams {
   id: string;
@@ -67,15 +75,7 @@ const Video = ({
     <>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
-        style={{
-          margin: '2%',
-          minHeight: '30%',
-          width: '25%',
-          borderRadius: 15,
-          borderWidth: 3,
-          borderStyle: 'solid',
-          borderColor: '#4ea55b',
-        }}
+        className="video_container"
         playsInline
         autoPlay
         ref={ref}
@@ -214,8 +214,8 @@ const ChatVideo = () => {
   }, []);
 
   return (
-    <>
-      <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div className="allVideosContainer">
+      <Container style={{ display: 'flex', flexWrap: 'wrap', flex: 10 }}>
 
         {peersRef?.current.map((peer: IPeerWithId) => (
           <>
@@ -230,11 +230,24 @@ const ChatVideo = () => {
           </>
         ))}
       </Container>
-      <div className="buttons">
-        <button type="button" className="button" onClick={() => setMicroStatus(!microStatus)}>micro status</button>
-        <button type="button" className="button" onClick={() => setVideoStatus(!videoStatus)}>video button</button>
+      <div className="video_navBar">
+        <div className="button_container">
+          <button type="button" className="video_navBar_button" onClick={() => setMicroStatus(!microStatus)}>
+            {microStatus
+              ? <FontAwesomeIcon icon={faMicrophoneAltSlash} />
+              : <FontAwesomeIcon icon={faMicrophoneAlt} />}
+          </button>
+        </div>
+
+        <div className="button_container">
+          <button type="button" className="video_navBar_button" onClick={() => setVideoStatus(!videoStatus)}>
+            {videoStatus
+              ? <FontAwesomeIcon icon={faVideoSlash} />
+              : <FontAwesomeIcon icon={faVideo} />}
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

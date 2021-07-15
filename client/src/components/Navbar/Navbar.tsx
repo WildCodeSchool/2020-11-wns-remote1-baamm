@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import AuthService from '../../services/auth.service';
 import './Navbar.css';
+import LogoWhite from '../../pictures/Logo_white.png';
 
 function logOut() {
   AuthService.logout();
@@ -15,6 +16,7 @@ const NavBar = ({ currentUser }: any) => (
   <nav className="navBarContainer">
     <Link to="/" className="nav-link">
       <FontAwesomeIcon icon={faHome} />
+      <img src={LogoWhite} alt="Logo" className="imgLogo" />
     </Link>
     <div className="conditionnal-navbar">
 
