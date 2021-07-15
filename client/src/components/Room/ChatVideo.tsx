@@ -10,11 +10,6 @@ interface IParams {
   roomID: string;
 }
 
-interface IVideoProps {
-  videoStatus: boolean;
-  microStatus: boolean;
-}
-
 interface IPayload {
   signal: string | SignalData;
   callerID: string;
@@ -66,7 +61,7 @@ const Video = ({
         ref.current.srcObject = stream;
       }
     });
-  }, [peer]);
+  }, [peer, videoStatus]);
 
   return (
     <>
@@ -74,10 +69,12 @@ const Video = ({
       <video
         style={{
           margin: '2%',
-          height: '25%',
+          minHeight: '30%',
           width: '25%',
-          borderRadius: '10px',
-          objectFit: 'cover',
+          borderRadius: 15,
+          borderWidth: 3,
+          borderStyle: 'solid',
+          borderColor: '#4ea55b',
         }}
         playsInline
         autoPlay
@@ -87,16 +84,15 @@ const Video = ({
   );
 };
 
-const ChatRoom = ({
-  videoStatus,
-  microStatus,
-}: IVideoProps): JSX.Element => {
+const ChatVideo = () => {
   const params = useParams<IParams>();
   const [peerId, setPeerId] = useState<string>('');
   const peersRef = useRef<IPeerWithId[]>([]);
   const [peers, setPeers] = useState<Peer.Instance[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [screenShare, setScreenShare] = useState(false);
+  const [videoStatus, setVideoStatus] = useState(true);
+  const [microStatus, setMicroStatus] = useState(false);
 
   const roomId = params.roomID;
 
@@ -151,35 +147,10 @@ const ChatRoom = ({
     return peer;
   };
 
-  // const addScreen = () => {
-  //   const mediaDevices = navigator.mediaDevices as any;
-  //   mediaDevices.getDisplayMedia({ video: true, audio: false })
-  //     .then((stream: MediaStream) => {
-  //       console.log('Add Screen');
-  //       // ? ref.current.srcObject = stream;
-  //       // eslint-disable-next-line prefer-template
-  //       const userID = socket.id + '_screenShare';
-  //       const peer = createPeer(userID, socket.id, stream);
-  //       if (
-  //         !peersRef.current.find(
-  //           (peerWithId) => userID === peerWithId.peerID,
-  //         )
-  //       ) {
-  //         peersRef.current.push({
-  //           peerID: userID,
-  //           peer,
-  //           micro: true,
-  //           video: true,
-  //         });
-  //       }
-  //       setScreenShare(true);
-  //     });
-  // };
-
   useEffect(() => {
     if (roomId) {
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false })
+        .getUserMedia({ video: true, audio: true })
         .then((stream: MediaStream) => {
           socket.emit('join room', roomId);
 
@@ -243,23 +214,28 @@ const ChatRoom = ({
   }, []);
 
   return (
-    <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <>
+      <Container style={{ display: 'flex', flexWrap: 'wrap' }}>
 
-      {peersRef?.current.map((peer: IPeerWithId) => (
-        <>
-          <Video
-            key={peer.peerID}
-            peer={peer.peer}
-            microStatus={microStatus}
-            videoStatus={videoStatus}
-            peerId={peerId}
-            videoPeerId={peer.peerID}
-          />
-          {/* <button type="button" onClick={() => addScreen()}>share screen</button> */}
-        </>
-      ))}
-    </Container>
+        {peersRef?.current.map((peer: IPeerWithId) => (
+          <>
+            <Video
+              key={peer.peerID}
+              peer={peer.peer}
+              microStatus={microStatus}
+              videoStatus={videoStatus}
+              peerId={peerId}
+              videoPeerId={peer.peerID}
+            />
+          </>
+        ))}
+      </Container>
+      <div className="buttons">
+        <button type="button" className="button" onClick={() => setMicroStatus(!microStatus)}>micro status</button>
+        <button type="button" className="button" onClick={() => setVideoStatus(!videoStatus)}>video button</button>
+      </div>
+    </>
   );
 };
 
-export default ChatRoom;
+export default ChatVideo;

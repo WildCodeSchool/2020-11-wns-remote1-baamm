@@ -6,7 +6,7 @@ import { Message } from '../../types';
 
 const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'; // Name of the event
 
-const useChat = (roomId: string): any => {
+const useChat = (): any => {
   const [messages, setMessages] = useState<Message[]>([]); // Sent and received messages
 
   // add a message to the existing array of messages
@@ -30,7 +30,7 @@ const useChat = (roomId: string): any => {
         console.log('Disconnect');
       }
     };
-  }, [roomId]);
+  }, []);
 
   // Sends a message to the server that
   // dispatches it to all users in the same room

@@ -8,13 +8,14 @@ import { AskTalkings } from '../data/askTalking';
 const globalSockets = (httpServer: http.Server) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "https://staging.baam.wns.wilders.dev/",
+      origin: "*",
       methods: ["GET", "POST"]
     }
   });
   const socketToRoom: Record<string, string> = {};
   const users: Record<string, string[]> = {};
   const usersInTheRoom: Record<string, string[]> = {};
+  const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
 
   io.on('connect', (socket: Socket) => {
     socket.on('join room', (roomID: string) => {
@@ -32,8 +33,13 @@ const globalSockets = (httpServer: http.Server) => {
       socket.emit('all users', usersTotalInRoom);
     });
 
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data:any) => {
+      console.log(data);
+      io.emit(NEW_CHAT_MESSAGE_EVENT, data);
+    });
+
     videoSockets(socket, io);
-    chatSockets(socket, io);
+    // chatSockets(socket, io);
 
     socket.on('disconnect', async () => {
       delete users[socket.id];

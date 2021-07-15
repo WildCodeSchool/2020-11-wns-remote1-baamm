@@ -1,35 +1,47 @@
-import React, { useState } from 'react';
-import socket from '../../../socket/Socket';
+import React, { useContext, useState } from 'react';
+import { Message } from '../../../types';
+import ChatContext from '../../../context/ChatContext';
 import './ChatRoom.style.css';
-import dataEnDur from './ChatDataEnDur';
 
 export default function ChatRoom() {
-  const currentUserID = socket.id;
   const [newMessage, setNewMessage] = useState('');
+  const ChatContextType = useContext(ChatContext);
 
+  if (ChatContextType) {
+    const handleSendMessage = () => {
+      ChatContextType.sendMessage(newMessage);
+      setNewMessage('');
+    };
+
+    return (
+      <div className="toolsContainer">
+        <div className="messagesContainer">
+          <ol className="listMessages">
+            {ChatContextType.messages.map((message: Message) => (
+              <li className={message.ownedByCurrentUser ? 'message my-message' : 'message receive-message'}>
+                <p className="userName">{message.ownedByCurrentUser ? 'Moi' : message.ownedByCurrentUser}</p>
+                <p className="messageBody">{message.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="inputBlock">
+          <textarea
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Write message ..."
+            className="inputMessage"
+          />
+          <button type="button" onClick={handleSendMessage} className="sendButton">
+            Envoyer
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="toolsContainer">
-      <div className="messagesContainer">
-        <ol className="listMessages">
-          {dataEnDur.map((data) => (
-            <li className={data.userTalking === currentUserID ? 'message my-message' : 'message receive-message'}>
-              <p className="userName">{data.userTalking === currentUserID ? 'Moi' : data.userTalking}</p>
-              <p className="messageBody">{data.messageBody}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-      <div className="inputBlock">
-        <textarea
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Write message ..."
-          className="inputMessage"
-        />
-        <button type="button" onClick={() => console.log(newMessage)} className="sendButton">
-          Envoyer
-        </button>
-      </div>
+    <div>
+      <p>ERROR !!!</p>
     </div>
   );
 }
