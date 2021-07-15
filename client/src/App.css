@@ -22,13 +22,13 @@
   border-radius: 50%;
 }
 
+.pageContainer {
+  height: 92vh;
+}
+
 .roomContainer {
   background-color: brown;
   display: flex;
   flex-direction: row;
   height: 100%;
-}
-
-.pageContainer {
-  height: 92vh;
 }

@@ -9,10 +9,8 @@ import Register from './components/Authentification/Register/Register';
 import Profile from './components/Profile/profile.component';
 import NavBar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
-import Teacher from './components/Teacher/Teacher';
-import DynamicMenu from './components/DynamicMenu/DynamicMenu';
-import Student from './components/Student/Student';
 import MeetUp from './components/MeetUp/MeetUp';
+import GlobalRoom from './components/GlobalRoom/GlobalRoom';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<any>(undefined);
@@ -32,13 +30,9 @@ export default function App() {
         <Switch>
           <Route exact path={['/', '/home']} component={Home} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/chatroom" component={Student} />
           <Route path="/room" exact component={MeetUp} />
           <Route path="/room/:roomID">
-            <div className="roomContainer">
-              <Teacher />
-              <DynamicMenu />
-            </div>
+            <GlobalRoom />
           </Route>
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
