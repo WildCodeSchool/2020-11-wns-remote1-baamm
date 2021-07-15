@@ -85,6 +85,10 @@ const socketVideo = (httpServer: http.Server) => {
       });
     });
 
+    socket.on('turnOffVideo', () => {
+      socket.broadcast.emit('removeUserVideo', socket.id)
+    })
+
     socket.on('disconnect', async () => {
       delete users[socket.id];
       const roomID = socketToRoom[socket.id];
@@ -92,7 +96,6 @@ const socketVideo = (httpServer: http.Server) => {
       if (room) {
         room = room.filter((id) => id !== socket.id);
         usersInTheRoom[roomID] = room;
-        console.log('socket id', socket.id);
         socket.broadcast.emit('removeUserVideo', socket.id);
       }
     });

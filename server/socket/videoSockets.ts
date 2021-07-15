@@ -23,6 +23,15 @@ const videoSockets = (socket: Socket, io: Server) => {
     });
   });
 
+  socket.on('turnOffVideo', () => {
+    socket.broadcast.emit('removeUserVideo', socket.id);
+  });
+
+  socket.on('switch', (payload) => {
+    socket.broadcast.emit('receive change', payload)
+  } )
+
+  
   //   socket.on("sending signal", payload => {
   //     console.log('send signal')
   //     io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
