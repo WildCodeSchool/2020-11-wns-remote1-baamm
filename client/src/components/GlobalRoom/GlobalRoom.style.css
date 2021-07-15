@@ -1,0 +1,22 @@
+.roomContainer {
+  background-color: brown;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.leftColumn {
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex: 3;
+  display: flex;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  flex : 1;
+  height: 100%;
+}
