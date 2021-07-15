@@ -1,41 +1,11 @@
-// import React, { useState } from 'react';
-// import './ChatRoom.style.css';
-
-// export default function ChatRoom() {
-//   const [newMessage, setNewMessage] = useState('');
-//   return (
-//     <div className="toolsContainer">
-//       <div className="messagesContainer">
-//         <p>Ceci contient les messages de tchat</p>
-//         <p>Ceci contient les messages de tchat</p>
-//         <p>Ceci contient les messages de tchat</p>
-//         <p>Ceci contient les messages de tchat</p>
-//         <p>Ceci contient les messages de tchat</p>
-//         <p>Ceci contient les messages de tchat</p>
-//       </div>
-//       <div className="inputBlock">
-//         <textarea
-//           value={newMessage}
-//           onChange={(e) => setNewMessage(e.target.value)}
-//           placeholder="Write message ..."
-//           className="inputMessage"
-//         />
-//         <button type="button" onClick={() => console.log(newMessage)} className="sendMessage">
-//           Envoyer
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useContext, useState } from 'react';
-import './ChatRoom.style.css';
 import { Message } from '../../../types';
 import ChatContext from '../../../context/ChatContext';
+import './ChatRoom.style.css';
 
 export default function ChatRoom() {
-  const ChatContextType = useContext(ChatContext);
   const [newMessage, setNewMessage] = useState('');
+  const ChatContextType = useContext(ChatContext);
 
   if (ChatContextType) {
     const handleSendMessage = () => {
@@ -46,14 +16,11 @@ export default function ChatRoom() {
     return (
       <div className="toolsContainer">
         <div className="messagesContainer">
-          <ol className="messagesList">
-            {ChatContextType.messages.map((message: Message, i: number) => (
-              <li
-                // eslint-disable-next-line react/no-array-index-key
-                key={i}
-                className={`message-item ${message.ownedByCurrentUser ? 'my-message' : 'receive-message'}`}
-              >
-                {message.body}
+          <ol className="listMessages">
+            {ChatContextType.messages.map((message: Message) => (
+              <li className={message.ownedByCurrentUser ? 'message my-message' : 'message receive-message'}>
+                <p className="userName">{message.ownedByCurrentUser ? 'Moi' : message.ownedByCurrentUser}</p>
+                <p className="messageBody">{message.body}</p>
               </li>
             ))}
           </ol>
@@ -65,7 +32,7 @@ export default function ChatRoom() {
             placeholder="Write message ..."
             className="inputMessage"
           />
-          <button type="button" onClick={handleSendMessage} className="sendMessage">
+          <button type="button" onClick={handleSendMessage} className="sendButton">
             Envoyer
           </button>
         </div>
@@ -74,7 +41,7 @@ export default function ChatRoom() {
   }
   return (
     <div>
-      <p>ERROR !!!</p>
+      <p>Pas de tchat disponible</p>
     </div>
   );
 }
