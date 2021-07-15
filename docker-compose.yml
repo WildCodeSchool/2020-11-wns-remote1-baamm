@@ -4,7 +4,5 @@ services:
         build: ./server
     client:
         build: ./client
-        ports:
-            - 3000:3000
     mongodb:
         image: mongo
