@@ -38,7 +38,7 @@ const Video = ({
   peerId,
   videoPeerId,
 }: IPeer) => {
-  const ref = useRef<HTMLVideoElement>(null);
+  const ref = useRef<any>(null);
   const isUser = peerId === videoPeerId;
 
   useEffect(() => {
@@ -49,11 +49,26 @@ const Video = ({
   }, [videoStatus, isUser, videoPeerId]);
 
   useEffect(() => {
+    socket.on('receive change', (mediaChange: any) => {
+      if (videoPeerId === mediaChange.peerId && ref?.current?.srcObject) {
+        // eslint-disable-next-line max-len
+        (ref.current.srcObject as MediaStream).getVideoTracks()[0].enabled = mediaChange.videoStatus;
+      }
+      // eslint-disable-next-line max-len
+      // (ref.current.srcObject as MediaStream).getAudioTracks()[0].enabled = mediaChange.microStatus;
+    });
+  }, [videoStatus, isUser, videoPeerId]);
+
+  useEffect(() => {
     if (ref?.current?.srcObject && isUser) {
       (ref.current
         .srcObject as MediaStream).getAudioTracks()[0].enabled = microStatus;
     }
   }, [microStatus, isUser, videoPeerId]);
+
+  useEffect(() => {
+    socket.emit('switch', { peerId, videoStatus, microStatus });
+  }, [microStatus, videoStatus, videoPeerId]);
 
   useEffect(() => {
     peer.on('stream', (stream: MediaStream) => {
@@ -97,7 +112,12 @@ const ChatVideo = () => {
   const roomId = params.roomID;
 
   const removeUserLeavingRoomVideo = (socketId: string) => {
-    peersRef.current = peersRef.current.filter((el) => el.peerID !== socketId);
+    const supressPeer = peersRef.current.find((target) => target.peerID === socketId);
+    if (supressPeer) {
+      supressPeer.peer.destroy();
+    }
+    peersRef.current = peersRef.current.filter((target) => target.peerID !== socketId);
+    setPeers(peersRef.current.map((target) => target.peer));
   };
 
   const createPeer = (
