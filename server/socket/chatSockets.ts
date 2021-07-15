@@ -1,14 +1,34 @@
 import { Socket, Server } from 'socket.io';
+import { Handshake } from 'socket.io/dist/socket';
+import { AskTalkings } from '../data/askTalking';
+
+interface CustomHandShake extends Handshake {
+  query: {
+    roomId: string
+  }
+}
+
+class CustomSockets extends Socket {
+  readonly handshake!: CustomHandShake;
+}
 
 const chatSockets = (socket: Socket, io: Server) => {
-  // const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
-  // let interval: NodeJS.Timeout;
-  // let askingTalkArray = AskTalkings;
+  let interval: NodeJS.Timeout;
+  let askingTalkArray = AskTalkings;
+  let clients: CustomSockets[] = []
+  const NEW_CHAT_MESSAGE_EVENT: string = "newChatMessage";
 
-  // io.on("connection", (socket) => {
 
-  //   console.log("New client connected");
-  //   io.emit("FromAPI", askingTalkArray);
+
+  io.on("connection", (socket) => {   
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data:any) => {
+      console.log(data);
+      io.emit(NEW_CHAT_MESSAGE_EVENT, data);
+   });
+
+
+
+  //  io.emit("FromAPI", askingTalkArray);
 
   //   // * PARTIE ASKINGTALK
   //   // TODO typer correctement le askingtalk
@@ -36,10 +56,11 @@ const chatSockets = (socket: Socket, io: Server) => {
   //   // * FIN PARTIE ASKINGTALK
 
 
-  //   // * Leave the room if the user closes the socket
-  //   socket.on("disconnect", () => {
-  //     console.log("Client disconnected");
-  //   });
+    // * Leave the room if the user closes the socket
+    // socket.on("disconnect", () => {
+    //   console.log("Client disconnected");
+    // });
+  })
 }
 
 export default chatSockets;

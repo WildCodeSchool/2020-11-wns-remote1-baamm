@@ -13,8 +13,11 @@ import Teacher from './components/Teacher/Teacher';
 import DynamicMenu from './components/DynamicMenu/DynamicMenu';
 import Student from './components/Student/Student';
 import MeetUp from './components/MeetUp/MeetUp';
+import ChatContext from './context/ChatContext';
+import useChat from './components/hooks/useChat';
 
 export default function App() {
+  const { messages, sendMessage } = useChat();
   const [currentUser, setCurrentUser] = useState<any>(undefined);
 
   useEffect(() => {
@@ -26,24 +29,26 @@ export default function App() {
 
   return (
     <>
-      <NavBar currentUser={currentUser} />
+      <ChatContext.Provider value={{ messages, sendMessage }}>
+        <NavBar currentUser={currentUser} />
 
-      <div className="pageContainer">
-        <Switch>
-          <Route exact path={['/', '/home']} component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/chatroom" component={Student} />
-          <Route path="/room" exact component={MeetUp} />
-          <Route path="/room/:roomID">
-            <div className="roomContainer">
-              <Teacher />
-              <DynamicMenu />
-            </div>
-          </Route>
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
-        </Switch>
-      </div>
+        <div className="pageContainer">
+          <Switch>
+            <Route exact path={['/', '/home']} component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/chatroom" component={Student} />
+            <Route path="/room" exact component={MeetUp} />
+            <Route path="/room/:roomID">
+              <div className="roomContainer">
+                <Teacher />
+                <DynamicMenu />
+              </div>
+            </Route>
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/profile" component={Profile} />
+          </Switch>
+        </div>
+      </ChatContext.Provider>
     </>
   );
 }
