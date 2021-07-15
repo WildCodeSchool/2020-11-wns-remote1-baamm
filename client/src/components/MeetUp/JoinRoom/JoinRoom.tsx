@@ -4,17 +4,21 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import socket from '../../../socket/Socket';
 import RoomService from '../../../services/room.services';
+import AuthService from '../../../services/auth.service';
 import './JoinRoom.style.css';
 
 export default function JoinRoom() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const currentUser = AuthService.getCurrentUser();
   const history = useHistory();
   const [message, setMessage] = useState('');
 
   function joinRoom(data: any) {
     RoomService.joinRoom(data.roomID).then(
       (res) => {
+        socket.emit('join Room', res.id, currentUser);
         history.push(`/room/${res.id}`);
       },
       (error) => {

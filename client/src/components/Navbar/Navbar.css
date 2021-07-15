@@ -34,6 +34,10 @@
   color: #4ea55b;
 }
 
+.imgLogo {
+  height: 4vh;
+}
+
 .nav-notConnected {
   display: flex;
   flex-direction: row;
