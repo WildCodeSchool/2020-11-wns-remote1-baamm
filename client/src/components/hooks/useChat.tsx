@@ -15,6 +15,8 @@ const useChat = (): any => {
     const incomingMessage = {
       ...message,
       ownedByCurrentUser: message.senderId === socketRefCurrentId,
+      userFirstname: message.userFirstname,
+      userLastname: message.userLastname,
     };
     setMessages((oldMessages) => [...oldMessages, incomingMessage]);
   };
@@ -34,11 +36,13 @@ const useChat = (): any => {
 
   // Sends a message to the server that
   // dispatches it to all users in the same room
-  const sendMessage = (messageBody: string) => {
+  const sendMessage = (messageBody: string, user: any) => {
     if (socket !== undefined) {
       socket.emit(NEW_CHAT_MESSAGE_EVENT, {
         body: messageBody,
         senderId: socket.id,
+        userFirstname: user.firstname,
+        userLastname: user.lastname,
       });
     }
   };

@@ -18,9 +18,11 @@ export type Message = {
   senderId: string;
   body: string;
   ownedByCurrentUser: boolean;
+  userLastname: string;
+  userFirstname: string;
 };
 
 export type ChatContextType = {
   messages: Message[];
-  sendMessage: (messageBody: string) => void;
+  sendMessage: (messageBody: string, user: any) => void;
 };

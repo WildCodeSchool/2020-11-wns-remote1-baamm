@@ -14,10 +14,12 @@ function logOut() {
 
 const NavBar = ({ currentUser }: any) => (
   <nav className="navBarContainer">
-    <Link to="/" className="nav-link">
-      <FontAwesomeIcon icon={faHome} />
+    <div className="nav-notConnected">
+      <Link to="/" className="nav-link">
+        <FontAwesomeIcon icon={faHome} />
+      </Link>
       <img src={LogoWhite} alt="Logo" className="imgLogo" />
-    </Link>
+    </div>
     <div className="conditionnal-navbar">
 
       {currentUser && (
