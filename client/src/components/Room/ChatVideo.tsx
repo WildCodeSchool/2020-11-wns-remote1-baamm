@@ -111,7 +111,7 @@ const ChatVideo = () => {
 
   const roomId = params.roomID;
 
-  const removeUserLeavingRoomVideo = (socketId: string) => {
+  const removeUser = (socketId: string) => {
     const supressPeer = peersRef.current.find((target) => target.peerID === socketId);
     if (supressPeer) {
       supressPeer.peer.destroy();
@@ -226,7 +226,7 @@ const ChatVideo = () => {
 
           socket.on('removeUserVideo', (socketId: string) => {
             console.log('useEffect => removeUserVideo');
-            removeUserLeavingRoomVideo(socketId);
+            removeUser(socketId);
           });
         })
         .catch((err) => console.log('erreur dans getUserMedia : ', err));
