@@ -1,0 +1,55 @@
+.homeContainer {
+  height: 92vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #cccccc;
+}
+
+.homeContainer p {
+  margin: 0;
+  padding: 0;
+}
+
+.welcome_container {
+  background-color: white;
+  border: double 8px #cccccc;
+  height: 80%;
+  width: 80%;
+  border-radius: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 5%;
+}
+
+.welcomeLogo {
+  width: 55vw;
+  position: absolute;
+  left: 5%;
+}
+
+.welcome_textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+  border: solid 5px #4ea55b;
+  height: 80%;
+  width: 30vw;
+  border-radius: 0 30px 0 30px;
+  background-color: black;
+  padding: 0 5%;
+}
+
+.welcome_textContainer p {
+  color: whitesmoke;
+  text-align: center;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 24px;
+}
+
+#paraTwo, #paraThree {
+  margin-bottom: 5vh;
+}
