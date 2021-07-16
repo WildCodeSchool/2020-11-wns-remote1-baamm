@@ -16,7 +16,7 @@ export default function CreateRoom() {
 
     RoomService.createRoom(data.name, data.type, data.session).then(
       (response) => {
-        setMessage(response.data.message);
+        setMessage(response.message);
         setStatus(true);
       },
       (error) => {
@@ -46,7 +46,7 @@ export default function CreateRoom() {
         </button>
 
         {message && (
-          <div className="form-group">
+          <div className="message-container">
             <div
               className={
                 status
