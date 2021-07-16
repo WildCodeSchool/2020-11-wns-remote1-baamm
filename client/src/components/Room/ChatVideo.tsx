@@ -63,7 +63,7 @@ const Video = ({
         (ref.current.srcObject as MediaStream).getVideoTracks()[0].enabled = mediaChange.videoStatus;
       }
       // eslint-disable-next-line max-len
-      // (ref.current.srcObject as MediaStream).getAudioTracks()[0].enabled = mediaChange.microStatus;
+      (ref.current.srcObject as MediaStream).getAudioTracks()[0].enabled = mediaChange.microStatus;
     });
   }, [videoStatus, isUser, videoPeerId]);
 
@@ -107,7 +107,7 @@ const ChatVideo = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [screenShare, setScreenShare] = useState(false);
   const [videoStatus, setVideoStatus] = useState(true);
-  const [microStatus, setMicroStatus] = useState(false);
+  const [microStatus, setMicroStatus] = useState(true);
 
   const roomId = params.roomID;
 
@@ -254,16 +254,16 @@ const ChatVideo = () => {
         <div className="button_container">
           <button type="button" className="video_navBar_button" onClick={() => setMicroStatus(!microStatus)}>
             {microStatus
-              ? <FontAwesomeIcon icon={faMicrophoneAltSlash} />
-              : <FontAwesomeIcon icon={faMicrophoneAlt} />}
+              ? <FontAwesomeIcon icon={faMicrophoneAlt} />
+              : <FontAwesomeIcon icon={faMicrophoneAltSlash} />}
           </button>
         </div>
 
         <div className="button_container">
           <button type="button" className="video_navBar_button" onClick={() => setVideoStatus(!videoStatus)}>
             {videoStatus
-              ? <FontAwesomeIcon icon={faVideoSlash} />
-              : <FontAwesomeIcon icon={faVideo} />}
+              ? <FontAwesomeIcon icon={faVideo} />
+              : <FontAwesomeIcon icon={faVideoSlash} /> }
           </button>
         </div>
       </div>
