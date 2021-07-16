@@ -1,30 +1,22 @@
-import React, { useState, useEffect } from 'react';
-
-import UserService from '../../services/user.service';
+/* eslint-disable max-len */
+import React from 'react';
+import './Home.style.css';
+import WelcomeOwl from '../../pictures/welcomeOwl.png';
 
 export default function Home() {
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        setContent((error.response
-          && error.response.data
-          && error.response.data.message)
-          || error.message
-          || error.toString());
-      },
-    );
-  }, []);
-
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-      </header>
+    <div className="homeContainer">
+      <div className="welcome_container">
+        <img src={WelcomeOwl} alt="WelcomeLogo" className="welcomeLogo" />
+        <div className="welcome_textContainer">
+          <p>Bonjour à toi, </p>
+          <p id="paraTwo">jeune chouette en devenir !</p>
+
+          <p id="paraThree">Ici tu vas pouvoir partager ton savoir avec un tas d&apos;autres personnes, alors inscris toi vite et rejoins une de nos rooms !</p>
+
+          <p>A bientôt !</p>
+        </div>
+      </div>
     </div>
   );
 }
