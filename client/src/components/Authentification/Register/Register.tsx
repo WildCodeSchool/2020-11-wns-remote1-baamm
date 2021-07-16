@@ -2,6 +2,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import './Register.style.css';
+import OwlLogin from '../../../pictures/owlLogin.png';
 
 import AuthService from '../../../services/auth.service';
 
@@ -36,38 +38,35 @@ export default function Register() {
   }
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
+    <div className="registerContainer">
+      <div className="register_mainContainer">
         <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src={OwlLogin}
           alt="profile-img"
-          className="profile-img-card"
+          className="loginLogo"
         />
 
         <form onSubmit={handleSubmit(handleRegister)}>
           {!status && (
-            <div>
+            <div className="formContainer">
               <div className="form-group">
                 <input type="text" placeholder="Prénom" {...register('firstname', { maxLength: 80 })} />
                 <input type="text" placeholder="Nom" {...register('lastname', { maxLength: 100 })} />
                 <input type="email" placeholder="Email@mail.com" {...register('email', { required: true, pattern: /^\S+@\S+$/i })} />
                 <input type="password" placeholder="Password" {...register('password', { required: true })} />
                 <p>Quel est votre status ?</p>
-                <div>
-                  <label htmlFor="Student">
+                <div className="multipleChoice">
+                  <label htmlFor="Student" className="choice">
                     <input id="Student" {...register('role', { required: true })} type="radio" value="STUDENT" checked />
                     Elève
                   </label>
-                </div>
-                <div>
-                  <label htmlFor="Teacher">
+
+                  <label htmlFor="Teacher" className="choice">
                     <input id="Teacher" {...register('role', { required: true })} type="radio" value="TEACHER" />
                     Professeur
                   </label>
                 </div>
-              </div>
-              <div>
-                <input type="submit" />
+                <input type="submit" className="input_registerButton" />
               </div>
             </div>
           )}

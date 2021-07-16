@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import './Login.style.css';
+import OwlLogin from '../../../pictures/owlLogin.png';
 
 import AuthService from '../../../services/auth.service';
 
@@ -31,25 +33,20 @@ export default function Login() {
   }
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
+    <div className="loginContainer">
+      <div className="login_mainContainer">
         <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src={OwlLogin}
           alt="profile-img"
-          className="profile-img-card"
+          className="loginLogo"
         />
 
         <form onSubmit={handleSubmit(handleLogin)}>
-          <div>
+          <div className="formContainer">
             <div className="form-group">
               <input placeholder="Email" {...register('email', { required: true })} />
-              {errors.email && <span>This field is required</span>}
-
               <input type="password" placeholder="Password" {...register('password', { required: true })} />
-              {errors.password && <span>This field is required</span>}
-            </div>
-            <div>
-              <input type="submit" />
+              <input type="submit" className="input_loginButton" />
             </div>
           </div>
 
@@ -57,6 +54,15 @@ export default function Login() {
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
                 {message}
+              </div>
+            </div>
+          )}
+
+          {errors && (
+            <div className="form-group">
+              <div className="alert-danger" role="alert">
+                {errors.email && <span className="alert">L&apos;adresse email est requise</span>}
+                {errors.password && <span className="alert">Le mot de passe est requis</span>}
               </div>
             </div>
           )}

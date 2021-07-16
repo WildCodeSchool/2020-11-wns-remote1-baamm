@@ -1,10 +1,4 @@
-.login-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.loginContainer {
+.registerContainer {
   height: 92vh;
   display: flex;
   justify-content: center;
@@ -12,7 +6,7 @@
   background-color: #cccccc;
 }
 
-.login_mainContainer {
+.register_mainContainer {
   background-color: white;
   border: double 8px #cccccc;
   height: 80%;
@@ -22,6 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 2vh 0;
 }
 
 .formContainer {
@@ -31,23 +26,16 @@
   align-items: center;
 }
 
-.form-group {
+.multipleChoice {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
 }
 
-.form-group input {
-  margin-bottom: 1vh;
+.choice {
+  margin: 0 1vw 2vh 1vw; 
 }
 
-.loginLogo {
-  width: 20vw;
-  margin-bottom: 5vh;
-}
-
-.input_loginButton {
+.input_registerButton {
   background-color: #4ea55b;
   width: 100%;
   display: flex;
@@ -58,18 +46,4 @@
   border: none;
   color: whitesmoke;
   padding: 1vh 2vw;
-}
-
-.alert-danger {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.alert {
-  color: red;
-  background-color: rgba(190, 51, 0, 0.219);
-  border: solid 2px red;
-  padding: 2vh 4vw;
 }
